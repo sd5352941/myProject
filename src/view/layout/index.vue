@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <router-view></router-view>
+    <router-view class="top20"></router-view>
   </div>
 </template>
 

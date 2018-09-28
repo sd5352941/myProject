@@ -1,7 +1,9 @@
 <template>
   <div>
     <carousel></carousel>
-    <card-list></card-list>
+    <div class="cardList">
+      <card-list></card-list>
+    </div>
   </div>
 </template>
 
@@ -19,3 +21,10 @@
     }
   }
 </script>
+
+<style>
+  .cardList {
+    display: flex;
+    justify-content: center;
+  }
+</style>
