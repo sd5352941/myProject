@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <span>TEST</span>
+    <Icon type="md-bicycle" size="30"/>
   </div>
 </template>
 
