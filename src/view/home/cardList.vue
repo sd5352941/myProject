@@ -2,7 +2,7 @@
   <div class="card-box">
     <el-card class='card' v-for="item in 4" shadow="" :key="item">
       <img
-        src="https://mmbiz.qpic.cn/mmbiz_jpg/7Jo2WybqIWlRyGDPGRFQXA68NN1rGEfRh0lo1D7KUPibPu2sJTvGTHa62QUCEMg6zicV8zkbrrbj80Gic6gOt5Glg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1"
+        src=""
         class="card_img">
       <el-row class="pad20">
         <el-col :span="12">
@@ -16,7 +16,10 @@
         </el-col>
       </el-row>
       <el-row class="pad20 card_content">
-        <el-col v-for="item in cardDesc" class="top10">{{item.label}}:{{item.prop}}</el-col>
+        <CellGroup>
+          <Cell v-for="item in cardDesc" class="top10" :title="item.label" :extra="item.prop"></Cell>
+        </CellGroup>
+        <!--<el-col v-for="item in cardDesc" class="top10">{{item.label}}:{{item.prop}}</el-col>-->
       </el-row>
     </el-card>
   </div>
@@ -27,10 +30,10 @@
     data() {
       return {
         cardDesc:[
-          {label:'集合点',prop:'xxxxxxxxxxxxxx'},
-          {label:'集合时间',prop:'XXXX'},
-          {label:'骑行路线',prop:'XXXXXXXXXX'},
-          {label:'描述',prop:'XXXXXXXXXXXX'},
+          {label:'集合点',prop:'某个地方'},
+          {label:'集合时间',prop:'2019年9月29号'},
+          {label:'骑行路线',prop:'成都到杭州'},
+          {label:'描述',prop:'巴拉巴拉巴拉巴拉'},
           ]
       }
     },
@@ -51,7 +54,7 @@
   }
 
   .card:hover {
-    height: 500px;
+    height: 600px;
   }
 
   .card_img {

@@ -9,6 +9,7 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
 import '@/styles/index.scss' //全局CSS
+import '@/permission.js' //验权
 
 Vue.use(ElementUI);
 Vue.use(iView);
