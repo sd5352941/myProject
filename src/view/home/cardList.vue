@@ -1,12 +1,10 @@
 <template>
   <div class="card-box">
     <el-card class='card' v-for="item in 4" shadow="" :key="item">
-      <img
-        src=""
-        class="card_img">
+      <img src="" class="card_img">
       <el-row class="pad20">
         <el-col :span="12">
-          <b>标题名称测试标题名称测</b>
+          <b>到什么地方去</b>
         </el-col>
         <el-col :span="12">
           <div class="primary_text">
@@ -22,6 +20,9 @@
         <!--<el-col v-for="item in cardDesc" class="top10">{{item.label}}:{{item.prop}}</el-col>-->
       </el-row>
     </el-card>
+    <BackTop>
+      <el-button round type="info">返回顶部</el-button>
+    </BackTop>
   </div>
 </template>
 
@@ -37,7 +38,11 @@
           ]
       }
     },
-    methods: {}
+    methods: {
+      LoadMoreData(dir) {
+        console.log(dir)
+      }
+    }
   }
 </script>
 
@@ -69,7 +74,7 @@
   .primary_text {
     display: flex;
     justify-content: flex-end;
-    margin-right: 40px;
+    margin-right: 20px;
   }
 
   .card_content {
@@ -77,4 +82,5 @@
     font-size: 14px;
     margin-top: 20px;
   }
+
 </style>
