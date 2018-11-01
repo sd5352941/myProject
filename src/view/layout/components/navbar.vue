@@ -1,7 +1,20 @@
 <template>
   <div class="navbar">
-    <Icon type="md-bicycle" size="30"/>
-    <a class="link link--kukuri" href="#" data-letters="BikeProjact">BikeProjact</a>
+    <div class="navbar-centent">
+      <Icon type="md-bicycle" size="30"/>
+      <a class="link link--kukuri" href="#" data-letters="BikeProjact">BikeProjact</a>
+      <section class="navbar-right">
+        <article style="margin-right: 50px">
+          <el-button type="warning" size="medium" round>发布活动</el-button>
+        </article>
+        <article>
+          <el-input style="width: 120px" size="mini" suffix-icon="el-icon-search"></el-input>
+        </article>
+        <article class="sign-in">
+          注册/登陆
+        </article>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -9,28 +22,38 @@
 
 </script>
 
-<style>
+<style lang="scss" scoped>
 
   .navbar {
-    padding-left: 20px;
+    article {
+      margin-right: 20px;
+    }
+    .sign-in {
+      font-family: "Microsoft JhengHei UI";
+    }
+    margin-top: 5px;
+    padding: 20px;
     color: black;
     align-items: center;
+    justify-content: center;
     display: flex;
-    height: 45px;
-    background: linear-gradient(to bottom right,  #f0f1f3, #a5a5a5)
+    height: 55px;
+    background: linear-gradient(to bottom right, #f0f1f3, #a5a5a5)
   }
 
-   .link {
-     margin-left: 10px;
-     outline: none;
-     text-decoration: none;
-     position: relative;
-     font-size: 1.6em;
-     line-height: 1;
-     color: #9e9ba4;
-     display: inline-block;
-   }
+  .link {
+    margin-left: 10px;
+    outline: none;
+    text-decoration: none;
+    position: relative;
+    font-size: 1.6em;
+    line-height: 1;
+    color: #9e9ba4;
+    display: inline-block;
+  }
+
   .link--kukuri {
+    width: 200px;
     text-transform: uppercase;
     font-weight: 900;
     overflow: hidden;
@@ -51,13 +74,13 @@
     margin-top: -8px;
     right: 0;
     background: #F9F9F9;
-    transform: translate3d(-100%,0,0);
+    transform: translate3d(-100%, 0, 0);
     transition: transform 0.4s;
-    transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+    transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
   }
 
   .link--kukuri:hover::after {
-    transform: translate3d(100%,0,0);
+    transform: translate3d(100%, 0, 0);
   }
 
   .link--kukuri::before {
@@ -75,4 +98,19 @@
     width: 100%;
   }
 
+  .navbar-centent {
+    width: 95%;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-right {
+    color: #696969;
+    font-weight: 600;
+    font-size: 1.4em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 </style>

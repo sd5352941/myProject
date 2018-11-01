@@ -15,7 +15,7 @@
       </el-row>
       <el-row class="pad20 card_content">
         <CellGroup>
-          <Cell v-for="item in cardDesc" class="top10" :title="item.label" :extra="item.prop"></Cell>
+          <Cell v-for="item in cardDesc" class="top10" :title="item.label" :extra="item.prop" :key="item.prop"></Cell>
         </CellGroup>
         <!--<el-col v-for="item in cardDesc" class="top10">{{item.label}}:{{item.prop}}</el-col>-->
       </el-row>
