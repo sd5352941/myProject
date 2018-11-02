@@ -1,6 +1,6 @@
 <template>
   <div class="card-box">
-    <el-card class='card' v-for="item in 4" shadow="" :key="item">
+    <el-card class='card' v-for="item in cardTotal" shadow="" :key="item">
       <img src="" class="card_img">
       <el-row class="pad20">
         <el-col :span="12">
@@ -23,13 +23,24 @@
     <BackTop>
       <el-button round type="info">返回顶部</el-button>
     </BackTop>
+    <div v-infinite-scroll="loadMore" infinite-scroll-distance="0" style="height: 100px">
+      <div class="loadMore">
+        <div class="loading">
+          <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import NProgress from 'nprogress'
+
   export default {
     data() {
       return {
+        loadingDisplay:false,
+        cardTotal:4,
         cardDesc:[
           {label:'集合点',prop:'某个地方'},
           {label:'集合时间',prop:'2019年9月29号'},
@@ -39,17 +50,28 @@
       }
     },
     methods: {
-      LoadMoreData(dir) {
-        console.log(dir)
+      loadMore() {
+        this.cardTotal = this.cardTotal + 10
+        this.loadingDisplay = true
+        // console.log(this.cardTotal)
+        setTimeout(function () {
+          this.loadingDisplay = false
+        },1000)
       }
     }
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+
   .card-box {
     display: flex;
     flex-direction: column;
+    .loadMore {
+      margin-bottom: 30px;
+      display: flex;
+      justify-content:center;
+    }
   }
 
   .card {
