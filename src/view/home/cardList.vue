@@ -23,7 +23,7 @@
     <BackTop>
       <el-button round type="info">返回顶部</el-button>
     </BackTop>
-    <div v-infinite-scroll="loadMore" infinite-scroll-distance="0" style="height: 100px">
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay"	infinite-scroll-distance="10" style="height: 100px">
       <div class="loadMore">
         <div class="loading">
           <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
@@ -34,9 +34,12 @@
 </template>
 
 <script>
-  import NProgress from 'nprogress'
+  import loading from '@/components/loading.vue'
 
   export default {
+    components:{
+      loading
+    },
     data() {
       return {
         loadingDisplay:false,
@@ -51,12 +54,11 @@
     },
     methods: {
       loadMore() {
-        this.cardTotal = this.cardTotal + 10
         this.loadingDisplay = true
-        // console.log(this.cardTotal)
-        setTimeout(function () {
+        setTimeout(()=> {
+          this.cardTotal = this.cardTotal + 10
           this.loadingDisplay = false
-        },1000)
+        },3000)
       }
     }
   }
