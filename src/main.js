@@ -6,6 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui';
 import iView from 'iview';
 import infiniteScroll from 'vue-infinite-scroll'
+import store from './store'
 
 import '@/permission.js' //验权
 
@@ -27,6 +28,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
