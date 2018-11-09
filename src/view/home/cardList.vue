@@ -76,7 +76,7 @@
        */
       getList() {
         this.$store.dispatch("GetActivityList").then(res => {
-          console.log(this.activityList)
+          // console.log(this.activityList)
         })
       }
     },
