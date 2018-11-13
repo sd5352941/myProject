@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
-export function getActivityList() {
+export function getActivity(params) {
   return request({
     url:'/activity/query',
-    method:'post',
+    method:'get',
+    params,
   })
 }

@@ -18,12 +18,12 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'test',
+      name: 'home',
       component: layout,
       children: [{
-        path: 'test',
-        name: 'test',
-        component: () => import('@/view/test')
+        path: 'activityDetail',
+        name: 'activityDetail',
+        component: () => import('@/view/activity/detail')
       }]
     }
   ]
