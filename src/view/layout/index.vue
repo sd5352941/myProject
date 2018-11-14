@@ -1,7 +1,9 @@
 <template>
   <div>
     <navbar></navbar>
-    <router-view class="top20"></router-view>
+    <transition name="fade-transform" mode="out-in">
+      <router-view class="top20"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -10,7 +12,7 @@
 
   export default {
     data() {
-      return{}
+      return {}
     },
     components: {
       navbar,
@@ -18,6 +20,6 @@
   }
 </script>
 
-<style>
+<style lang="scss">
 
 </style>

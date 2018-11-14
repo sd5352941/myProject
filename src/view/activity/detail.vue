@@ -1,9 +1,12 @@
 <template>
   <div class="detail_content">
     <el-card class="card">
-      <img src="../../../static/image/activityImg/ac1.png" class="titleImg"/>
+      <!--<img src="../../../static/image/activityImg/ac1.png" class="titleImg"/>-->
       <div class="content_detail">
         <h1>{{activityDetail.esInformation.name}}</h1>
+        <p v-for="item in activityDetail.esInformation">
+          {{item}}
+        </p>
       </div>
     </el-card>
   </div>
@@ -13,6 +16,7 @@
   import {mapGetters} from 'vuex'
 
   export default {
+    name: 'activityDetail',
     data() {
       return {}
     },
@@ -52,7 +56,7 @@
       height: 100%;
       /*max-height: 300px;*/
     }
-    .content_detail{
+    .content_detail {
       margin-top: 30px;
     }
   }
