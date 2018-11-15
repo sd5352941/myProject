@@ -2,14 +2,20 @@ import {getActivity} from "@/api/activity";
 
 const activity = {
   state: {
-    activityList: [],
-    activityDetail: {}
+    activityList: [],// 活动列表
+    activityDetail: {}, // 活动详情
+    activityDesc: { //活动描述
+      date1: '集合时间',
+      date2: '出发时间',
+      desc: '活动描述',
+      type: '活动标签'
+    }
   },
   mutations: {
     SET_LIST(state, list) {
       state.activityList = list
     },
-    SET_DETAIL(state,detail) {
+    SET_DETAIL(state, detail) {
       state.activityDetail = detail[0]
     },
   },
@@ -37,7 +43,8 @@ const activity = {
   },
   getters: {
     activityList: state => state.activityList,
-    activityDetail: state => state.activityDetail
+    activityDetail: state => state.activityDetail,
+    activityDesc: state => state.activityDesc
   }
 }
 

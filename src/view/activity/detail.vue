@@ -1,13 +1,29 @@
 <template>
   <div class="detail_content">
-    <el-card class="card">
-      <!--<img src="../../../static/image/activityImg/ac1.png" class="titleImg"/>-->
-      <div class="content_detail">
-        <h1>{{activityDetail.esInformation.name}}</h1>
-        <p v-for="item in activityDetail.esInformation">
-          {{item}}
-        </p>
-      </div>
+    <el-card class="card" v-if="activityDetail.esInformation">
+      <img src="../../../static/image/activityImg/ac1.png" class="titleImg"/>
+      <article style="padding: 16px">
+        <section class="top20">
+          <h1 class="title">{{activityDetail.esInformation.name}}</h1>
+          <span>123</span>
+        </section>
+        <section class="top20">
+          <el-row>
+            <el-col :span="12">
+              <p v-for="item,index in activityDesc" :key="index">
+                {{item}}:{{activityDetail.esInformation[index]}}
+              </p>
+            </el-col>
+            <el-col :span="12">
+              <div id="baiduMap" style="height: 200px;width: 100%"></div>
+            </el-col>
+          </el-row>
+
+        </section>
+        <section class="top20">
+
+        </section>
+      </article>
     </el-card>
   </div>
 </template>
@@ -23,6 +39,7 @@
     computed: {
       ...mapGetters([
         'activityDetail',
+        'activityDesc'
       ])
     },
     methods: {
@@ -33,7 +50,14 @@
         let query = {
           id: this.$route.query._id
         }
-        this.$store.dispatch('GetActivityDetail', query)
+        this.$store.dispatch('GetActivityDetail', query).then(res => {
+          this.initMap()
+        })
+      },
+      initMap() {
+        var map = new BMap.Map("baiduMap");          // 创建地图实例
+        var point = new BMap.Point(116.404, 39.915);  // 创建点坐标
+        map.centerAndZoom(point, 15);
       }
     },
     mounted() {
@@ -47,7 +71,6 @@
     display: flex;
     justify-content: center;
     .card {
-      padding: 16px;
       width: 750px;
       margin-top: 50px;
     }
@@ -58,6 +81,12 @@
     }
     .content_detail {
       margin-top: 30px;
+    }
+    .detail_desc {
+      margin-top: 30px;
+    }
+    .title {
+      font-size: 24px;
     }
   }
 </style>

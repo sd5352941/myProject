@@ -2,7 +2,8 @@
   <div class="navbar">
     <div class="navbar-centent">
       <Icon type="md-bicycle" size="30"/>
-      <a class="link link--kukuri" href="#" data-letters="BikeProjact">BikeProjact</a>
+      <a class="link link--kukuri" href="#" data-letters="BikeProjact"
+      @click="toHome">BikeProjact</a>
       <section class="navbar-right">
         <article style="margin-right: 50px">
           <el-button type="warning" size="medium" round>发布活动</el-button>
@@ -19,7 +20,19 @@
 </template>
 
 <script>
+  export default {
+    name: 'navbar',
+    data() {
+      return {
 
+      }
+    },
+    methods:{
+      toHome() {
+        this.$router.push('/home')
+      }
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
