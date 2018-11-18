@@ -1,4 +1,4 @@
-import {getActivity} from "@/api/activity";
+import {getActivity, getActivityDetail} from "@/api/activity";
 
 const activity = {
   state: {
@@ -32,7 +32,7 @@ const activity = {
     },
     GetActivityDetail({commit}, params) {
       return new Promise((resolve, reject) => {
-        getActivity(params).then(res => {
+        getActivityDetail(params).then(res => {
           commit('SET_DETAIL', res.data.result)
           resolve(res)
         }).catch(err => {

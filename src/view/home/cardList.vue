@@ -2,8 +2,8 @@
   <div class="card-box">
     <el-card class='card' v-for="item in activityList" shadow="" :key="item._id">
       <div @click="toDetail(item._id)" style="cursor:pointer">
-        <img src="" class="card_img">
-        <el-row class="pad20">
+        <div class="card_img"></div>
+        <el-row class="pad20 top20">
           <el-col :span="12">
             <b>{{item.esInformation.name}}</b>
           </el-col>
@@ -67,11 +67,10 @@
        * 加载更多活动列表
        */
       loadMore() {
-        // this.loadingDisplay = true
-        // setTimeout(() => {
-        //   this.total += 3
-        //   this.loadingDisplay = false
-        // }, 2000)
+        this.loadingDisplay = true
+        setTimeout(() => {
+          this.loadingDisplay = false
+        }, 2000)
       },
       /**
        * 获取活动列表
@@ -86,7 +85,7 @@
        */
       toDetail(id) {
         let query = {
-          _id:id
+          _id: id
         }
         this.$router.push({path: '/activityDetail', query})
       }
@@ -120,8 +119,9 @@
   }
 
   .card_img {
-    height: 270px;
+    height: 200px;
     width: 100%;
+    background: url('../../image/title/bike_title_1.jpg');
   }
 
   b {

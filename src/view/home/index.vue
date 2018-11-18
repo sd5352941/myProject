@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="backgourdIMG">
     <carousel></carousel>
     <div class="cardList">
       <card-list></card-list>
@@ -26,5 +26,8 @@
   .cardList {
     display: flex;
     justify-content: center;
+  }
+
+  .backgourdIMG {
   }
 </style>

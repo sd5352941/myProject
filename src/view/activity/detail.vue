@@ -5,23 +5,20 @@
       <article style="padding: 16px">
         <section class="top20">
           <h1 class="title">{{activityDetail.esInformation.name}}</h1>
-          <span>123</span>
         </section>
-        <section class="top20">
+        <section style="margin-top: 50px">
           <el-row>
-            <el-col :span="12">
-              <p v-for="item,index in activityDesc" :key="index">
-                {{item}}:{{activityDetail.esInformation[index]}}
+            <el-col :span="9">
+              <p v-for="item,index in activityDesc" :key="index" class="top10">
+                <label>{{item}}</label>:{{activityDetail.esInformation[index]}}
               </p>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="15">
               <div id="baiduMap" style="height: 200px;width: 100%"></div>
             </el-col>
           </el-row>
-
         </section>
-        <section class="top20">
-
+        <section style="margin-top: 50px">
         </section>
       </article>
     </el-card>
@@ -57,7 +54,18 @@
       initMap() {
         var map = new BMap.Map("baiduMap");          // 创建地图实例
         var point = new BMap.Point(116.404, 39.915);  // 创建点坐标
+        map.enableScrollWheelZoom(true);
         map.centerAndZoom(point, 15);
+        var riding = new BMap.RidingRoute(map, {
+          renderOptions: {
+            map: map,
+            autoViewport: true
+          }
+        });
+        var mapPoint = this.activityDetail.mapPoint
+        let start = new BMap.Point(mapPoint.startPoint.lng, mapPoint.startPoint.lat);
+        let end = new BMap.Point(mapPoint.endPoint.lng, mapPoint.endPoint.lat);
+        riding.search(start, end)
       }
     },
     mounted() {
@@ -88,5 +96,8 @@
     .title {
       font-size: 24px;
     }
+  }
+  .anchorBL {
+    display: none;
   }
 </style>

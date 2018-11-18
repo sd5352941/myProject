@@ -7,3 +7,11 @@ export function getActivity(params) {
     params,
   })
 }
+
+export function getActivityDetail(params) {
+  return request({
+    url:'/activity/detail',
+    method:'get',
+    params,
+  })
+}
