@@ -26,13 +26,14 @@
       <el-button round type="info">返回顶部</el-button>
     </BackTop>
     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay" infinite-scroll-distance="10"
-         style="height: 100px">
+         style="height: 100px" v-if="!noData">
       <div class="loadMore">
         <div class="loading">
           <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
         </div>
       </div>
     </div>
+    <span v-if="noData" style="text-align: center;height: 50px">已经到顶拉<a @click="loadMore">重新加载</a></span>
   </div>
 </template>
 
@@ -47,13 +48,14 @@
     },
     computed: {
       ...mapGetters([
-        'activityList'
+        'activityList',
+        'activityParmas'
       ])
     },
     data() {
       return {
+        noData: false,
         loadingDisplay: false,
-        total: 3,
         cardDesc: [
           {label: '集合点', prop: '某个地方'},
           {label: '集合时间', prop: '2019年9月29号'},
@@ -68,16 +70,25 @@
        */
       loadMore() {
         this.loadingDisplay = true
+        this.noData = false
         setTimeout(() => {
-          this.loadingDisplay = false
-        }, 2000)
+          this.$store.dispatch("GetActivityList", this.activityParmas).then(res => {
+            if (res.data.result.length != 0) {
+              this.activityParmas.pageNum += 1
+              this.loadingDisplay = false
+            } else {
+              this.loadingDisplay = true
+              this.noData = true
+            }
+          })
+        },1500)
       },
       /**
        * 获取活动列表
        */
       getList() {
-        this.$store.dispatch("GetActivityList").then(res => {
-          // console.log(this.activityList)
+        this.$store.dispatch("GetActivityList", this.activityParmas).then(res => {
+          this.activityParmas.pageNum += 1
         })
       },
       /**

@@ -9,11 +9,15 @@ const activity = {
       date2: '出发时间',
       desc: '活动描述',
       type: '活动标签'
+    },
+    queryParams: {
+      pageNum: 1,
+      pageSize: 3
     }
   },
   mutations: {
     SET_LIST(state, list) {
-      state.activityList = list
+      state.activityList.push(...list)
     },
     SET_DETAIL(state, detail) {
       state.activityDetail = detail[0]
@@ -44,7 +48,8 @@ const activity = {
   getters: {
     activityList: state => state.activityList,
     activityDetail: state => state.activityDetail,
-    activityDesc: state => state.activityDesc
+    activityDesc: state => state.activityDesc,
+    activityParmas: state=> state.queryParams
   }
 }
 

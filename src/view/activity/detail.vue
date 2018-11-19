@@ -1,7 +1,9 @@
 <template>
   <div class="detail_content">
     <el-card class="card" v-if="activityDetail.esInformation">
-      <img src="../../../static/image/activityImg/ac1.png" class="titleImg"/>
+      <el-card>
+        <img src="../../../static/image/activityImg/ac1.png" class="titleImg"/>
+      </el-card>
       <article style="padding: 16px">
         <section class="top20">
           <h1 class="title">{{activityDetail.esInformation.name}}</h1>
@@ -14,7 +16,9 @@
               </p>
             </el-col>
             <el-col :span="15">
-              <div id="baiduMap" style="height: 200px;width: 100%"></div>
+              <el-card>
+                <div id="baiduMap" style="height: 200px;width: 100%"></div>
+              </el-card>
             </el-col>
           </el-row>
         </section>
@@ -97,6 +101,7 @@
       font-size: 24px;
     }
   }
+
   .anchorBL {
     display: none;
   }

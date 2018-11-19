@@ -1,8 +1,17 @@
 <template>
   <div class="backgourdIMG">
     <carousel></carousel>
-    <div class="cardList">
-      <card-list></card-list>
+    <div class="content">
+      <el-tabs v-model="activeName" @tab-click="handleClick" style="width: 1200px" type="card">
+        <el-tab-pane label="活动列表" name="first">
+          <div style="width: 1200px" class="content">
+            <card-list></card-list>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="地图模式" name="second">
+
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -23,11 +32,10 @@
 </script>
 
 <style>
-  .cardList {
+  .backgourdIMG {
+  }
+  .content {
     display: flex;
     justify-content: center;
-  }
-
-  .backgourdIMG {
   }
 </style>
