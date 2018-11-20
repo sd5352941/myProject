@@ -112,7 +112,7 @@
   }
 
   .navbar-centent {
-    width: 95%;
+    width: 1200px;
     display: flex;
     align-items: center;
   }

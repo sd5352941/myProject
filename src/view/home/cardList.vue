@@ -120,8 +120,8 @@
   }
 
   .card {
-    height: 320px;
-    width: 450px;
+    height: 400px;
+    width: 600px;
     margin: 12px 0px;
   }
 

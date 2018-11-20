@@ -83,7 +83,7 @@
     display: flex;
     justify-content: center;
     .card {
-      width: 750px;
+      width: 1200px;
       margin-top: 50px;
     }
     .titleImg {

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import layout from '@/view/layout'
+import login from '@/view/user/login'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
         name: 'activityDetail',
         component: () => import('@/view/activity/detail')
       }]
+    },
+    {
+      path: '/login',
+      name: 'home',
+      component: login,
     }
   ]
 })
