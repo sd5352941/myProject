@@ -12,7 +12,9 @@
           <el-input style="width: 120px" size="mini" suffix-icon="el-icon-search"></el-input>
         </article>
         <article class="sign-in">
-          注册/登陆
+          <a @click="toLogin">
+            注册/登陆
+          </a>
         </article>
       </section>
     </div>
@@ -20,6 +22,11 @@
 </template>
 
 <script>
+  import { Icon } from 'iview';
+  import Vue from 'vue'
+
+  Vue.component('Icon', Icon);
+
   export default {
     name: 'navbar',
     data() {
@@ -30,6 +37,9 @@
     methods:{
       toHome() {
         this.$router.push('/home')
+      },
+      toLogin() {
+        this.$router.push('/login')
       }
     }
   }

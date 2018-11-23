@@ -2,7 +2,7 @@
   <div class="backgourdIMG">
     <carousel></carousel>
     <div class="content">
-      <el-tabs v-model="activeName" @tab-click="handleClick" style="width: 1200px" type="card">
+      <el-tabs style="width: 1200px" type="card">
         <el-tab-pane label="活动列表" name="first">
           <div style="width: 1200px" class="content">
             <card-list></card-list>

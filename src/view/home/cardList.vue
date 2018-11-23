@@ -40,7 +40,6 @@
 <script>
   import loading from '@/components/loading.vue'
   import {mapGetters} from 'vuex'
-  import activity from "../../store/modules/activity";
 
   export default {
     components: {
@@ -55,7 +54,7 @@
     data() {
       return {
         noData: false,
-        loadingDisplay: false,
+        loadingDisplay: true,
         cardDesc: [
           {label: '集合点', prop: '某个地方'},
           {label: '集合时间', prop: '2019年9月29号'},

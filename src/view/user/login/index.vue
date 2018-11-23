@@ -1,12 +1,13 @@
 <template>
   <div style="height: 100%">
     <div class="intro-container">
-      <el-button class="text" @click="test1">1111</el-button>
+      <el-button class="text" @click="toRegister" type="primary">注册</el-button>
     </div>
     <div class="sky-container" id="sky-container">
-      <el-button @click="test2" class="x-mark">222222222</el-button>
+      <el-input></el-input>
+      <el-button @click="toLogin" class="x-mark" type="primary">登陆</el-button>
     </div>
-    <div id="back_canvas"></div>
+    <div id="backroundCanvas"></div>
   </div>
 </template>
 
@@ -14,14 +15,10 @@
   export default {
     data() {
       return {
-        visible: true
       }
     },
-    mounted() {
-
-    },
     methods: {
-      test1() {
+      toRegister() {
         var introContainer = document.getElementsByClassName('intro-container')[0];
         var skyContainer = document.getElementsByClassName('sky-container')[0];
         var xMark = document.getElementsByClassName('x-mark')[0];
@@ -42,7 +39,7 @@
           ease: Power3.easeInOut
         }), TweenLite.to(skyContainer, 2, {opacity: 1, ease: Power3.easeInOut})]);
       },
-      test2() {
+      toLogin() {
         var outroTimeline = new TimelineMax();
         var introContainer = document.getElementsByClassName('intro-container')[0];
         var skyContainer = document.getElementsByClassName('sky-container')[0];
@@ -59,10 +56,13 @@
         }), TweenLite.to(plane.scale, 3, {x: 1, ease: Power3.easeInOut})]);
 
         outroTimeline.add([TweenLite.to(introContainer, 0.5, {opacity: 1, ease: Power3.easeIn})]);
-      }
-    }
+      },
+    },
+    mounted() {
+      document.getElementById('backroundCanvas').appendChild(renderer.domElement)
+    },
   }
-  var plane = undefined;
+
   var raycaster = new THREE.Raycaster();
   var normalizedMouse = {
     x: 0,
@@ -73,22 +73,22 @@
     g: 52,
     b: 74
   };
-  var baseColorRGB = darkBlue;
-  var baseColor = "rgb(" + baseColorRGB.r + "," + baseColorRGB.g + "," + baseColorRGB.b + ")";
+  // var baseColorRGB = darkBlue;
+  var baseColor = "rgb(" + darkBlue.r + "," + darkBlue.g + "," + darkBlue.b + ")";
 
   var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.5, 1000);
   var renderer = new THREE.WebGLRenderer();
 
   // Scene initialization
   camera.position.z = 50;
-
   renderer.setClearColor("#121212", 1.0);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
 
-  console.log(document.getElementById("back_canvas"))
-  document.body.appendChild(renderer.domElement);
+  // document.body.appendChild(renderer.domElement);
+
+
   // Lights
   var topLight = new THREE.DirectionalLight(0xffffff, 1);
   topLight.position.set(0, 1, 1).normalize();
@@ -130,10 +130,10 @@
 
   for (var i = 0; i < geometry.faces.length; i++) {
     geometry.faces[i].color.setStyle(baseColor);
-    geometry.faces[i].baseColor = baseColorRGB;
+    geometry.faces[i].baseColor = darkBlue;
   }
 
-  plane = new THREE.Mesh(geometry, darkBlueMaterial);
+  var plane = new THREE.Mesh(geometry, darkBlueMaterial);
   scene.add(plane);
 
   // Create stars
@@ -236,13 +236,15 @@
 <style>
   .intro-container {
     position: absolute;
-    /*top: 50%;*/
-    /*transform: translateY(-50%);*/
-    /*color: white;*/
-    /*text-align: center;*/
-    /*margin: 0 auto;*/
-    /*right: 0;*/
-    /*left: 0;*/
+    top: 50%;
+    height: 200px;
+    width: 300px;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
   }
 
   h1 {
@@ -369,15 +371,15 @@
   }
 
   .sky-container {
-    /*position: absolute;*/
+    position: absolute;
     /*color: white;*/
-    /*text-transform: uppercase;*/
+    text-transform: uppercase;
     /*margin: 0 auto;*/
-    /*right: 0;*/
-    /*left: 0;*/
-    /*top: 2%;*/
-    /*text-align: center;*/
-    /*opacity: 0;*/
+    right: 0;
+    left: 0;
+    top: 2%;
+    text-align: center;
+    opacity: 0;
   }
 
   @media screen and (min-width: 860px) {

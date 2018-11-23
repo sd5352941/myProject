@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Message} from 'element-ui'
 
 var request = axios.create({
   baseURL: process.env.BASE_API,
@@ -26,6 +27,7 @@ request.interceptors.response.use(
     }
   },
   error => {
+    console.log(error.message)
     Message({
       message: error.message,
       type: 'error',
