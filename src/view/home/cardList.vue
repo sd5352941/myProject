@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <span v-if="noData" style="text-align: center;height: 50px">已经到顶拉<a @click="loadMore">重新加载</a></span>
+    <span v-if="noData" style="text-align: center;height: 50px">已无数据<a @click="loadMore" style="color: #2baee9">重新加载</a></span>
   </div>
 </template>
 
@@ -79,8 +79,11 @@
               this.loadingDisplay = true
               this.noData = true
             }
+          }).catch(err=>{
+            this.loadingDisplay = true
+            this.noData = true
           })
-        },1500)
+        }, 1500)
       },
       /**
        * 获取活动列表
@@ -88,6 +91,9 @@
       getList() {
         this.$store.dispatch("GetActivityList", this.activityParmas).then(res => {
           this.activityParmas.pageNum += 1
+        }).catch(err => {
+          this.loadingDisplay = true
+          this.noData = true
         })
       },
       /**
