@@ -54,7 +54,7 @@
     data() {
       return {
         noData: false,
-        loadingDisplay: true,
+        loadingDisplay: false,
         cardDesc: [
           {label: '集合点', prop: '某个地方'},
           {label: '集合时间', prop: '2019年9月29号'},
@@ -83,7 +83,7 @@
             this.loadingDisplay = true
             this.noData = true
           })
-        }, 1500)
+        }, 3000)
       },
       /**
        * 获取活动列表
@@ -125,13 +125,13 @@
   }
 
   .card {
-    height: 400px;
+    height: 280px;
     width: 600px;
     margin: 12px 0px;
   }
 
   .card:hover {
-    height: 600px;
+    height: 500px;
   }
 
   .card_img {

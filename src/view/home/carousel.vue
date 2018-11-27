@@ -26,7 +26,9 @@
 </script>
 
 <style>
-
+  .el-carousel__container {
+    height: 500px;
+  }
   .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;
@@ -38,30 +40,30 @@
   .img {
     width: 100%; /* ... */
     height: 100%; /* ... */
-    /*background-image: url('../../image/title/bike_title_1.jpg');*/
-    /*background-position-y:center;*/
+    background-image: url('../../image/title/bike_title_1.jpg');
+    background-position-y:center;
     background-position-x:center;
-    /*background-size: 500px;*/
+    background-size: 700px;
     background-repeat: no-repeat;
   }
 
   .img2 {
     width: 100%; /* ... */
     height: 100%; /* ... */
-    /*background-image: url('../../image/title/bike_title_2.jpg');*/
-    /*background-position-y:center;*/
+    background-image: url('../../image/title/bike_title_2.jpg');
+    background-position-y:center;
     background-position-x:center;
-    /*background-size: 500px;*/
+    background-size: 700px;
     background-repeat: no-repeat;
   }
 
   .img3 {
     width: 100%; /* ... */
     height: 100%; /* ... */
-    /*background-image: url('../../image/title/bike_title_3.jpg');*/
-    /*background-position-y:center;*/
+    background-image: url('../../image/title/bike_title_3.jpg');
+    background-position-y:center;
     background-position-x:center;
-    /*background-size: 500px;*/
+    background-size: 700px;
     background-repeat: no-repeat;
   }
 </style>
