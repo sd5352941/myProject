@@ -1,11 +1,15 @@
 <template>
   <div style="height: 100%">
     <div class="intro-container">
-      <el-button class="text" @click="toRegister" type="primary">注册</el-button>
+      <h1 style="text-align: center">登陆</h1>
+      <el-input class="top20" placeholder="请输入账号"></el-input>
+      <el-input class="top20" placeholder="请输入密码" type="password"></el-input>
+      <div>
+        <el-button class="top20" @click="toRegister" type="primary" style="width: 300px">登陆</el-button>
+      </div>
     </div>
     <div class="sky-container" id="sky-container">
-      <el-input></el-input>
-      <el-button @click="toLogin" class="x-mark" type="primary">登陆</el-button>
+      <el-button @click="toLogin" class="x-mark" type="primary" style="width:500px">注册界面 by 杨益汉</el-button>
     </div>
     <div id="backroundCanvas"></div>
   </div>
@@ -14,8 +18,7 @@
 <script>
   export default {
     data() {
-      return {
-      }
+      return {}
     },
     methods: {
       toRegister() {
@@ -234,17 +237,23 @@
 
 
 <style>
+  .login-content {
+    display: flex;
+    justify-content: center;
+  }
+
   .intro-container {
     position: absolute;
-    top: 50%;
-    height: 200px;
+    top: 40%;
+    /*height: 200px;*/
     width: 300px;
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0);
-    text-align: center;
+    /*text-align: center;*/
     margin: 0 auto;
     right: 0;
     left: 0;
+    color: white;
   }
 
   h1 {
@@ -375,9 +384,9 @@
     /*color: white;*/
     text-transform: uppercase;
     /*margin: 0 auto;*/
-    right: 0;
-    left: 0;
-    top: 2%;
+    /*right: 0;*/
+    /*left: 0;*/
+    /*top: 2%;*/
     text-align: center;
     opacity: 0;
   }
