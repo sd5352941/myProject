@@ -3,7 +3,7 @@
   <div class="header">
     <el-carousel type="card">
       <el-carousel-item v-for="item in carouselList" :key="item.imageURL">
-        <div :class="item.imageURL"></div>
+        <!--<div :class="item.imageURL"></div>-->
       </el-carousel-item>
     </el-carousel>
   </div>

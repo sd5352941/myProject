@@ -5,7 +5,10 @@
       <el-input class="top20" placeholder="请输入账号"></el-input>
       <el-input class="top20" placeholder="请输入密码" type="password"></el-input>
       <div>
-        <el-button class="top20" @click="toRegister" type="primary" style="width: 300px">登陆</el-button>
+        <el-button class="top20" @click="login" type="primary" style="width: 300px">登陆</el-button>
+      </div>
+      <div>
+        <el-button class="top20" @click="toRegister" type="primary" style="width: 300px">注册</el-button>
       </div>
     </div>
     <div class="sky-container" id="sky-container">
@@ -16,6 +19,9 @@
 </template>
 
 <script>
+  import request from '@/utils/request'
+
+
   export default {
     data() {
       return {}
@@ -60,9 +66,18 @@
 
         outroTimeline.add([TweenLite.to(introContainer, 0.5, {opacity: 1, ease: Power3.easeIn})]);
       },
+      login() {
+
+      }
     },
     mounted() {
       document.getElementById('backroundCanvas').appendChild(renderer.domElement)
+      request.post('/user/add', {
+        userName: 'asdasd',
+        passWord: 'ccccccc'
+      }).then(res => {
+        console.log(res)
+      })
     },
   }
 

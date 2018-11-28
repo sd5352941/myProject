@@ -9,7 +9,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="地图模式" name="map">
-          {{homeTab}}
+
         </el-tab-pane>
       </el-tabs>
     </div>
