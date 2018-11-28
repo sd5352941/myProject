@@ -1,30 +1,40 @@
 <template>
   <div style="height: 100%">
     <div class="intro-container">
-      <h1 style="text-align: center">登陆</h1>
-      <el-input class="top20" placeholder="请输入账号"></el-input>
-      <el-input class="top20" placeholder="请输入密码" type="password"></el-input>
+      <h3 style="text-align: center;font-weight: bold;color: #eee;font-size:2.3em">活动骑行登陆</h3>
+      <el-input class="top20" placeholder="请输入账号" v-model="user.username" style="margin-top: 30px">
+        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+      </el-input>
+      <el-input class="top20" placeholder="请输入密码" type="password" v-model="user.password"></el-input>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-button class="top20" @click="login" type="primary" style="width:100%">登陆</el-button>
+        </el-col>
+        <el-col :span="12">
+          <el-button class="top20" @click="toRegister" type="success" style="width:100%">注册</el-button>
+        </el-col>
+      </el-row>
       <div>
-        <el-button class="top20" @click="login" type="primary" style="width: 300px">登陆</el-button>
-      </div>
-      <div>
-        <el-button class="top20" @click="toRegister" type="primary" style="width: 300px">注册</el-button>
       </div>
     </div>
     <div class="sky-container" id="sky-container">
-      <el-button @click="toLogin" class="x-mark" type="primary" style="width:500px">注册界面 by 杨益汉</el-button>
+      <el-button @click="toLogin" class="x-mark" type="success" style="width:500px">注册界面 by 杨益汉</el-button>
     </div>
     <div id="backroundCanvas"></div>
   </div>
 </template>
 
 <script>
-  import request from '@/utils/request'
 
 
   export default {
     data() {
-      return {}
+      return {
+        user: {
+          username: '',
+          password: '',
+        }
+      }
     },
     methods: {
       toRegister() {
@@ -67,17 +77,13 @@
         outroTimeline.add([TweenLite.to(introContainer, 0.5, {opacity: 1, ease: Power3.easeIn})]);
       },
       login() {
-
+        this.$store.dispatch('Login',this.user).then(res=>{
+          // alert(res)
+        })
       }
     },
     mounted() {
       document.getElementById('backroundCanvas').appendChild(renderer.domElement)
-      request.post('/user/add', {
-        userName: 'asdasd',
-        passWord: 'ccccccc'
-      }).then(res => {
-        console.log(res)
-      })
     },
   }
 
@@ -262,7 +268,7 @@
     top: 40%;
     /*height: 200px;*/
     width: 300px;
-    transform: translateY(-50%);
+    transform: translateY(-65%);
     background-color: rgba(0, 0, 0, 0);
     /*text-align: center;*/
     margin: 0 auto;

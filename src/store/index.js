@@ -1,12 +1,15 @@
 import Vuex from "vuex"
 import Vue from "vue"
 import activity from "./modules/activity"
+import user from "./modules/user"
+
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    activity
+    activity,
+    user
   },
   state: {
     homeTab: 'list' //首页标签
