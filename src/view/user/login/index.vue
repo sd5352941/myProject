@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%">
-    <div class="intro-container">
-      <h3 style="text-align: center;font-weight: bold;color: #eee;font-size:2.3em">活动骑行登陆</h3>
+    <div class="intro-container" v-show="loginShow">
+      <h3 class="login-title">活动骑行登陆</h3>
       <el-input class="top20" placeholder="请输入账号" v-model="user.username" style="margin-top: 30px">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
@@ -17,8 +17,21 @@
       <div>
       </div>
     </div>
-    <div class="sky-container" id="sky-container">
-      <el-button @click="toLogin" class="x-mark" type="success" style="width:500px">注册界面 by 杨益汉</el-button>
+    <div class="sky-container" id="sky-container" v-show="!loginShow">
+      <div class="x-mark">
+        <section style="width: 300px">
+          <h1 style="color:white">欢 迎!</h1>
+          <h3 class="login-title top10">会员注册</h3>
+          <el-input class="top20 "  placeholder="用户名" v-model="registerParams.username"></el-input>
+          <el-input class="top20 " placeholder="密码" v-model="registerParams.password" type="password"></el-input>
+          <el-input class="top20 "  placeholder="重复密码" v-model="registerParams.password"  type="password" ></el-input>
+        </section>
+        <el-button @click="register" class="top20" type="success" style="width: 300px">注册</el-button>
+        <el-button @click="toLogin" class="top20" type="danger" style="width:300px;margin-left: 0px">返回登陆</el-button>
+      </div>
+    </div>
+    <div>
+      <el-button class="back-home-button" plain @click="$router.push('home')"><Icon type="md-bicycle" size="20"/>bikeProject</el-button>
     </div>
     <div id="backroundCanvas"></div>
   </div>
@@ -33,11 +46,17 @@
         user: {
           username: '',
           password: '',
-        }
+        },
+        registerParams: {
+          username: '',
+          password: '',
+        },
+        loginShow: true,
       }
     },
     methods: {
       toRegister() {
+        this.loginShow = false
         var introContainer = document.getElementsByClassName('intro-container')[0];
         var skyContainer = document.getElementsByClassName('sky-container')[0];
         var xMark = document.getElementsByClassName('x-mark')[0];
@@ -59,6 +78,7 @@
         }), TweenLite.to(skyContainer, 2, {opacity: 1, ease: Power3.easeInOut})]);
       },
       toLogin() {
+        this.loginShow = true
         var outroTimeline = new TimelineMax();
         var introContainer = document.getElementsByClassName('intro-container')[0];
         var skyContainer = document.getElementsByClassName('sky-container')[0];
@@ -77,10 +97,15 @@
         outroTimeline.add([TweenLite.to(introContainer, 0.5, {opacity: 1, ease: Power3.easeIn})]);
       },
       login() {
-        this.$store.dispatch('Login',this.user).then(res=>{
+        this.$store.dispatch('Login', this.user).then(res => {
           // alert(res)
         })
-      }
+      },
+      register() {
+        this.$store.dispatch('Register', this.registerParams).then(res => {
+          this.$message.success(res.data.msg)
+        })
+      },
     },
     mounted() {
       document.getElementById('backroundCanvas').appendChild(renderer.domElement)
@@ -258,6 +283,18 @@
 
 
 <style>
+  .back-home-button {
+    top: 20px;
+    position: absolute;
+  }
+  .login-title {
+    opacity:0.5;
+    text-align: center;
+    font-weight: bold;
+    color: #eee;
+    font-size: 2em
+  }
+
   .login-content {
     display: flex;
     justify-content: center;

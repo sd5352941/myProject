@@ -3,7 +3,7 @@
   <div class="header">
     <el-carousel type="card">
       <el-carousel-item v-for="item in carouselList" :key="item.imageURL">
-        <!--<div :class="item.imageURL"></div>-->
+        <div :class="item.imageURL"></div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -43,7 +43,7 @@
     background-image: url('../../image/title/bike_title_1.jpg');
     background-position-y:center;
     background-position-x:center;
-    background-size: 700px;
+    /*background-size: 700px;*/
     background-repeat: no-repeat;
   }
 
@@ -51,9 +51,9 @@
     width: 100%; /* ... */
     height: 100%; /* ... */
     background-image: url('../../image/title/bike_title_2.jpg');
-    background-position-y:center;
+    /*background-position-y:center;*/
     background-position-x:center;
-    background-size: 700px;
+    /*background-size: 700px;*/
     background-repeat: no-repeat;
   }
 
@@ -63,7 +63,7 @@
     background-image: url('../../image/title/bike_title_3.jpg');
     background-position-y:center;
     background-position-x:center;
-    background-size: 700px;
+    /*background-size: 700px;*/
     background-repeat: no-repeat;
   }
 </style>
