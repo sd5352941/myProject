@@ -17,7 +17,7 @@
             </el-col>
             <el-col :span="15">
               <el-card>
-                <div id="baiduMap" style="height: 200px;width: 100%"></div>
+                <div id="baiduMap" style="height: 600px;width: 100%"></div>
               </el-card>
             </el-col>
           </el-row>
