@@ -1,9 +1,9 @@
 <template>
   <div class="navbar">
     <div class="navbar-centent">
-      <Icon type="md-bicycle" size="30"/>
-      <a class="link link--kukuri" href="#" data-letters="BikeProjact"
-      @click="toHome">BikeProjact</a>
+      <Icon type="md-bicycle" size="40"/>
+      <a class="link link--kukuri" href="#" data-letters="骑迹"
+      @click="toHome">骑迹</a>
       <section class="navbar-right">
         <article style="margin-right: 50px">
           <el-button type="warning" size="medium" round>发布活动</el-button>
@@ -54,29 +54,29 @@
     .sign-in {
       font-family: "Microsoft JhengHei UI";
     }
-    margin-top: 5px;
     padding: 20px;
     color: black;
     align-items: center;
     justify-content: center;
     display: flex;
-    height: 55px;
+    height: 80px;
     background: linear-gradient(to bottom right, #f0f1f3, #a5a5a5)
   }
 
   .link {
-    margin-left: 10px;
+    margin-left: 5px;
     outline: none;
     text-decoration: none;
     position: relative;
-    font-size: 1.6em;
+    font-size: 2em;
+    font-weight: 700;
     line-height: 1;
     color: #9e9ba4;
     display: inline-block;
   }
 
   .link--kukuri {
-    width: 200px;
+    width: 58px;
     text-transform: uppercase;
     font-weight: 900;
     overflow: hidden;

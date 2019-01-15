@@ -162,7 +162,6 @@
     computed: {
       ...mapGetters([
         'name',
-
       ])
     },
     data () {

@@ -1,39 +1,40 @@
 <template>
-  <div class="card-box">
-    <el-card class='card' v-for="item in activityList" shadow="" :key="item._id">
-      <div @click="toDetail(item._id)" style="cursor:pointer">
-        <div class="card_img"></div>
-        <el-row class="pad20 top20">
-          <el-col :span="12">
-            <b>{{item.esInformation.name}}</b>
-          </el-col>
-          <el-col :span="12">
-            <div class="primary_text">
-              <img src="../../image/pointer/gps_18.png" style="width: 30px;height: 30px;padding-bottom: 7px"/>
-              <span style="font-size: 14px;padding-top: 4px">{{item.esInformation.region}}</span>
+  <div>
+    <div class="card-box">
+      <el-card class='card' v-for="item,index in activityList" shadow="" :key="item._id">
+        <div>
+          <div class="card_img"></div>
+          <div style="padding: 10px">
+            <div class="time"><i class="el-icon-time" style="margin-right: 10px"></i>{{item.esInformation.date1}}</div>
+            <div class="card_title" @click="toDetail(item._id)" >{{item.esInformation.name}}</div>
+            <div class="area"><img src="../../image/pointer/gps_19.png" style="margin-right: 10px;width: 20px;height: 20px">{{item.esInformation.region}}</div>
+            <hr style="margin-top: 15px;border:1px solid #eee ;"/>
+            <div class="type">
+              <div>
+                <el-tag v-for="itemType in item.esInformation.type" :key="itemType" style="margin-right: 10px">{{itemType }}</el-tag>
+              </div>
+              <div>
+                <el-checkbox v-model="item[index]">收藏</el-checkbox>
+              </div>
             </div>
-          </el-col>
-        </el-row>
-        <el-row class="pad20 card_content">
-          <CellGroup>
-            <Cell v-for="desc in cardDesc" class="top10" :title="desc.label" :extra="desc.prop" :key="desc.prop"></Cell>
-          </CellGroup>
-          <!--<el-col v-for="item in cardDesc" class="top10">{{item.label}}:{{item.prop}}</el-col>-->
-        </el-row>
-      </div>
-    </el-card>
-    <BackTop>
-      <el-button round type="info">返回顶部</el-button>
-    </BackTop>
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay" infinite-scroll-distance="10"
-         style="height: 100px" v-if="!noData">
-      <div class="loadMore">
-        <div class="loading">
-          <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
+          </div>
         </div>
+      </el-card>
+      <BackTop>
+        <el-button round type="info">返回顶部</el-button>
+      </BackTop>
+      <div style="width: 100%;display: flex;justify-content: center">
+        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay" infinite-scroll-distance="10"
+             style="height: 100px" v-if="!noData">
+          <div class="loadMore">
+            <div class="loading">
+              <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
+            </div>
+          </div>
+        </div>
+        <span v-if="noData" style="text-align: center;height: 50px; margin-top: 30px;width: 100%">已无数据<a @click="loadMore" style="color: #2baee9">重新加载</a></span>
       </div>
     </div>
-    <span v-if="noData" style="text-align: center;height: 50px">已无数据<a @click="loadMore" style="color: #2baee9">重新加载</a></span>
   </div>
 </template>
 
@@ -73,7 +74,7 @@
         setTimeout(() => {
           this.$store.dispatch("GetActivityList", this.activityParmas).then(res => {
             if (res.data.result.length != 0) {
-              this.activityParmas.pageNum += 1
+              this.activityParmas.pageNum = this.activityList.length
               this.loadingDisplay = false
             } else {
               this.loadingDisplay = true
@@ -83,14 +84,14 @@
             this.loadingDisplay = true
             this.noData = true
           })
-        }, 3000)
+        }, 1000)
       },
       /**
        * 获取活动列表
        */
       getList() {
         this.$store.dispatch("GetActivityList", this.activityParmas).then(res => {
-          this.activityParmas.pageNum += 1
+          this.activityParmas.pageNum = this.activityList.length
         }).catch(err => {
           this.loadingDisplay = true
           this.noData = true
@@ -115,8 +116,12 @@
 <style lang="scss" scoped>
 
   .card-box {
+    overflow-y:auto;
+    max-height: 800px;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /*flex-direction: column;*/
     .loadMore {
       margin-bottom: 30px;
       display: flex;
@@ -125,14 +130,42 @@
   }
 
   .card {
-    height: 280px;
-    width: 600px;
+    .time {
+      margin-top: 14px;
+      color: #999;
+      font-size: 14px;
+    }
+    .type {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+    }
+    .area {
+      margin-top: 14px;
+      color: #999;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+    .card_title {
+      cursor:pointer;
+      word-wrap:break-word;
+      margin-top: 8px;
+      color: #2b312b;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 22px;
+      height: 44px;
+    }
+    .card_title:hover{
+      color: #409EFF;
+    }
+    height: 420px;
+    width: 350px;
     margin: 12px 0px;
   }
 
-  .card:hover {
-    height: 500px;
-  }
 
   .card_img {
     height: 200px;

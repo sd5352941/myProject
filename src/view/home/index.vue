@@ -1,18 +1,21 @@
 <template>
   <div class="backgourdIMG">
     <carousel class="top20" style="margin-top: 50px"></carousel>
-    <div class="content top20" style="">
-      <el-tabs style="width: 1200px" type="card" v-model="homeTab">
+    <el-card class="content top20">
+      <el-tabs v-model="homeTab" style="width: 1180px">
         <el-tab-pane label="活动列表" name="list">
-          <div style="width: 1200px" class="content">
+          <div>
             <card-list></card-list>
           </div>
         </el-tab-pane>
         <el-tab-pane label="地图模式" name="map">
 
         </el-tab-pane>
+        <el-tab-pane label="点聚合" name="dianjuhe">
+
+        </el-tab-pane>
       </el-tabs>
-    </div>
+    </el-card>
   </div>
 </template>
 
@@ -48,6 +51,9 @@
   }
 
   .content {
+    padding: 10px;
+    margin: auto;
+    width: 1200px;
     display: flex;
     justify-content: center;
   }

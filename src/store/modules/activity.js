@@ -2,17 +2,17 @@ import {getActivity, getActivityDetail} from "@/api/activity";
 
 const activity = {
   state: {
-    activityList: [],// 活动列表
+    activityList: [], // 活动列表
     activityDetail: {}, // 活动详情
-    activityDesc: { //活动描述
+    activityDesc: {  //活动描述
       date1: '集合时间',
       date2: '出发时间',
       desc: '活动描述',
       type: '活动标签'
     },
     queryParams: {
-      pageNum: 1,
-      pageSize: 3
+      pageNum: 0,
+      pageSize: 9
     }
   },
   mutations: {

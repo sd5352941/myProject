@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%">
     <div class="intro-container" v-show="loginShow">
-      <h3 class="login-title">活动骑行登陆</h3>
+      <h1 class="login-title">骑迹活动平台登陆</h1>
       <el-input class="top20" placeholder="请输入账号" v-model="user.username" style="margin-top: 30px">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
@@ -20,18 +20,18 @@
     <div class="sky-container" id="sky-container" v-show="!loginShow">
       <div class="x-mark">
         <section style="width: 300px">
-          <h1 style="color:white">欢 迎!</h1>
-          <h3 class="login-title top10">会员注册</h3>
+          <h1 style="color:white">欢 迎 !</h1>
+          <h3 class="login-title top10">骑迹平台会员注册</h3>
           <el-input class="top20 "  placeholder="用户名" v-model="registerParams.username"></el-input>
           <el-input class="top20 " placeholder="密码" v-model="registerParams.password" type="password"></el-input>
           <el-input class="top20 "  placeholder="重复密码" v-model="registerParams.password"  type="password" ></el-input>
         </section>
         <el-button @click="register" class="top20" type="success" style="width: 300px">注册</el-button>
-        <el-button @click="toLogin" class="top20" type="danger" style="width:300px;margin-left: 0px">返回登陆</el-button>
+        <el-button @click="toLogin" class="top20" type="primary" style="width:300px;margin-left: 0px">返回登陆</el-button>
       </div>
     </div>
     <div>
-      <el-button class="back-home-button" plain @click="$router.push('home')"><Icon type="md-bicycle" size="20"/>bikeProject</el-button>
+      <el-button class="back-home-button" type="primary" @click="$router.push('home')">返回首页</el-button>
     </div>
     <div id="backroundCanvas"></div>
   </div>
@@ -284,11 +284,14 @@
 
 <style>
   .back-home-button {
+    display: flex;
+    align-items: center;
+    left: 20px;
     top: 20px;
     position: absolute;
   }
   .login-title {
-    opacity:0.5;
+    opacity:0.8;
     text-align: center;
     font-weight: bold;
     color: #eee;

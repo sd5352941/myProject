@@ -16,13 +16,7 @@ export default new Router({
         path: 'home',
         name: 'home',
         component: () => import('@/view/home')
-      }]
-    },
-    {
-      path: '/',
-      name: 'home',
-      component: layout,
-      children: [{
+      },{
         path: 'activityDetail',
         name: 'activityDetail',
         component: () => import('@/view/activity/detail')
