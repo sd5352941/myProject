@@ -8,10 +8,10 @@
       <el-input class="top20" placeholder="请输入密码" type="password" v-model="user.password"></el-input>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-button class="top20" @click="login" type="primary" style="width:100%">登陆</el-button>
+          <el-button class="top20" @click="toRegister" type="success" style="width:100%">注册</el-button>
         </el-col>
         <el-col :span="12">
-          <el-button class="top20" @click="toRegister" type="success" style="width:100%">注册</el-button>
+          <el-button class="top20" @click="login" type="primary" style="width:100%">登陆</el-button>
         </el-col>
       </el-row>
       <div>

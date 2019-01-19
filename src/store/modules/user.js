@@ -1,14 +1,27 @@
-import {register,login} from "@/api/user";
+import {register, login} from "@/api/user";
+import {setToken, setUserName, removeToken,
+  removeUserName, getToken, getUserName} from "../../utils/auth";
 
 var user = {
-  state: {},
+  state: {
+    userName: getUserName(),
+    token: getToken()
+  },
   actions: {
     Login({commit}, data) {
       return new Promise((resolve, reject) => {
         login(data).then(res => {
+          setToken(res.data.token)
+          setUserName(res.data.name)
           resolve(res)
+        }).catch(err => {
+          reject(err)
         })
       })
+    },
+    LoginOut({commit}) {
+      removeUserName()
+      removeToken()
     },
     Register({commit}, data) {
       return new Promise((resolve, reject) => {
@@ -18,6 +31,10 @@ var user = {
       })
     }
   },
+  getters: {
+    token: state => state.token,
+    userName: state => state.userName()
+  }
 }
 
 export default user
