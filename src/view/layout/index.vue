@@ -1,10 +1,10 @@
 <template>
   <div>
-    <navbar></navbar>
+    <navbar style="min-width: 1200px"></navbar>
     <transition name="fade-transform" mode="out-in">
       <router-view class="top20"></router-view>
     </transition>
-    <foobar></foobar>
+    <foobar style="min-width: 1200px"></foobar>
   </div>
 </template>
 

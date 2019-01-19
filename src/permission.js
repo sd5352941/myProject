@@ -4,11 +4,7 @@ import router from './router'
 
 router.beforeEach((to, from, next)=>{
   NProgress.start()
-  if(to.path==='/') {
-    next('/home')
-  } else {
-    next()
-  }
+  next()
 })
 
 

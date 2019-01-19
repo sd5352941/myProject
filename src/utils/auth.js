@@ -10,7 +10,7 @@ export function setToken(token) {
 }
 
 export function removeToken() {
-  Cookies.remove('token')
+  Cookies.remove('userToken')
 }
 
 export function removeUserName() {
@@ -18,9 +18,9 @@ export function removeUserName() {
 }
 
 export function getToken() {
-  Cookies.get('token')
+  return Cookies.get('userToken')
 }
 
 export function getUserName() {
-  Cookies.get('username')
+  return Cookies.get('username')
 }

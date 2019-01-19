@@ -98,7 +98,8 @@
       },
       login() {
         this.$store.dispatch('Login', this.user).then(res => {
-          // alert(res)
+          this.$router.push('/')
+          this.$message.success(res.data.msg)
         })
       },
       register() {

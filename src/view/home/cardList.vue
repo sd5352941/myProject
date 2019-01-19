@@ -24,7 +24,7 @@
         <el-button round type="info">返回顶部</el-button>
       </BackTop>
       <div style="width: 100%;display: flex;justify-content: center">
-        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay" infinite-scroll-distance="10"
+        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay" infinite-scroll-distance="0"
              style="height: 100px" v-if="!noData">
           <div class="loadMore">
             <div class="loading">
@@ -117,7 +117,7 @@
 
   .card-box {
     overflow-y:auto;
-    max-height: 800px;
+    /*max-height: 800px;*/
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;

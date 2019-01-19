@@ -3,7 +3,7 @@
     <div class="navbar-centent">
       <Icon type="md-bicycle" size="40"/>
       <a class="link link--kukuri" href="#" data-letters="骑迹"
-      @click="toHome">骑迹</a>
+         @click="toHome">骑迹</a>
       <section class="navbar-right">
         <article style="margin-right: 50px">
           <el-button type="warning" size="medium" round>发布活动</el-button>
@@ -11,10 +11,25 @@
         <article>
           <el-input style="width: 120px" size="mini" suffix-icon="el-icon-search"></el-input>
         </article>
-        <article class="sign-in">
+        <article class="sign-in" v-if="!token">
           <a @click="toLogin">
             注册/登陆
           </a>
+        </article>
+        <article class="user-name-box" v-if="token">
+          <el-dropdown>
+            <span class="user-name">
+              {{userName}}
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>
+                <el-button type="text" style="color: #242329">个人中心</el-button>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <el-button type="text" style="color: #242329" @click="loginOut">退出登陆</el-button>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </article>
       </section>
     </div>
@@ -22,24 +37,33 @@
 </template>
 
 <script>
-  import { Icon } from 'iview';
+  import {Icon} from 'iview';
   import Vue from 'vue'
+  import {mapGetters} from "vuex"
 
   Vue.component('Icon', Icon);
 
   export default {
+    computed: {
+      ...mapGetters([
+        'token',
+        'userName'
+      ])
+    },
     name: 'navbar',
     data() {
-      return {
-
-      }
+      return {}
     },
-    methods:{
+    methods: {
       toHome() {
-        this.$router.push('/home')
+        this.$router.push('/')
       },
       toLogin() {
         this.$router.push('/login')
+      },
+      loginOut() {
+        this.$store.dispatch('LoginOut')
+        this.toHome()
       }
     }
   }
@@ -73,6 +97,15 @@
     line-height: 1;
     color: #9e9ba4;
     display: inline-block;
+  }
+
+  .user-name-box {
+    margin-left: 150px;
+  }
+
+  .user-name-box .user-name {
+    font-size: 19px;
+    cursor:pointer
   }
 
   .link--kukuri {
