@@ -2,8 +2,8 @@
   <div class="navbar">
     <div class="navbar-centent">
       <Icon type="md-bicycle" size="40"/>
-      <a class="link link--kukuri" href="#" data-letters="骑迹"
-         @click="toHome">骑迹</a>
+      <a class="link link--kukuri" href="#" data-letters="BIK"
+         @click="toHome">BIK</a>
       <section class="navbar-right">
         <article style="margin-right: 50px">
           <el-button type="warning" size="medium" round>发布活动</el-button>

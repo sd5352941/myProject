@@ -12,7 +12,7 @@ const activity = {
     },
     queryParams: {
       pageNum: 0,
-      pageSize: 9
+      pageSize: 6
     }
   },
   mutations: {

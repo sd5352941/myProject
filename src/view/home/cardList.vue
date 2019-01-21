@@ -20,20 +20,20 @@
           </div>
         </div>
       </el-card>
+    </div>
       <BackTop>
         <el-button round type="info">返回顶部</el-button>
       </BackTop>
-      <div style="width: 100%;display: flex;justify-content: center">
-        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay" infinite-scroll-distance="0"
-             style="height: 100px" v-if="!noData">
-          <div class="loadMore">
-            <div class="loading">
-              <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
-            </div>
+    <div style="width: 100%;display: flex;justify-content: center">
+      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay" infinite-scroll-distance="10"
+           style="height: 100px" v-if="!noData">
+        <div class="loadMore">
+          <div class="loading">
+            <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
           </div>
         </div>
-        <span v-if="noData" style="text-align: center;height: 50px; margin-top: 30px;width: 100%">已无数据<a @click="loadMore" style="color: #2baee9">重新加载</a></span>
       </div>
+      <span v-if="noData" style="text-align: center;height: 50px; margin-top: 30px;width: 100%">已无数据<a @click="loadMore" style="color: #2baee9">重新加载</a></span>
     </div>
   </div>
 </template>
@@ -117,7 +117,7 @@
 
   .card-box {
     overflow-y:auto;
-    /*max-height: 800px;*/
+    min-height: 300px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
