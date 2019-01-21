@@ -23,7 +23,7 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <el-button type="text" style="color: #242329">个人中心</el-button>
+                <el-button type="text" style="color: #242329" @click="$router.push('/system')">个人中心</el-button>
               </el-dropdown-item>
               <el-dropdown-item>
                 <el-button type="text" style="color: #242329" @click="loginOut">退出登陆</el-button>
