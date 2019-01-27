@@ -9,7 +9,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="地图模式" name="map">
-
+          <map-list></map-list>
         </el-tab-pane>
         <el-tab-pane label="点聚合" name="dianjuhe">
 
@@ -21,6 +21,7 @@
 
 <script>
   import cardList from './cardList'
+  import mapList from './mapList'
   import carousel from './carousel'
   import {mapGetters} from 'vuex'
 
@@ -35,11 +36,10 @@
     },
     components: {
       cardList,
-      carousel
+      carousel,
+      mapList
     },
-    methods: {
-
-    },
+    methods: {},
     mounted() {
 
     }
