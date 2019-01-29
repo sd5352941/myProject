@@ -40,7 +40,7 @@
   .img {
     width: 100%; /* ... */
     height: 100%; /* ... */
-    background-image: url('../../image/title/bike_title_1.jpg');
+    background-image: url('../../image/title/bike_title_2.jpg');
     background-position-y:center;
     background-position-x:center;
     /*background-size: 700px;*/

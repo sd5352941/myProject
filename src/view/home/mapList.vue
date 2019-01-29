@@ -3,7 +3,9 @@
     <div id="baiduMap">
     </div>
     <el-card class="data-list-box">
-      {{activityList}}
+      <div class="data-item" v-for="item in activityList" @click="searchRoute(item.mapPoint)">
+        <h2>{{item.esInformation.name}}</h2>
+      </div>
     </el-card>
   </div>
 </template>
@@ -13,31 +15,46 @@
 
   export default {
     computed: {
-      ...mapGetters([])
+      ...mapGetters([
+        'activityList'
+      ])
     },
     data() {
       return {
-        activityList: [],
-        params: {
-
-        }
+        map: '',
+        point: '',
+        // activityList: [],
+        params: {}
       }
     },
     methods: {
       initMap() {
-        var map = new BMap.Map("baiduMap");          // 创建地图实例
-        var point = new BMap.Point(116.404, 39.915);  // 创建点坐标
-        map.enableScrollWheelZoom(true);
-        map.centerAndZoom(point, 15);
+        this.map = new BMap.Map("baiduMap");          // 创建地图实例
+        this.point = new BMap.Point(116.404, 39.915);  // 创建点坐标
+        this.map.enableScrollWheelZoom(true);
+        this.map.centerAndZoom(this.point, 15);
       },
       getActivityList() {
-        this.$store.dispatch('GetActivityList',this.params).then(res=> {
+        this.$store.dispatch('GetActivityList', this.params).then(res => {
           console.log(res)
         })
+      },
+      searchRoute(mapPoint) {
+        this.map.clearOverlays()
+        var driving = new BMap.RidingRoute(this.map, {
+          renderOptions:{
+            map: this.map,
+            autoViewport: true,
+            enableDragging : true,
+          }
+        });
+        let start = new BMap.Point(mapPoint.startPoint.lng,mapPoint.startPoint.lat);
+        let end = new BMap.Point(mapPoint.endPoint.lng,mapPoint.endPoint.lat);
+        driving.search(start,end)
       }
     },
     mounted() {
-      this.getActivityList()
+      // this.getActivityList()
       this.initMap()
     }
   }
@@ -50,9 +67,19 @@
   }
 
   .data-list-box {
-    position: relative;
-    top: 0px;
-    width: 400px;
-    height: 750px;
+    overflow-y: auto;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 300px;
+    height: 780px;
+
+    .data-item {
+      cursor: pointer;
+      height: 100px;
+      margin-bottom: 10px;
+      width: 100%;
+      background: #f0f1f3;
+    }
   }
 </style>
