@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import layout from '@/view/layout'
+import system from '@/view/systemLayout'
 
 Vue.use(Router)
 
@@ -26,11 +27,19 @@ export default new Router({
       path: '/login',
       name: 'home',
       component: ()=> import('@/view/user/login')
-    },
-    {
+    }, {
       path: '/system',
       name: 'system',
-      component: ()=> import('@/view/manageSystem/home/home'),
-    }
+      component: system,
+      children: [{
+        path: 'home',
+        name: 'home',
+        component: () => import('@/view/home')
+      },{
+        path: 'activityDetail',
+        name: 'activityDetail',
+        component: () => import('@/view/activity/detail')
+      }] 
+    },
   ]
 })

@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%">
     <div class="intro-container" v-show="loginShow">
-      <h1 class="login-title">骑迹活动平台登陆</h1>
+      <h1 class="login-title">活动平台登陆</h1>
       <el-input class="top20" placeholder="请输入账号" v-model="user.username" style="margin-top: 30px">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
@@ -21,7 +21,7 @@
       <div class="x-mark">
         <section style="width: 300px">
           <h1 style="color:white">欢 迎 !</h1>
-          <h3 class="login-title top10">骑迹平台会员注册</h3>
+          <h3 class="login-title top10">平台会员注册</h3>
           <el-input class="top20 "  placeholder="用户名" v-model="registerParams.username"></el-input>
           <el-input class="top20 " placeholder="密码" v-model="registerParams.password" type="password"></el-input>
           <el-input class="top20 "  placeholder="重复密码" v-model="registerParams.password"  type="password" ></el-input>
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div>
-      <el-button class="back-home-button" type="primary" @click="$router.push('home')">返回首页</el-button>
+      <el-button class="back-home-button" type="primary" @click="$router.push('/')">返回首页</el-button>
     </div>
     <div id="backroundCanvas"></div>
   </div>
