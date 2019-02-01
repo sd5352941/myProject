@@ -39,7 +39,7 @@ export default new Router({
         path: 'activityDetail',
         name: 'activityDetail',
         component: () => import('@/view/activity/detail')
-      }] 
+      }]
     },
   ]
 })
