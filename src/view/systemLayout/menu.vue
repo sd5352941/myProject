@@ -50,8 +50,19 @@
   export default {
     data() {
       return {
-        isCollapse: true
+        isCollapse: true,
+        systemMenu: []
       };
+    },
+    computed: {
+      menuData() {
+        let item
+        for(item of this.$router.options.routes) {
+          if(item === 'system') {
+            return item.children
+          }
+        }
+      }
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -59,7 +70,16 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      getSystemMenu() {
+        let item
+        for(item of this.$router.options.routes) {
+          if(item.name === 'system') this.systemMenu = item.children
+        }
       }
+    },
+    mounted() {
+      this.getSystemMenu()
     }
   }
 </script>
