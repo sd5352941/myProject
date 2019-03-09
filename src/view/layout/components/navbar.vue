@@ -1,9 +1,9 @@
 <template>
   <div class="navbar">
     <div class="navbar-centent">
-      <Icon type="md-bicycle" size="40"/>
-      <a class="link link--kukuri" href="#" data-letters="BIK"
-         @click="toHome">BIK</a>
+      <a class="link link--kukuri" href="#" data-letters="LOGO"
+         @click="toHome">LOGO</a>
+      <nav-menu class="nav-menu"></nav-menu>
       <section class="navbar-right">
         <article style="margin-right: 50px">
           <el-button type="warning" size="medium" round>发布活动</el-button>
@@ -40,17 +40,21 @@
   import {Icon} from 'iview';
   import Vue from 'vue'
   import {mapGetters} from "vuex"
+  import navMenu from './navMenu'
 
   Vue.component('Icon', Icon);
 
   export default {
+    name: 'navbar',
     computed: {
       ...mapGetters([
         'token',
         'userName'
       ])
     },
-    name: 'navbar',
+    components: {
+      navMenu
+    },
     data() {
       return {}
     },
@@ -75,16 +79,18 @@
     article {
       margin-right: 20px;
     }
+    .nav-menu {
+      margin-left: 93px;
+    }
     .sign-in {
       font-family: "Microsoft JhengHei UI";
     }
-    padding: 20px;
-    color: black;
     align-items: center;
     justify-content: center;
     display: flex;
-    height: 80px;
-    background: linear-gradient(to bottom right, #f0f1f3, #a5a5a5)
+    height: 103px;
+    background: #090909;
+    /*background: linear-gradient(to bottom right, #f0f1f3, #a5a5a5)*/
   }
 
   .link {
@@ -109,7 +115,7 @@
   }
 
   .link--kukuri {
-    width: 58px;
+    width: 110px;
     text-transform: uppercase;
     font-weight: 900;
     overflow: hidden;
