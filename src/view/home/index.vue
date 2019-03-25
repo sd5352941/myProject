@@ -1,6 +1,7 @@
 <template>
   <div class="backgourdIMG">
-    <carousel class="top20" style="margin-top: 50px;min-width: 1200px"></carousel>
+    <carousel style="min-width: 1200px"></carousel>
+
     <el-card class="content top20">
       <el-tabs v-model="homeTab" style="width: 1180px">
         <el-tab-pane label="活动列表" name="list">

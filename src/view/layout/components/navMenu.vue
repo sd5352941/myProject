@@ -1,9 +1,8 @@
 <template>
-  <div class="menu">
-    <a v-for="item in navMenu" class="men-title">
-      {{item.label}}
-    </a>
-  </div>
+  <el-menu :default-active="activeIndex" class="menu" mode="horizontal" @select="handleSelect">
+    <el-menu-item index="1">首页</el-menu-item>
+    <el-menu-item index="2">测试</el-menu-item>
+  </el-menu>
 </template>
 
 <script>
@@ -32,12 +31,5 @@
 <style lang="scss">
 .menu {
   display: flex;
-  .men-title {
-    color: white;
-    width: 77px;
-  }
-  a :active{
-    color:yellow;
-  }
 }
 </style>

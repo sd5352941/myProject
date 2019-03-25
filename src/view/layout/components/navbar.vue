@@ -3,18 +3,17 @@
     <div class="navbar-centent">
       <a class="link link--kukuri" href="#" data-letters="LOGO"
          @click="toHome">LOGO</a>
-      <nav-menu class="nav-menu"></nav-menu>
+      <!--<nav-menu class="nav-menu"></nav-menu>-->
       <section class="navbar-right">
         <article style="margin-right: 50px">
-          <el-button type="warning" size="medium" round>发布活动</el-button>
+          <el-button type="warning" round class="nav-button">发布活动</el-button>
         </article>
         <article>
-          <el-input style="width: 120px" size="mini" suffix-icon="el-icon-search"></el-input>
+          <el-input class="nav-input" suffix-icon="el-icon-search"></el-input>
         </article>
         <article class="sign-in" v-if="!token">
-          <a @click="toLogin">
-            注册/登陆
-          </a>
+          <a style="margin-right: 40px">注册</a>
+          <a class="login-text">登录</a>
         </article>
         <article class="user-name-box" v-if="token">
           <el-dropdown>
@@ -74,16 +73,35 @@
 </script>
 
 <style lang="scss" scoped>
-
+  a :hover {
+    color: yellow;
+  }
   .navbar {
     article {
       margin-right: 20px;
     }
+    .nav-input {
+      border-radius: 19px;
+      width: 195px;
+      height: 38px;
+      margin-right: 40px
+    }
     .nav-menu {
+      height: 100%;
       margin-left: 93px;
     }
     .sign-in {
-      font-family: "Microsoft JhengHei UI";
+      font-family: PingFang-SC-Medium;
+      font-size: 20px;
+      color: #FFFFFF;
+      letter-spacing: 0;
+      text-align: center;
+      span {
+        width: 40px;
+        height: 30px;
+        display:inline-block;
+        cursor:pointer
+      }
     }
     align-items: center;
     justify-content: center;
@@ -162,6 +180,7 @@
 
   .navbar-centent {
     width: 1200px;
+    height: 100%;
     display: flex;
     align-items: center;
   }
