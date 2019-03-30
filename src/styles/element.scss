@@ -8,6 +8,17 @@
   height: 37px;
 }
 
+.content {
+  .el-tabs__item {
+    height:162px;
+  }
+  .el-tabs__item.is-active {
+    background: #F6F6F6;
+  }
+  .el-card__body {
+    padding: 0px;
+  }
+}
 .search-box {
   .el-radio-button--mini .el-radio-button__inner {
     border: 0px;

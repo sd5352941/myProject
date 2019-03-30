@@ -15,12 +15,12 @@ const store = new Vuex.Store({
     app,
     home
   },
-  state: {
-    homeTab: 'list' //首页标签
-  },
-  getters: {
-    homeTab: state => state.homeTab
-  }
+  // state: {
+  //   homeTab: 'list' //首页标签
+  // },
+  // getters: {
+  //   homeTab: state => state.homeTab
+  // }
 })
 
 export default store
