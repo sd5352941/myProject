@@ -11,7 +11,7 @@ import iview from 'iview';
 import '@/permission.js' //验权
 
 import 'iview/dist/styles/iview.css'
-import 'element-ui/lib/theme-chalk/index.css';
+// import 'element-ui/lib/theme-chalk/index.css';
 import '@/styles/index.scss' //全局CSS
 import '@/styles/loadingIcon.scss' //加载图标
 
