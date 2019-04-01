@@ -170,7 +170,6 @@
   .card_img {
     height: 200px;
     width: 100%;
-    background: url('../../image/title/bike_title_1.jpg');
   }
 
   b {

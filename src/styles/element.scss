@@ -18,6 +18,12 @@
   .el-card__body {
     padding: 0px;
   }
+  .el-tabs__active-bar {
+    height: 8px;
+  }
+  .el-tabs__nav-wrap::after {
+    height: 8px;
+  }
 }
 .search-box {
   .el-radio-button--mini .el-radio-button__inner {
