@@ -6,20 +6,22 @@
       <!--<nav-menu class="nav-menu"></nav-menu>-->
       <section class="navbar-right">
         <article style="margin-right: 50px">
-          <el-button type="warning" round class="nav-button">发布活动</el-button>
+          <el-button type="primary" round class="nav-button">发布活动</el-button>
         </article>
         <article>
           <el-input class="nav-input" suffix-icon="el-icon-search"></el-input>
         </article>
         <article class="sign-in" v-if="!token">
-          <a style="margin-right: 40px">注册</a>
-          <a class="login-text">登录</a>
+          <a style="margin-right: 40px" @click="$router.push('login')">注册</a>
+          <a class="login-text" @click="$router.push('login')">登录</a>
         </article>
         <article class="user-name-box" v-if="token">
           <el-dropdown>
-            <span class="user-name">
-              {{userName}}
-            </span>
+            <el-badge :value="3" class="badge-item" type="primary">
+              <span class="user-name">
+                {{userName}}
+              </span>
+            </el-badge>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
                 <el-button type="text" style="color: #242329" @click="$router.push('/system')">个人中心</el-button>
@@ -77,6 +79,16 @@
     color: yellow;
   }
   .navbar {
+    .badge-item {
+
+    }
+    .nav-button {
+      font-family: PingFang-SC-Regular;
+      font-size: 18px;
+      color: #333333;
+      letter-spacing: 0;
+      width: 134px;
+      }
     article {
       margin-right: 20px;
     }
