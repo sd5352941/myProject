@@ -17,7 +17,7 @@
         </article>
         <article class="user-name-box" v-if="token">
           <el-dropdown>
-            <el-badge :value="3" class="badge-item" type="primary">
+            <el-badge :value="3" class="badge-item">
               <span class="user-name">
                 {{userName}}
               </span>
@@ -88,6 +88,10 @@
       color: #333333;
       letter-spacing: 0;
       width: 134px;
+      height: 37px;
+      padding: 10px;
+      background: yellow;
+      border-color:yellow;
       }
     article {
       margin-right: 20px;
