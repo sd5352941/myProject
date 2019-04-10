@@ -76,7 +76,7 @@
 
 <style lang="scss" scoped>
   a :hover {
-    color: yellow;
+    color: #FFE403;
   }
   .navbar {
     .badge-item {
@@ -90,8 +90,8 @@
       width: 134px;
       height: 37px;
       padding: 10px;
-      background: yellow;
-      border-color:yellow;
+      background: #FFE403;
+      border-color:#FFE403;
       }
     article {
       margin-right: 20px;
