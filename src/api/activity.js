@@ -15,3 +15,7 @@ export function getActivityDetail(params) {
     params,
   })
 }
+
+export function f() {
+  
+}

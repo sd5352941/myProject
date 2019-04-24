@@ -2,6 +2,19 @@ import {getActivity, getActivityDetail} from "@/api/activity";
 
 const activity = {
   state: {
+    commitDetail: {  //发布活动信息
+      title: '',
+      time: '', //骑行日期
+      gatheringTime: '', //集合时间
+      departureTime: '', //开始时间
+      type: 'free',
+      tags: [],
+      desc: '',
+      people: 0,
+      pee: '',
+      mapPoint: [], //骑行路径点
+    },
+
     activityList: [], // 活动列表
     activityDetail: {}, // 活动详情
     activityDesc: {  //活动描述
@@ -24,7 +37,7 @@ const activity = {
     },
   },
   actions: {
-    GetActivityList({commit}, parmas) {
+    GetActivityList({commit}, parmas) {  //获取活动列表
       return new Promise((resolve, reject) => {
         getActivity(parmas).then(res => {
           commit('SET_LIST', res.data.result)
@@ -34,7 +47,7 @@ const activity = {
         })
       })
     },
-    GetActivityDetail({commit}, params) {
+    GetActivityDetail({commit}, params) {  //获取活动详情
       return new Promise((resolve, reject) => {
         getActivityDetail(params).then(res => {
           commit('SET_DETAIL', res.data.result)
@@ -49,7 +62,8 @@ const activity = {
     activityList: state => state.activityList,
     activityDetail: state => state.activityDetail,
     activityDesc: state => state.activityDesc,
-    activityParmas: state=> state.queryParams
+    activityParmas: state => state.queryParams,
+    commitDetail: state => state.commitDetail
   }
 }
 

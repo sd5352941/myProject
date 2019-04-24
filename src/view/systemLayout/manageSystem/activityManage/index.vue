@@ -1,3 +1,3 @@
 <template>
-  <div>活动列表</div>
+  <div>活动管理</div>
 </template>

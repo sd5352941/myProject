@@ -18,6 +18,7 @@ module.exports = {
     "BMap": "BMap",
     "THREE": 'THREE',
     "TimelineMax": "TimelineMax",
+    "BMapLib":"BMapLib",
     // "introContainer": 'introContainer'
   },
   output: {

@@ -1,85 +1,59 @@
 <template>
   <div>
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-      <el-radio-button :label="false">展开</el-radio-button>
-      <el-radio-button :label="true">收起</el-radio-button>
-    </el-radio-group>
-    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-             :collapse="isCollapse">
-      <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span slot="title">导航一</span>
-        </template>
-        <el-menu-item-group>
-          <span slot="title">分组一</span>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <span slot="title">选项4</span>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
+    <el-menu :default-active="routerName" unique-opened class="el-menu-vertical-demo"
+             :collapse="isCollapse" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+      <template v-for="item in routers">
+        <el-submenu :index="item.name" v-if="item.children">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span slot="title">{{item.meta.title}}</span>
+          </template>
+          <template v-for="children in item.children">
+            <router-link :to="{name:children.name}" :key="children.name">
+              <el-menu-item :index="children.name">{{children.meta.title}}</el-menu-item>
+            </router-link>
+          </template>
         </el-submenu>
-      </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
-      </el-menu-item>
+        <template v-if="!item.children">
+          <router-link :to="{name:item.name}">
+            <el-menu-item :index="item.name">
+              <i class="el-icon-document"></i>
+              <span slot="title">{{item.meta.title}}</span>
+            </el-menu-item>
+          </router-link>
+        </template>
+      </template>
     </el-menu>
   </div>
 </template>
 <style>
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
-    min-height: 400px;
+    min-height: 100%;
   }
 </style>
 
 <script>
   export default {
+    props: {
+      routers: {
+        type: Array
+      }
+    },
     data() {
       return {
-        isCollapse: true,
+        isCollapse: false,
         systemMenu: []
       };
     },
     computed: {
-      menuData() {
-        let item
-        for(item of this.$router.options.routes) {
-          if(item === 'system') {
-            return item.children
-          }
-        }
+      routerName() {
+        return this.$route.name
       }
     },
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      getSystemMenu() {
-        let item
-        for(item of this.$router.options.routes) {
-          if(item.name === 'system') this.systemMenu = item.children
-        }
-      }
-    },
+    methods: {},
     mounted() {
-      this.getSystemMenu()
+      console.log(this.routers)
     }
   }
 </script>
