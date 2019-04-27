@@ -24,8 +24,8 @@
       <el-form-item label="活动性质">
         <el-radio-group v-model="commitDetail.type">
           <div style="display: flex">
-            <el-radio-button label="free">免费</el-radio-button>
-            <el-radio-button label="charge">收费</el-radio-button>
+            <el-radio label="free">免费</el-radio>
+            <el-radio label="charge">收费</el-radio>
           </div>
         </el-radio-group>
         <span style="margin-left: 20px" v-if="commitDetail.type=='charge'">价格/人(元):
@@ -65,9 +65,9 @@
         活动详情
       </h2>
       <hr/>
-      <quill-editor v-model="commitDetail.desc" style="height: 500px"></quill-editor>
+      <quill-editor v-model="commitDetail.desc" style="height: 400px"></quill-editor>
     </div>
-    {{commitDetail}}
+    <!--{{commitDetail}}-->
   </div>
 </template>0
 
@@ -78,11 +78,13 @@
   import 'quill/dist/quill.bubble.css'
 
   import { quillEditor } from 'vue-quill-editor'
+  import VueCropper from "vue-cropper"
 
   export default {
     name: 'baseMessage',
     components: {
-      quillEditor
+      quillEditor, //富文本编辑器
+      VueCropper  //图片剪裁
     },
     computed: {
       ...mapGetters([
