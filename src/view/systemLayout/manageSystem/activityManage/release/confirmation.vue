@@ -1,119 +1,85 @@
 <template>
   <div>
-    <!-- element 上传图片按钮 -->
-    <el-upload class="uploader"
-               action
-               :show-file-list="false"
-               :on-success="handleUploadSuccess"
-               >
-      <img v-if="fileinfo.url"
-           :src="fileinfo.url"
-           class="upload">
-      <i v-else
-         class="el-icon-plus uploader-icon" />
+    <el-upload
+      class="upload-demo"
+      action="http://127.0.0.1:3001/activity/uploadIMG"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      :before-upload="beforeUpload"
+      multiple
+      :limit="3"
+      :on-exceed="handleExceed"
+      :file-list="fileList">
+      <el-button size="small" type="primary">点击上传</el-button>
+      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
-    ......
-    <!-- vueCropper 剪裁图片实现-->
-    <div class="vue-cropper-box"
-         v-if="isShowCropper">
-      <div class="vue-cropper-content">
-        <vueCropper ref="cropper"
-                    :img="option.img"
-                    :outputSize="option.outputSize"
-                    :outputType="option.outputType"
-                    :info="option.info"
-                    :canScale="option.canScale"
-                    :autoCrop="option.autoCrop"
-                    :autoCropWidth="option.autoCropWidth"
-                    :autoCropHeight="option.autoCropHeight"
-                    :fixed="option.fixed"
-                    :fixedNumber="option.fixedNumber"></vueCropper>
-      </div>
-      <el-button v-if="isShowCropper"
-                 type="danger"
-                 @click="onCubeImg">确定裁剪图片</el-button>
-
-    </div>
+    <vueCropper
+      style="height: 500px;width: 800px"
+      ref="cropper"
+      :img="option.img"?
+      :outputSize="option.size"
+      :outputType="option.outputType"
+      :info="true"
+      :full="option.full"
+      :canMove="option.canMove"
+      :canMoveBox="option.canMoveBox"
+      :original="option.original"
+      :autoCrop="option.autoCrop"
+      :autoCropWidth="option.autoCropWidth"
+      :autoCropHeight="option.autoCropHeight"
+      :fixedBox="option.fixedBox"
+    ></vueCropper>
   </div>
 </template>
-
 <script>
-  import VueCropper from "vue-cropper"
+
+  import { VueCropper } from 'vue-cropper'
 
   export default {
     components: {
-      VueCropper
+      VueCropper,
     },
     data() {
       return {
-        //裁剪组件的基础配置option
         option: {
-          img: '',                         //裁剪图片的地址
-          info: true,                      //裁剪框的大小信息
-          outputSize: 1,                   // 裁剪生成图片的质量
-          outputType: 'jpeg',              //裁剪生成图片的格式
-          canScale: false,                 // 图片是否允许滚轮缩放
-          autoCrop: true,                  // 是否默认生成截图框
-          autoCropWidth: 150,              // 默认生成截图框宽度
-          autoCropHeight: 150,             // 默认生成截图框高度
-          fixed: false,                    //是否开启截图框宽高固定比例
-          fixedNumber: [4, 4]              //截图框的宽高比例
+          imG: '',
+          outputSize:1, //剪切后的图片质量（0.1-1）
+          full: false,//输出原图比例截图 props名full
+          outputType: 'png',
+          canMove: true,
+          original: false,
+          canMoveBox: true,
+          autoCrop: true,
+          autoCropWidth: 500,
+          autoCropHeight: 400,
+          fixedBox: true
         },
-        isShowCropper: false,            //是否显示截图框
-        fileUpload: null,
-        fileinfo: {},
-        form: {},
-      }
+        fileList: [{
+          name: 'food.jpeg',
+          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        }, {
+          name: 'food2.jpeg',
+          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        }]
+      };
     },
     methods: {
-      //上传按钮上传成功执行事件
-      handleUploadSuccess(response, file, fileList) {
-        debugger
-        this.log('Upload response is %o', response)
-        this.fileinfo = response
-
-        this.fileUpload = file;
-
-        //上传成功后将图片地址赋值给裁剪框显示图片
-        this.$nextTick(() => {
-          this.option.img = file.url;
-          this.isShowCropper = true
-        })
+      beforeUpload(event,file) {
+        console.log(event,file,123)
       },
-
-      // 确定裁剪图片
-      onCubeImg() {
-        // 获取cropper的截图的base64 数据
-        this.$refs.cropper.getCropData(data => {
-          this.fileinfo.url = data
-          this.isShowCropper = false
-
-          //先将显示图片地址清空，防止重复显示
-          this.option.img = ''
-
-          //将剪裁后base64的图片转化为file格式
-          let file = this.convertBase64UrlToBlob(data)
-          file.name = this.fileUpload.name
-
-          //将剪裁后的图片执行上传
-          this.uploadFile(file).then(res => {
-            this.form.content = res.file_id    //将上传的文件id赋值给表单from的content
-          })
-
-        })
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
       },
-
-      // 将base64的图片转换为file文件
-      convertBase64UrlToBlob(urlData) {
-        let bytes = window.atob(urlData.split(',')[1]);//去掉url的头，并转换为byte
-        //处理异常,将ascii码小于0的转换为大于0
-        let ab = new ArrayBuffer(bytes.length);
-        let ia = new Uint8Array(ab);
-        for (var i = 0; i < bytes.length; i++) {
-          ia[i] = bytes.charCodeAt(i);
-        }
-        return new Blob([ab], {type: 'image/jpeg'});
+      handlePreview(file) {
+        console.log(file);
       },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${file.name}？`);
+      }
     }
   }
 </script>

@@ -36,7 +36,6 @@
       },
       getActivityList() {
         this.$store.dispatch('GetActivityList', this.params).then(res => {
-          console.log(res)
         })
       },
       searchRoute(mapPoint) {

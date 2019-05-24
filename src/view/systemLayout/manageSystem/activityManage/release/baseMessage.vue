@@ -35,29 +35,16 @@
           </span>
       </el-form-item>
       <el-form-item label="活动标签">
-        <el-tag
-          :key="tag"
-          v-for="tag in commitDetail.tags"
-          closable
-          style="margin-right: 20px"
-          :disable-transitions="false"
-          @close="handleClose(tag)">
+        <el-tag :key="tag" v-for="tag in commitDetail.tags" closable style="margin-right: 20px" :disable-transitions="false" @close="handleClose(tag)">
           {{tag}}
         </el-tag>
-        <el-input
-          style="width: 100px"
-          v-if="inputVisible"
-          v-model="tagValue"
-          ref="saveTagInput"
-          size="small"
-          maxlength="4"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"
-        >
+        <el-input style="width: 100px" v-if="inputVisible" v-model="tagValue" ref="saveTagInput" size="small" maxlength="4" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
         </el-input>
         <el-button v-if="!inputVisible && commitDetail.tags.length < 4" class="button-new-tag" size="small"
                    @click="showInput">+新标签
         </el-button>
+      </el-form-item>
+      <el-form-item label="活动封面">
       </el-form-item>
     </el-form>
     <div class="activity-detail">
@@ -93,11 +80,33 @@
     },
     data() {
       return {
+        imageUrl: '',
         inputVisible: false,
         tagValue: '',
+        option: {
+          img: '',                         //裁剪图片的地址
+          info: true,                      //裁剪框的大小信息
+          outputSize: 1,                   // 裁剪生成图片的质量
+          outputType: 'jpeg',              //裁剪生成图片的格式
+          canScale: false,                 // 图片是否允许滚轮缩放
+          autoCrop: true,                  // 是否默认生成截图框
+          autoCropWidth: 150,              // 默认生成截图框宽度
+          autoCropHeight: 150,             // 默认生成截图框高度
+          fixed: false,                    //是否开启截图框宽高固定比例
+          fixedNumber: [4, 4]              //截图框的宽高比例
+        },
       };
     },
     methods: {
+      /**
+       * 图片剪裁触发
+       */
+      handleAvatarSuccess() {
+        console.log(123)
+      },
+      beforeAvatarUpload(file) {
+        console.log(file)
+      },
       onSubmit() {
         console.log('submit!');
       },
