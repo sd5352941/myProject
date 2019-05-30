@@ -10,7 +10,7 @@
         <road-route v-show="stepsActive == 1"></road-route>
         <confirmation v-show="stepsActive == 2"></confirmation>
       </div>
-    <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+    <el-button style="margin-top: 12px;" @click="next">{{stepsActive > 1 ? '提交': '下一步'}}</el-button>
   </el-card>
 </template>
 
@@ -33,7 +33,11 @@
     },
     methods: {
       next() {
-        if (this.stepsActive++ > 2) this.stepsActive = 0;
+        if (this.stepsActive < 2) {
+          this.stepsActive ++
+        } else {
+          this.$store.dispatch('AddActivity')
+        }
       }
     }
   }

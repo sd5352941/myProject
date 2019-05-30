@@ -4,9 +4,55 @@
       基础信息
     </h2>
     <hr/>
+
+<!--    剪裁控件dialog-->
+
+    <el-dialog title="图片剪裁" :visible.sync="dialogVisible">
+      <vueCropper
+        style="height: 500px;width: 800px"
+        ref="cropper"
+        :img="option.img"
+        :outputSize="option.size"
+        :outputType="option.outputType"
+        :info="true"
+        :full="option.full"
+        :canMove="option.canMove"
+        :canMoveBox="option.canMoveBox"
+        :original="option.original"
+        :autoCrop="option.autoCrop"
+        :autoCropWidth="option.autoCropWidth"
+        :autoCropHeight="option.autoCropHeight"
+        :fixedBox="option.fixedBox"
+      ></vueCropper>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="Tailoring">确 定</el-button>
+  </span>
+    </el-dialog>
+
+<!--    活动基本信息  -->
+
     <el-form ref="form" :model="commitDetail" label-width="80px" size="small">
       <el-form-item label="活动名称">
         <el-input v-model="commitDetail.title" style="width: 220px"></el-input>
+      </el-form-item>
+      <el-form-item label="活动封面">
+        <div class="activityImgDiv">
+          <div style="height:200px;width: 350px;border-right: 1px">
+            <img :src="commitDetail.img">
+          </div>
+          <div class="upload">
+            <el-upload
+              action
+              :auto-upload="false"
+              :limit="1"
+              :on-change="uploadChange"
+              >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+          </div>
+        </div>
       </el-form-item>
       <el-form-item label="活动日期">
         <el-date-picker type="date" placeholder="选择日期" v-model="commitDetail.time"></el-date-picker>
@@ -44,8 +90,6 @@
                    @click="showInput">+新标签
         </el-button>
       </el-form-item>
-      <el-form-item label="活动封面">
-      </el-form-item>
     </el-form>
     <div class="activity-detail">
       <h2>
@@ -59,13 +103,14 @@
 </template>0
 
 <script>
+  import {uploadIMG} from '@/api/activity'
   import {mapGetters} from 'vuex'
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
 
   import { quillEditor } from 'vue-quill-editor'
-  import VueCropper from "vue-cropper"
+  import { VueCropper } from 'vue-cropper'
 
   export default {
     name: 'baseMessage',
@@ -80,35 +125,50 @@
     },
     data() {
       return {
+        dialogVisible:false,
         imageUrl: '',
         inputVisible: false,
         tagValue: '',
         option: {
-          img: '',                         //裁剪图片的地址
-          info: true,                      //裁剪框的大小信息
-          outputSize: 1,                   // 裁剪生成图片的质量
-          outputType: 'jpeg',              //裁剪生成图片的格式
-          canScale: false,                 // 图片是否允许滚轮缩放
-          autoCrop: true,                  // 是否默认生成截图框
-          autoCropWidth: 150,              // 默认生成截图框宽度
-          autoCropHeight: 150,             // 默认生成截图框高度
-          fixed: false,                    //是否开启截图框宽高固定比例
-          fixedNumber: [4, 4]              //截图框的宽高比例
+          img: '',
+          outputSize:1, //剪切后的图片质量（0.1-1）
+          full: false,//输出原图比例截图 props名full
+          outputType: 'png',
+          canMove: true,
+          original: false,
+          canMoveBox: true,
+          autoCrop: true,
+          autoCropWidth: 700,
+          autoCropHeight: 400,
+          fixedBox: true
         },
       };
     },
     methods: {
       /**
-       * 图片剪裁触发
+       * 上传图片剪裁触发
        */
-      handleAvatarSuccess() {
-        console.log(123)
+      uploadChange(file, fileList) {
+        var reader = new FileReader()
+        reader.readAsDataURL(file.raw)
+        reader.onload = (e) => {
+          this.option.img = e.target.result
+        }
+        console.log(this.option.img)
+        this.dialogVisible = true
       },
-      beforeAvatarUpload(file) {
-        console.log(file)
-      },
-      onSubmit() {
-        console.log('submit!');
+      /**
+       * 确定剪裁
+       */
+      Tailoring() {
+        this.$refs.cropper.getCropData(data => {
+          // this.commitDetail.img = window.URL.createObjectURL(data)
+          this.commitDetail.img = data
+        })
+        uploadIMG('data').then(res=> {
+          console.log(res)
+        })
+        this.dialogVisible = false
       },
       handleClose(tag) {
         this.commitDetail.tags.splice(this.commitDetail.tags.indexOf(tag), 1);
@@ -135,6 +195,19 @@
   .base-message-box {
     .activity-detail {
       margin-top: 60px;
+    }
+    .activityImgDiv {
+      display: flex;
+      .upload {
+        margin-left: 20px;
+      }
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+    .el-upload__tip {
+      color: #409EFF;
     }
     hr {
       margin: 20px 0px;

@@ -16,6 +16,18 @@ export function getActivityDetail(params) {
   })
 }
 
-export function f() {
-  
+export function addActivity(data) {
+  return request({
+    url: '/activity/add',
+    method: 'post',
+    data
+  })
+}
+
+export function uploadIMG(data) {
+  return request({
+    url: '/activity/uploadIMG',
+    method: 'post',
+    data
+  })
 }

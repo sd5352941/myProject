@@ -1,8 +1,10 @@
-import {getActivity, getActivityDetail} from "@/api/activity";
+import {getActivity, getActivityDetail, addActivity} from "@/api/activity";
 
 const activity = {
   state: {
     commitDetail: {  //发布活动信息
+      img: '', //活动封面图片url
+      imgBlob: {},
       title: '',
       time: '', //骑行日期
       gatheringTime: '', //集合时间
@@ -53,6 +55,15 @@ const activity = {
           commit('SET_DETAIL', res.data.result)
           resolve(res)
         }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    AddActivity({state}) {
+      return new Promise((resolve, reject)=> {
+        addActivity(state.commitDetail).then(res => {
+          resolve(res)
+        }).catch(err=> {
           reject(err)
         })
       })
