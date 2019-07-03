@@ -4,7 +4,7 @@ const activity = {
   state: {
     commitDetail: {  //发布活动信息
       img: '', //活动封面图片url
-      imgBlob: {},
+      imgPath: {}, //活动封面后台地址
       title: '',
       time: '', //骑行日期
       gatheringTime: '', //集合时间

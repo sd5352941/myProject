@@ -18,7 +18,7 @@
           </el-dropdown-item>
         </router-link>
         <el-dropdown-item divided>
-          <span @click="logout" style="display:block;">退出</span>
+          <span @click="loginOut" style="display:block;">退出</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -46,9 +46,9 @@
       ])
     },
     methods: {
-      logout() {
-        this.$store.dispatch('LogOut').then(() => {
-          this.$router.push("/login")
+      loginOut() {
+        this.$store.dispatch('LoginOut').then(() => {
+          this.$router.push("/home")
           location.reload() // 为了重新实例化vue-router对象 避免bug
         })
       },

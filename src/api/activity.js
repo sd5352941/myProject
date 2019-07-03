@@ -25,9 +25,13 @@ export function addActivity(data) {
 }
 
 export function uploadIMG(data) {
-  return request({
-    url: '/activity/uploadIMG',
-    method: 'post',
-    data
-  })
+  let config = {
+    headers:{'Content-Type':'multipart/form-data'},
+  }
+  return request.post('/activity/uploadIMG',data, config)
+  // return request({
+  //   url: '/activity/uploadIMG',
+  //   method: 'post',
+  //   formData: data
+  // })
 }

@@ -5,9 +5,9 @@
     </h2>
     <hr/>
 
-<!--    剪裁控件dialog-->
+    <!--    剪裁控件dialog-->
 
-    <el-dialog title="图片剪裁" :visible.sync="dialogVisible">
+    <el-dialog title="图片剪裁" :visible.sync="dialogVisible" class="cropperDialog">
       <vueCropper
         style="height: 500px;width: 800px"
         ref="cropper"
@@ -30,7 +30,7 @@
   </span>
     </el-dialog>
 
-<!--    活动基本信息  -->
+    <!--    活动基本信息  -->
 
     <el-form ref="form" :model="commitDetail" label-width="80px" size="small">
       <el-form-item label="活动名称">
@@ -47,7 +47,7 @@
               :auto-upload="false"
               :limit="1"
               :on-change="uploadChange"
-              >
+            >
               <el-button size="small" type="primary">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
             </el-upload>
@@ -154,31 +154,41 @@
         reader.onload = (e) => {
           this.option.img = e.target.result
         }
-        console.log(this.option.img)
         this.dialogVisible = true
       },
       /**
        * 确定剪裁
        */
       Tailoring() {
-        this.$refs.cropper.getCropData(data => {
-          // this.commitDetail.img = window.URL.createObjectURL(data)
-          this.commitDetail.img = data
-        })
-        uploadIMG('data').then(res=> {
-          console.log(res)
+        this.$refs.cropper.getCropBlob(data => {
+          this.commitDetail.img = window.URL.createObjectURL(data)
+          let files = new window.File([data], 'testImg.png', {type: 'image/png'})
+          let formData = new FormData();
+          formData.append('file', files)
+          uploadIMG(formData).then(res=> {
+            this.commitDetail.imgPath = res.data.path
+          })
         })
         this.dialogVisible = false
       },
+      /**
+       * 关闭标签
+       */
       handleClose(tag) {
         this.commitDetail.tags.splice(this.commitDetail.tags.indexOf(tag), 1);
       },
+      /**
+       * 点击标签显示INPUT框
+       */
       showInput() {
         this.inputVisible = true;
         this.$nextTick(_ => {
           this.$refs.saveTagInput.$refs.input.focus();
         });
       },
+      /**
+       * 添加标签
+       */
       handleInputConfirm() {
         let inputValue = this.tagValue;
         if (inputValue) {
@@ -214,6 +224,11 @@
     }
     h2 {
       color: #409EFF;
+    }
+
+    .cropperDialog {
+      width: 500px;
+      height: 800px;
     }
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
