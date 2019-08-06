@@ -21,6 +21,7 @@
   export default {
     data() {
       return {
+        rideSearchCallBack: {},   //路径搜索回调
         label: 0,  //当前拖动Maker数组位置
         riding: {},
         polyline: {},  //当前返回骑行路径line
@@ -66,18 +67,45 @@
             autoViewport: true
           }
         });
-
-        // 骑行路径点搜索回调
-        this.riding.setSearchCompleteCallback(() => {
-          var pts = this.riding.getResults().getPlan(0).getRoute(0).getPath()   //获取路线途经坐标点
-          var polyline = new BMap.Polyline(pts)  // 将坐标点数组绘制成线
-          this.map.addOverlay(polyline)
-          !this.dragendStatus ? this.polylineArr.push(polyline) :this.replaceLine(polyline)  //拖拽状态数组不添加
-          this.polyline = polyline
-          this.riding.clearResults() //清除路径计算点
-        })
         this.autocomplete()
         this.handlerMouseClick()
+      },
+      /**
+       * maker拖拽事件
+       */
+      async makerDragendEvent(e) {
+        let label
+        e.target.getLabel().content != '起点' ? label = e.target.getLabel().content : label = 0
+        label = Number(label)
+        this.label = label
+        let endMaker = this.commitDetail.mapPoint.length - 1
+        this.commitDetail.mapPoint[label] = e.target.point
+        this.dragendStatus = true
+        if (label > 0 && label < endMaker) {   //移动非起点非终点Maker
+          this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label - 1], 1)
+          await this.rideSearchCallBack
+          this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label + 1], 2)
+          await this.rideSearchCallBack
+          this.map.removeOverlay(this.polylineArr[label - 1])       //地图上移除相关line
+          this.map.removeOverlay(this.polylineArr[label])
+          console.log('outside')
+          this.polylineArr[label - 1] = this.polylineArr[this.polylineArr.length - 2]
+          this.polylineArr[label] = this.polylineArr[this.polylineArr.length - 1]
+          this.polylineArr.pop()
+          this.polylineArr.pop()
+        }
+        // else if(label == 0) {    //移动起点Maker
+        //   this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label - 1])
+        //   this.map.removeOverlay(this.polylineArr[label - 1])       //地图上移除相关line
+        //   this.polylineArr.splice(label - 1, 1)       // polyArr移除相关line
+        // }else if(label == endMaker) {   //移动终点Maker
+        //   this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label - 1])
+        //   this.map.removeOverlay(this.polylineArr[label - 1])       //地图上移除相关line
+        //   this.polylineArr.splice(label - 1, 1)       // polyArr移除相关line
+        // }
+        setTimeout(() => {
+          this.dragendStatus = false
+        }, 1000)
       },
       /**
        * 输入框完成自动输入，搜索目的地
@@ -137,47 +165,21 @@
         // }
         // this.map.setViewport(this.commitDetail.mapPoint)
       },
-
-      replaceLine(line) {
-        console.log(line.Qn,3)
-        // this.polylineArr[this.label] = line
-      },
-      /**
-       * maker拖拽事件
-       */
-      makerDragendEvent(e) {
-        let label
-        e.target.getLabel().content != '起点' ? label = e.target.getLabel().content : label = 0
-        label = Number(label)
-        this.label = label
-        let endMaker = this.commitDetail.mapPoint.length - 1
-        this.commitDetail.mapPoint[label] = e.target.point
-        this.dragendStatus = true
-        if (label > 0 && label < endMaker) {   //移动非起点非终点Maker
-          this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label - 1])
-          this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label + 1])
-          this.map.removeOverlay(this.polylineArr[label - 1])       //地图上移除相关line
-          this.map.removeOverlay(this.polylineArr[label])
-        }
-        // else if(label == 0) {    //移动起点Maker
-        //   this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label - 1])
-        //   this.map.removeOverlay(this.polylineArr[label - 1])       //地图上移除相关line
-        //   this.polylineArr.splice(label - 1, 1)       // polyArr移除相关line
-        // }else if(label == endMaker) {   //移动终点Maker
-        //   this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label - 1])
-        //   this.map.removeOverlay(this.polylineArr[label - 1])       //地图上移除相关line
-        //   this.polylineArr.splice(label - 1, 1)       // polyArr移除相关line
-        // }
-        setTimeout(()=> {
-          this.dragendStatus = false
-        },1000)
-      },
       /**
        * 骑行路径计算
        */
-      computedRouter(form, to) {
+      async computedRouter(form, to, label) {
         if (this.commitDetail.mapPoint.length > 1) {      // 利用骑行路径返回point在地图绘制成线
           this.riding.search(form, to)
+          // 骑行路径点搜索回调
+          await this.riding.setSearchCompleteCallback(() => {
+            if (label != undefined) console.log(label)
+            var pts = this.riding.getResults().getPlan(0).getRoute(0).getPath()   //获取路线途经坐标点
+            var polyline = new BMap.Polyline(pts)  // 将坐标点数组绘制成线
+            this.map.addOverlay(polyline)
+            this.polylineArr.push(polyline)    //拖拽状态数组不添加
+            this.riding.clearResults() //清除路径计算点
+          })
           var viewPort = this.map.getViewport(this.commitDetail.mapPoint)
           this.map.centerAndZoom(viewPort.center, viewPort.zoom - 1);      //地图视角切换至路径规划中心
         }
