@@ -5,13 +5,13 @@
         <div>
           <div class="card_img"></div>
           <div style="padding: 10px">
-            <div class="time"><i class="el-icon-time" style="margin-right: 10px"></i>{{item.esInformation.date1}}</div>
-            <div class="card_title" @click="toDetail(item._id)" >{{item.esInformation.name}}</div>
-            <div class="area"><img src="../../image/pointer/gps_19.png" style="margin-right: 10px;width: 20px;height: 20px">{{item.esInformation.region}}</div>
+            <div class="time"><i class="el-icon-time" style="margin-right: 10px"></i>{{item.time}}</div>
+            <div class="card_title" @click="toDetail(item._id)" >{{item.title}}</div>
+            <div class="area"><img src="../../image/pointer/gps_19.png" style="margin-right: 10px;width: 20px;height: 20px">{{item.region}}</div>
             <hr style="margin-top: 15px;border:1px solid #eee ;"/>
             <div class="type">
               <div>
-                <el-tag v-for="itemType in item.esInformation.type" :key="itemType" style="margin-right: 10px">{{itemType }}</el-tag>
+                <el-tag v-for="itemType in item.tags" :key="itemType" style="margin-right: 10px">{{itemType }}</el-tag>
               </div>
               <div>
                 <el-checkbox v-model="item[index]">收藏</el-checkbox>
