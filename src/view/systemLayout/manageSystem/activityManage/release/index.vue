@@ -8,9 +8,10 @@
     <div class="content-box">
       <base-message v-show="stepsActive == 0"></base-message>
       <road-route v-show="stepsActive == 1"></road-route>
-      <confirmation v-show="stepsActive == 2"></confirmation>
+      <confirmation v-if="stepsActive == 2"></confirmation>
     </div>
-    <el-button style="margin-top: 12px;" @click="next">{{stepsActive > 1 ? '提交': '下一步'}}</el-button>
+    <el-button @click="back" v-if="stepsActive!=0">上一步</el-button>
+    <el-button @click="next">{{stepsActive > 1 ? '提交': '下一步'}}</el-button>
   </el-card>
 </template>
 
@@ -40,7 +41,7 @@
         }
       },
       back() {
-
+        this.stepsActive --
       }
     }
   }
