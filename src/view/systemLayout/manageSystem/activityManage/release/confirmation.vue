@@ -34,7 +34,6 @@
         loading: {},  //地图加载状态
         callbackStuts: false,  //判断是否在回调状态
         polylineArr: [],
-        test:1
       }
     },
     methods: {
