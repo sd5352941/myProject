@@ -79,6 +79,8 @@
     color: #FFE403;
   }
   .navbar {
+    width: 100%;
+    min-width: 1200px;
     .badge-item {
 
     }

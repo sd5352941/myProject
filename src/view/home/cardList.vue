@@ -2,7 +2,6 @@
   <div>
     <div class="card-box">
       <el-card class='card' v-for="item,index in activityList" shadow="" :key="item._id">
-        <div>
           <div class="card_img"></div>
           <div style="padding: 10px">
             <div class="time"><i class="el-icon-time" style="margin-right: 10px"></i>{{item.time}}</div>
@@ -18,7 +17,6 @@
               </div>
             </div>
           </div>
-        </div>
       </el-card>
     </div>
       <BackTop>
@@ -49,19 +47,14 @@
     computed: {
       ...mapGetters([
         'activityList',
-        'activityParmas'
+        'activityParams'
       ])
     },
     data() {
       return {
         noData: false,
         loadingDisplay: false,
-        cardDesc: [
-          {label: '集合点', prop: '某个地方'},
-          {label: '集合时间', prop: '2019年9月29号'},
-          {label: '骑行路线', prop: '成都到杭州'},
-          {label: '描述', prop: '巴拉巴拉巴拉巴拉'},
-        ]
+        cardDesc: []
       }
     },
     methods: {
@@ -72,9 +65,9 @@
         this.loadingDisplay = true
         this.noData = false
         setTimeout(() => {
-          this.$store.dispatch("GetActivityList", this.activityParmas).then(res => {
+          this.$store.dispatch("GetActivityList", this.activityParams).then(res => {
             if (res.data.result.length != 0) {
-              this.activityParmas.pageNum = this.activityList.length
+              this.activityParams.pageNum = this.activityList.length
               this.loadingDisplay = false
             } else {
               this.loadingDisplay = true
@@ -90,8 +83,8 @@
        * 获取活动列表
        */
       getList() {
-        this.$store.dispatch("GetActivityList", this.activityParmas).then(res => {
-          this.activityParmas.pageNum = this.activityList.length
+        this.$store.dispatch("GetActivityList", this.activityParams).then(res => {
+          this.activityParams.pageNum = this.activityList.length
         }).catch(err => {
           this.loadingDisplay = true
           this.noData = true

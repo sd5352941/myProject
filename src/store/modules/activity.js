@@ -42,7 +42,12 @@ const activity = {
     GetActivityList({commit}, parmas) {  //获取活动列表
       return new Promise((resolve, reject) => {
         getActivity(parmas).then(res => {
-          commit('SET_LIST', res.data.result)
+          const result = res.data.result
+          // 转换时间
+          for (let item of result) {
+
+          }
+          commit('SET_LIST', result)
           resolve(res)
         }).catch(err => {
           reject(err)
@@ -73,7 +78,7 @@ const activity = {
     activityList: state => state.activityList,
     activityDetail: state => state.activityDetail,
     activityDesc: state => state.activityDesc,
-    activityParmas: state => state.queryParams,
+    activityParams: state => state.queryParams,
     commitDetail: state => state.commitDetail
   }
 }

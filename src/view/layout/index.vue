@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="home-box">
     <Affix>
-      <navbar style="min-width: 1200px"></navbar>
+      <navbar></navbar>
     </Affix>
     <transition name="fade-transform" mode="out-in">
       <router-view></router-view>
@@ -25,6 +25,10 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped="scoped">
+  .home-box {
+    width: 100%;
+    min-width: 1200px;
+  }
 
 </style>

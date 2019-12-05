@@ -1,6 +1,6 @@
 <template>
   <div class="backgourdIMG">
-    <carousel style="min-width: 1200px"></carousel>
+    <carousel></carousel>
     <div class="search-div">
       <search-box></search-box>
     </div>
