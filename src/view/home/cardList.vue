@@ -77,7 +77,7 @@
             this.loadingDisplay = true
             this.noData = true
           })
-        }, 1000)
+        }, 3000)
       },
       /**
        * 获取活动列表

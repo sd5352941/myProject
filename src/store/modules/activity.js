@@ -35,7 +35,7 @@ const activity = {
       state.activityList.push(...list)
     },
     SET_DETAIL(state, detail) {
-      state.activityDetail = detail[0]
+      state.activityDetail = detail
     },
   },
   actions: {
@@ -43,10 +43,6 @@ const activity = {
       return new Promise((resolve, reject) => {
         getActivity(parmas).then(res => {
           const result = res.data.result
-          // 转换时间
-          for (let item of result) {
-
-          }
           commit('SET_LIST', result)
           resolve(res)
         }).catch(err => {

@@ -17,7 +17,7 @@
             </el-col>
             <el-col :span="15">
               <el-card>
-                <div id="baiduMap" style="height: 600px;width: 100%"></div>
+                <div id="baiduMap"></div>
               </el-card>
             </el-col>
           </el-row>
@@ -79,6 +79,10 @@
 </script>
 
 <style lang="scss">
+  #baiduMap {
+    height: 600px;
+    width: 100%
+  }
   .detail_content {
     display: flex;
     justify-content: center;
