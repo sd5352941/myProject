@@ -1,38 +1,37 @@
 <template>
-  <div>
-    <div class="card-box">
-      <el-card class='card' v-for="item,index in activityList" shadow="" :key="item._id">
-          <div class="card_img"></div>
-          <div style="padding: 10px">
-            <div class="time"><i class="el-icon-time" style="margin-right: 10px"></i>{{item.time}}</div>
-            <div class="card_title" @click="toDetail(item._id)" >{{item.title}}</div>
-            <div class="area"><img src="../../image/pointer/gps_19.png" style="margin-right: 10px;width: 20px;height: 20px">{{item.region}}</div>
-            <hr style="margin-top: 15px;border:1px solid #eee ;"/>
-            <div class="type">
-              <div>
-                <el-tag v-for="itemType in item.tags" :key="itemType" style="margin-right: 10px">{{itemType }}</el-tag>
-              </div>
-              <div>
-                <el-checkbox v-model="item[index]">收藏</el-checkbox>
-              </div>
+  <div class="card-list-box">
+    <div class="card-box" v-infinite-scroll="loadMore" :infinite-scroll-immediate="false">
+      <el-card class='card' v-for="item,index in activityList" :key="item._id">
+<!--          <div class="card_img"></div>-->
+<!--          <div style="padding: 10px">-->
+<!--            <div class="time"><i class="el-icon-time" style="margin-right: 10px"></i>{{item.time}}</div>-->
+<!--            <div class="card_title" @click="toDetail(item._id)" >{{item.title}}</div>-->
+<!--            <div class="area"><img src="../../image/pointer/gps_19.png" style="margin-right: 10px;width: 20px;height: 20px">{{item.region}}</div>-->
+<!--            <hr style="margin-top: 15px;border:1px solid #eee ;"/>-->
+<!--            <div class="type">-->
+<!--              <div>-->
+<!--                <el-tag v-for="itemType in item.tags" :key="itemType" style="margin-right: 10px">{{itemType }}</el-tag>-->
+<!--              </div>-->
+<!--              <div>-->
+<!--                <el-checkbox v-model="item[index]">收藏</el-checkbox>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+      </el-card>
+      <div style="width: 100%;display: flex;justify-content: center">
+        <div style="height: 100px" v-if="!noData">
+          <div class="loadMore">
+            <div class="loading">
+              <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
             </div>
           </div>
-      </el-card>
+        </div>
+        <span v-if="noData" style="text-align: center;height: 50px; margin-top: 30px;width: 100%">已经没有更多了</span>
+      </div>
     </div>
       <BackTop>
         <el-button round type="info">返回顶部</el-button>
       </BackTop>
-    <div style="width: 100%;display: flex;justify-content: center">
-      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loadingDisplay" infinite-scroll-distance="10"
-           style="height: 100px" v-if="!noData">
-        <div class="loadMore">
-          <div class="loading">
-            <span v-for="item in 5" :key="item" v-if="loadingDisplay"></span>
-          </div>
-        </div>
-      </div>
-      <span v-if="noData" style="text-align: center;height: 50px; margin-top: 30px;width: 100%">已无数据<a @click="loadMore" style="color: #2baee9">重新加载</a></span>
-    </div>
   </div>
 </template>
 
@@ -62,6 +61,9 @@
        * 加载更多活动列表
        */
       loadMore() {
+
+        if(this.noData) return false //无数据不触发
+
         this.loadingDisplay = true
         this.noData = false
         setTimeout(() => {
@@ -110,7 +112,7 @@
 
   .card-box {
     overflow-y:auto;
-    min-height: 300px;
+    height: 700px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -122,48 +124,7 @@
     }
   }
 
-  .card {
-    .time {
-      margin-top: 14px;
-      color: #999;
-      font-size: 14px;
-    }
-    .type {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-    }
-    .area {
-      margin-top: 14px;
-      color: #999;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-    }
-    .card_title {
-      cursor:pointer;
-      word-wrap:break-word;
-      margin-top: 8px;
-      color: #2b312b;
-      font-size: 22px;
-      font-weight: 600;
-      line-height: 22px;
-      height: 44px;
-    }
-    .card_title:hover{
-      color: #409EFF;
-    }
-    height: 420px;
-    width: 350px;
-    margin: 12px 0px;
-  }
 
-
-  .card_img {
-    height: 200px;
-    width: 100%;
-  }
 
   b {
     font-size: 18px;

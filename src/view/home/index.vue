@@ -81,7 +81,7 @@
   .tab-label {
     font-family: PingFang-SC-Medium;
     flex-direction: column;
-    width: 365px;
+    width: 355px;
     font-size: 18px;
     color: #333333;
     letter-spacing: 0;
@@ -90,4 +90,8 @@
     justify-content: center;
     align-items: center;
   }
+  /*.tab-label img{*/
+  /*  width: 20px;*/
+  /*  height: 20px;*/
+  /*}*/
 </style>
