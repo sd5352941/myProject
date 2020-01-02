@@ -60,7 +60,7 @@ const activity = {
         })
       })
     },
-    AddActivity({state}) {
+    AddActivity({state}) {  //添加活动列表
       return new Promise((resolve, reject)=> {
         addActivity(state.commitDetail).then(res => {
           resolve(res)

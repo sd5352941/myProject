@@ -1,7 +1,7 @@
 <template>
   <div class="card-list-box">
     <div class="card-box" v-infinite-scroll="loadMore" :infinite-scroll-immediate="false">
-      <el-card class='card' v-for="item,index in activityList" :key="item._id">
+      <div class='card' v-for="item,index in activityList" :key="item._id">
 <!--          <div class="card_img"></div>-->
 <!--          <div style="padding: 10px">-->
 <!--            <div class="time"><i class="el-icon-time" style="margin-right: 10px"></i>{{item.time}}</div>-->
@@ -17,7 +17,8 @@
 <!--              </div>-->
 <!--            </div>-->
 <!--          </div>-->
-      </el-card>
+        <activity-card :data="item"></activity-card>
+      </div>
       <div style="width: 100%;display: flex;justify-content: center">
         <div style="height: 100px" v-if="!noData">
           <div class="loadMore">
@@ -37,11 +38,13 @@
 
 <script>
   import loading from '@/components/loading.vue'
+  import activityCard from './activityCard'
   import {mapGetters} from 'vuex'
 
   export default {
     components: {
-      loading
+      loading,
+      activityCard
     },
     computed: {
       ...mapGetters([
