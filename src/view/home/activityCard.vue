@@ -5,7 +5,7 @@
       <div class="card-Label-box">
         <div class="card-label-text-box">
           <p>进行中</p>
-          <p>2/10人</p>
+          <p>999/999</p>
           <div class="thumbtack"></div>
         </div>
       </div>
@@ -46,7 +46,7 @@
         top: 0;
         left: 15px;
         width: 47px;
-        height: 61px;
+        height: 70px;
         background-color: #FFE403;
         display: flex;
         justify-content: center;
@@ -59,10 +59,10 @@
           flex-direction: column;
           align-items: center;
           p {
-            margin-bottom: 1px;
+            margin-bottom: 5px;
           }
           .thumbtack {
-            margin-bottom: 2px;
+            margin-top: 2px;
             width: 8px;
             height: 8px;
             border-radius: 20px;
