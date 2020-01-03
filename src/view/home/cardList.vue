@@ -1,24 +1,7 @@
 <template>
-  <div class="card-list-box">
-    <div class="card-box" v-infinite-scroll="loadMore" :infinite-scroll-immediate="false">
-      <div class='card' v-for="item,index in activityList" :key="item._id">
-<!--          <div class="card_img"></div>-->
-<!--          <div style="padding: 10px">-->
-<!--            <div class="time"><i class="el-icon-time" style="margin-right: 10px"></i>{{item.time}}</div>-->
-<!--            <div class="card_title" @click="toDetail(item._id)" >{{item.title}}</div>-->
-<!--            <div class="area"><img src="../../image/pointer/gps_19.png" style="margin-right: 10px;width: 20px;height: 20px">{{item.region}}</div>-->
-<!--            <hr style="margin-top: 15px;border:1px solid #eee ;"/>-->
-<!--            <div class="type">-->
-<!--              <div>-->
-<!--                <el-tag v-for="itemType in item.tags" :key="itemType" style="margin-right: 10px">{{itemType }}</el-tag>-->
-<!--              </div>-->
-<!--              <div>-->
-<!--                <el-checkbox v-model="item[index]">收藏</el-checkbox>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        <activity-card :data="item"></activity-card>
-      </div>
+  <div class="card-list-box"  v-infinite-scroll="loadMore" :infinite-scroll-immediate="false">
+    <div class="card-box">
+      <activity-card :data="item" v-for="item,index in activityList" :key="item._id"></activity-card>
       <div style="width: 100%;display: flex;justify-content: center">
         <div style="height: 100px" v-if="!noData">
           <div class="loadMore">
@@ -95,15 +78,6 @@
           this.noData = true
         })
       },
-      /**
-       * 跳转详情页面
-       */
-      toDetail(id) {
-        let query = {
-          _id: id
-        }
-        this.$router.push({path: '/activityDetail', query})
-      }
     },
     mounted() {
       this.getList()
@@ -112,10 +86,13 @@
 </script>
 
 <style lang="scss" scoped>
-
+  .card-list-box {
+    height: 700px;
+    overflow-y:auto;
+  }
   .card-box {
     overflow-y:auto;
-    height: 700px;
+    /*height: 700px;*/
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;

@@ -1,6 +1,6 @@
 <template>
   <el-card class="card-box">
-    <div class="card-title-img">
+    <div class="card-title-img hand" @click="toDetail">
       <img src="http://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&f=JPEG?w=1280&h=853">
       <div class="card-Label-box">
         <div class="card-label-text-box">
@@ -12,7 +12,19 @@
     </div>
     <div class="card-content">
       <div class="card-time-box">
+        <i class="el-icon-date"></i>
         <span class="card-time">{{data.departureTime}}</span>
+      </div>
+      <div class="card-title-box hand" @click="toDetail">
+        {{data.title}}
+      </div>
+      <div class="card-address-box">
+        <i class="el-icon-location"></i> 高新区益州大道按时大萨达所多
+      </div>
+      <div class="card-tags-box">
+        <el-tag v-for="item of data.tags" :key="item">
+          {{item}}
+        </el-tag>
       </div>
     </div>
   </el-card>
@@ -28,6 +40,22 @@
         type:Object,
         default: {}
       }
+    },
+    data() {
+      return {
+
+      }
+    },
+    methods: {
+      /**
+       * 跳转详情页面
+       */
+      toDetail() {
+        let query = {
+          _id: this.data._id
+        }
+        this.$router.push({path: '/activityDetail', query})
+      }
     }
   }
 </script>
@@ -35,12 +63,12 @@
 <style scoped="scoped" lang="scss">
     .card-box {
       width: 365px;
-      height: 626px;
       margin-bottom: 20px;
 
       .card-title-img {
         position: relative;
       }
+
       .card-Label-box {
         position: absolute;
         top: 0;
@@ -51,7 +79,6 @@
         display: flex;
         justify-content: center;
         border-radius: 0px 0px 20px 20px;
-
         .card-label-text-box {
           margin-top: 6px;
           font-size: 12px;
@@ -70,7 +97,6 @@
           }
         }
 
-
       }
       .card-title-img img{
         width: 365px;
@@ -80,12 +106,33 @@
         margin: 25px 20px;
 
         .card-time-box{
-
+          display: flex;
+          align-items: center;
+        }
+        .card-time-box span{
+          margin-left: 5px;
         }
         .card-time {
           font-size: 14px;
         }
       }
-
+      .card-title-box {
+        height: 74px;
+        margin-top: 15px;
+        font-size: 25px;
+        color: #333333;
+        font-family: "adobe-garamond-pro", sans-serif;
+      }
+      .card-address-box {
+        margin-top: 15px;
+        color: #666666;
+      }
+      .card-tags-box {
+        margin-top: 20px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #eee;
+      }
     }
 </style>
