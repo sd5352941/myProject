@@ -1,29 +1,29 @@
 <template>
   <div class="base-message-box">
-    <h2>
+    <h2 class="base-message-title">
       基础信息
     </h2>
-    <hr/>
-
     <!--    剪裁控件dialog-->
 
-    <el-dialog title="图片剪裁" :visible.sync="dialogVisible" class="cropperDialog">
-      <vueCropper
-        style="height: 500px;width: 800px"
-        ref="cropper"
-        :img="option.img"
-        :outputSize="option.size"
-        :outputType="option.outputType"
-        :info="true"
-        :full="option.full"
-        :canMove="option.canMove"
-        :canMoveBox="option.canMoveBox"
-        :original="option.original"
-        :autoCrop="option.autoCrop"
-        :autoCropWidth="option.autoCropWidth"
-        :autoCropHeight="option.autoCropHeight"
-        :fixedBox="option.fixedBox"
-      ></vueCropper>
+    <el-dialog title="图片剪裁" :visible.sync="dialogVisible" >
+      <div class="cropper-box">
+        <vueCropper
+          style="height: 500px;width: 800px"
+          ref="cropper"
+          :img="option.img"
+          :outputSize="option.size"
+          :outputType="option.outputType"
+          :info="true"
+          :full="option.full"
+          :canMove="option.canMove"
+          :canMoveBox="option.canMoveBox"
+          :original="option.original"
+          :autoCrop="option.autoCrop"
+          :autoCropWidth="option.autoCropWidth"
+          :autoCropHeight="option.autoCropHeight"
+          :fixedBox="option.fixedBox"></vueCropper>
+      </div>
+
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="Tailoring">确 定</el-button>
@@ -33,12 +33,12 @@
     <!--    活动基本信息  -->
 
     <el-form ref="form" :model="commitDetail" label-width="80px" size="small">
-      <el-form-item label="活动名称">
+      <el-form-item label="活动名称" :rules="{ required: true, message: '请输入活动名称', trigger: 'blur' }" prop="title">
         <el-input v-model="commitDetail.title" style="width: 220px"></el-input>
       </el-form-item>
       <el-form-item label="活动封面">
         <div class="activityImgDiv">
-          <div style="height:200px;width: 350px;border-right: 1px">
+          <div class="img-box">
             <img :src="commitDetail.img">
           </div>
           <div class="upload">
@@ -64,7 +64,7 @@
                         style="margin-left: 10px;"></el-time-picker>
       </el-form-item>
       <el-form-item label="人数限制">
-        <el-input-number v-model="commitDetail.people" style="width: 150px" :min="0" :max="1000"
+        <el-input-number v-model="commitDetail.people" style="width: 150px" :min="0" :max="999"
                          placeholder="如无限制输入0"></el-input-number>
       </el-form-item>
       <el-form-item label="活动性质">
@@ -92,10 +92,9 @@
       </el-form-item>
     </el-form>
     <div class="activity-detail">
-      <h2>
+      <h2 class="base-message-title">
         活动详情
       </h2>
-      <hr/>
       <quill-editor v-model="commitDetail.desc" style="height: 400px"></quill-editor>
     </div>
     <!--{{commitDetail}}-->
@@ -201,13 +200,22 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped="scoped">
   .base-message-box {
+    .base-message-title {
+      margin: 40px 0;
+    }
     .activity-detail {
       margin-top: 60px;
     }
     .activityImgDiv {
       display: flex;
+
+      .img-box {
+        height:200px;
+        width: 350px;
+        border: 2px solid #DCDFE6
+      }
       .upload {
         margin-left: 20px;
       }
@@ -226,10 +234,10 @@
       color: #409EFF;
     }
 
-    .cropperDialog {
-      width: 500px;
-      height: 800px;
+    .cropper-box{
+      min-width: 500px;
+      /*height: 800px;*/
     }
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    /*font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;*/
   }
 </style>

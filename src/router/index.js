@@ -7,7 +7,7 @@ import none from '@/view/systemLayout/manageSystem/none'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/index',

@@ -6,13 +6,13 @@
       <!--<nav-menu class="nav-menu"></nav-menu>-->
       <section class="navbar-right">
         <article style="margin-right: 50px">
-          <el-button type="primary" round class="nav-button">发布活动</el-button>
+          <el-button type="primary" round class="nav-button" @click="releaseActivity">发布活动</el-button>
         </article>
         <article>
           <el-input class="nav-input" suffix-icon="el-icon-search"></el-input>
         </article>
         <article class="sign-in" v-if="!token">
-          <a style="margin-right: 40px" @click="$router.push('login')">注册</a>
+<!--          <a style="margin-right: 40px" @click="$router.push('login')">注册</a>-->
           <a class="login-text" @click="$router.push('login')">登录</a>
         </article>
         <article class="user-name-box" v-if="token">
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+  import {getToken} from '@/utils/auth'
   import {Icon} from 'iview';
   import Vue from 'vue'
   import {mapGetters} from "vuex"
@@ -60,11 +61,17 @@
       return {}
     },
     methods: {
+      /**
+       * 发布活动r
+       */
+      releaseActivity() {
+        this.$router.push({name:'activityRelease'})
+      },
       toHome() {
-        this.$router.push('/')
+        this.$router.push({name:'login'})
       },
       toLogin() {
-        this.$router.push('/login')
+        this.$router.push({name:'login'})
       },
       loginOut() {
         this.$store.dispatch('LoginOut')

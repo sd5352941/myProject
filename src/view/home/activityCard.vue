@@ -103,7 +103,7 @@
         height: 210px;
       }
       .card-content {
-        margin: 25px 20px;
+        margin: 25px 20px 5px 20px;
 
         .card-time-box{
           display: flex;

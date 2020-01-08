@@ -31,7 +31,7 @@
       </div>
     </div>
     <div>
-      <el-button class="back-home-button" type="primary" @click="$router.push('/')">返回首页</el-button>
+      <el-button class="back-home-button" type="primary" @click="toHome">返回首页</el-button>
     </div>
     <div id="backroundCanvas"></div>
   </div>
@@ -107,6 +107,9 @@
           this.$message.success(res.data.msg)
         })
       },
+      toHome() {
+        this.$router.push('/home')
+      }
     },
     mounted() {
       document.getElementById('backroundCanvas').appendChild(renderer.domElement)

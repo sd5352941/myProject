@@ -6,7 +6,7 @@
       <el-step title="确认信息"></el-step>
     </el-steps>
     <div class="content-box">
-      <base-message v-show="stepsActive == 0"></base-message>
+      <base-message v-show="stepsActive == 0" ref="baseMessage"></base-message>
       <road-route v-show="stepsActive == 1"></road-route>
       <confirmation v-if="stepsActive == 2"></confirmation>
     </div>
@@ -34,11 +34,15 @@
     },
     methods: {
       next() {
-        if (this.stepsActive < 2) {
-          this.stepsActive ++
-        } else {
-          this.$store.dispatch('AddActivity')
-        }
+        this.$refs.baseMessage.$refs.form.validate((value) => {
+          if(value) {
+            if (this.stepsActive < 2) {
+              this.stepsActive ++
+            } else {
+              this.$store.dispatch('AddActivity')
+            }
+          }
+        })
       },
       back() {
         this.stepsActive --
