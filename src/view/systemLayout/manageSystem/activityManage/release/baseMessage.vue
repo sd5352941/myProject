@@ -33,39 +33,41 @@
     <!--    活动基本信息  -->
 
     <el-form ref="form" :model="commitDetail" label-width="80px" size="small">
-      <el-form-item label="活动名称" :rules="{ required: true, message: '请输入活动名称', trigger: 'blur' }" prop="title">
+      <el-form-item label="活动名称" :rules="{ required: true, message: '请填写活动名称', trigger: 'blur' }" prop="title">
         <el-input v-model="commitDetail.title" style="width: 220px"></el-input>
       </el-form-item>
-      <el-form-item label="活动封面">
+      <el-form-item label="活动封面" :rules="{ required: true, message: '请上传活动封面', trigger: 'blur' }" prop="img">
         <div class="activityImgDiv">
           <div class="img-box">
             <img :src="commitDetail.img">
           </div>
           <div class="upload">
-            <el-upload
-              action
-              :auto-upload="false"
+            <el-upload action :auto-upload="false" :file-list="fileList"
               :limit="1"
-              :on-change="uploadChange"
-            >
+              :on-exceed="resetUpload"
+              :on-change="uploadChange">
               <el-button size="small" type="primary">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
             </el-upload>
           </div>
         </div>
       </el-form-item>
-      <el-form-item label="活动日期">
+      <el-form-item label="活动日期" :rules="{ validator:validDate, trigger: 'blur',required: true }" prop="time">
         <el-date-picker type="date" placeholder="选择日期" v-model="commitDetail.time"></el-date-picker>
         <label style="margin-left: 10px;">集合时间:</label>
         <el-time-picker placeholder="选择时间" v-model="commitDetail.gatheringTime"
                         style="margin-left: 10px;"></el-time-picker>
-        <label style="margin-left: 10px;">开始/出发时间:</label>
+        <label style="margin-left: 10px;">出发时间:</label>
         <el-time-picker placeholder="选择时间" v-model="commitDetail.departureTime"
                         style="margin-left: 10px;"></el-time-picker>
       </el-form-item>
       <el-form-item label="人数限制">
-        <el-input-number v-model="commitDetail.people" style="width: 150px" :min="0" :max="999"
-                         placeholder="如无限制输入0"></el-input-number>
+        <div class="people-number-box">
+          <el-input-number v-model="commitDetail.people" style="width: 150px" :min="0" :max="999"></el-input-number>
+          <el-button type="text" v-popover:popover class="warning-btn">
+            <i class="el-icon-info warning-text"></i>
+          </el-button>
+        </div>
       </el-form-item>
       <el-form-item label="活动性质">
         <el-radio-group v-model="commitDetail.type">
@@ -97,9 +99,15 @@
       </h2>
       <quill-editor v-model="commitDetail.desc" style="height: 400px"></quill-editor>
     </div>
-    <!--{{commitDetail}}-->
+    {{commitDetail}}
+
+   <!-- 弹出提示-->
+    <el-popover placement="right" ref="popover"
+      trigger="hover"
+      content="此次活动的可参加的最大人数，如果为0则表示不限制">
+    </el-popover>
   </div>
-</template>0
+</template>
 
 <script>
   import {uploadIMG} from '@/api/activity'
@@ -124,6 +132,15 @@
     },
     data() {
       return {
+        validDate: (rule, value, callback)=> {
+          let {time, gatheringTime, departureTime} = this.commitDetail
+          if(time && gatheringTime && departureTime) {
+            gatheringTime > departureTime ? callback(new Error('出发时间必须大于集合时间')) :callback()
+          } else {
+            callback(new Error('请选择完整的活动时间'))
+          }
+        },
+        fileList: [],
         dialogVisible:false,
         imageUrl: '',
         inputVisible: false,
@@ -144,6 +161,15 @@
       };
     },
     methods: {
+      /**
+       * 重置上传
+       */
+      resetUpload(file,fileList) {
+        this.fileList = []
+        let newFile = {}
+        newFile['raw'] = file[0]
+        this.uploadChange(newFile)
+      },
       /**
        * 上传图片剪裁触发
        */
@@ -169,6 +195,7 @@
           })
         })
         this.dialogVisible = false
+        this.fileList = []
       },
       /**
        * 关闭标签
@@ -202,11 +229,14 @@
 
 <style lang="scss" scoped="scoped">
   .base-message-box {
+    .el-form-item__error {
+      margin-top: 5px;
+    }
     .base-message-title {
       margin: 40px 0;
     }
     .activity-detail {
-      margin-top: 60px;
+      margin: 60px 0px;
     }
     .activityImgDiv {
       display: flex;
@@ -233,11 +263,21 @@
     h2 {
       color: #409EFF;
     }
+    .people-number-box {
+      display: flex;
+      align-items: center;
+      .warning-btn {
+        font-size: 18px;
+        .warning-text {
+          margin-left: 10px;
+        }
+      }
+    }
 
     .cropper-box{
       min-width: 500px;
       /*height: 800px;*/
     }
-    /*font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;*/
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
 </style>

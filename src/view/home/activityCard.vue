@@ -1,7 +1,8 @@
 <template>
   <el-card class="card-box">
     <div class="card-title-img hand" @click="toDetail">
-      <img src="http://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&f=JPEG?w=1280&h=853">
+<!--      <img :src="data.imgPath">-->
+      <img src="D:\yyh\bike-koa\public\upload\activityCover\dGVzdEltZy5wbmcxNTc4NTU1ODM3MTY2cover.jpg">
       <div class="card-Label-box">
         <div class="card-label-text-box">
           <p>进行中</p>
@@ -56,7 +57,7 @@
         }
         this.$router.push({path: '/activityDetail', query})
       }
-    }
+    },
   }
 </script>
 

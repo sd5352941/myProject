@@ -10,8 +10,10 @@
       <road-route v-show="stepsActive == 1"></road-route>
       <confirmation v-if="stepsActive == 2"></confirmation>
     </div>
-    <el-button @click="back" v-if="stepsActive!=0">上一步</el-button>
-    <el-button @click="next">{{stepsActive > 1 ? '提交': '下一步'}}</el-button>
+    <div class="button-box">
+      <el-button @click="next">{{stepsActive > 1 ? '提交': '下一步'}}</el-button>
+      <el-button @click="back" v-if="stepsActive!=0">上一步</el-button>
+    </div>
   </el-card>
 </template>
 
@@ -41,6 +43,8 @@
             } else {
               this.$store.dispatch('AddActivity')
             }
+          } else {
+            this.$message.error('请完善相关信息')
           }
         })
       },
@@ -50,9 +54,14 @@
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped="scoped">
   .release-box {
     padding: 30px;
+    .button-box{
+      display: flex;
+      flex-direction: row-reverse;
+      margin: 20px;
+    }
     .content-box {
       margin: 40px;
     }

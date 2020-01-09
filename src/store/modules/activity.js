@@ -8,7 +8,7 @@ const activity = {
       title: '',
       time: '', //骑行日期
       gatheringTime: '', //集合时间
-      departureTime: '', //开始时间
+      departureTime: '', //出发时间
       type: 'free',
       tags: [],
       desc: '',

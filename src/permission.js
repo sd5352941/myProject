@@ -7,8 +7,6 @@ router.beforeEach((to, from, next)=>{
   NProgress.start()
   if(to.matched[0].name == 'system') {
     getToken() ? next() : next('/login')
-  } else if(to.path == '/'){
-     next('/home')
   } else {
     next()
   }
