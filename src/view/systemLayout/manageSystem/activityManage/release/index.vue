@@ -21,9 +21,15 @@
   import baseMessage from './baseMessage'
   import roadRoute from './roadRoute'
   import confirmation from './confirmation'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: 'release',
+    computed: {
+      ...mapGetters([
+        'commitDetail'
+      ])
+    },
     components: {
       baseMessage,
       roadRoute,
@@ -36,6 +42,7 @@
     },
     methods: {
       next() {
+        console.log(this.commitDetail)
         this.$refs.baseMessage.$refs.form.validate((value) => {
           if(value) {
             if (this.stepsActive < 2) {
@@ -44,7 +51,7 @@
               this.$store.dispatch('AddActivity')
             }
           } else {
-            this.$message.error('请完善相关信息')
+            this.$message.error('请完善相关活动信息')
           }
         })
       },

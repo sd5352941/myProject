@@ -5,7 +5,7 @@
       <el-input class="top20" placeholder="请输入账号" v-model="user.username" style="margin-top: 30px">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
-      <el-input class="top20" placeholder="请输入密码" type="password" v-model="user.password"></el-input>
+      <el-input class="top20" placeholder="请输入密码" type="password" v-model="user.password" @keyup.enter.native="login"></el-input>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-button class="top20" @click="toRegister" type="success" style="width:100%">注册</el-button>

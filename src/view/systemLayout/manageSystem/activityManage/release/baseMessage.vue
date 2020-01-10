@@ -53,12 +53,12 @@
         </div>
       </el-form-item>
       <el-form-item label="活动日期" :rules="{ validator:validDate, trigger: 'blur',required: true }" prop="time">
-        <el-date-picker type="date" placeholder="选择日期" v-model="commitDetail.time"></el-date-picker>
+        <el-date-picker type="date" placeholder="选择日期" v-model="commitDetail.time" value-format="timestamp"></el-date-picker>
         <label style="margin-left: 10px;">集合时间:</label>
-        <el-time-picker placeholder="选择时间" v-model="commitDetail.gatheringTime"
+        <el-time-picker placeholder="选择时间" v-model="commitDetail.gatheringTime" value-format="timestamp"
                         style="margin-left: 10px;"></el-time-picker>
         <label style="margin-left: 10px;">出发时间:</label>
-        <el-time-picker placeholder="选择时间" v-model="commitDetail.departureTime"
+        <el-time-picker placeholder="选择时间" v-model="commitDetail.departureTime" value-format="timestamp"
                         style="margin-left: 10px;"></el-time-picker>
       </el-form-item>
       <el-form-item label="人数限制">
@@ -97,10 +97,9 @@
       <h2 class="base-message-title">
         活动详情
       </h2>
-      <quill-editor v-model="commitDetail.desc" style="height: 400px"></quill-editor>
+<!--      <quill-editor v-model="commitDetail.desc" style="height: 400px"></quill-editor>-->
     </div>
     {{commitDetail}}
-
    <!-- 弹出提示-->
     <el-popover placement="right" ref="popover"
       trigger="hover"
@@ -112,11 +111,11 @@
 <script>
   import {uploadIMG} from '@/api/activity'
   import {mapGetters} from 'vuex'
-  import 'quill/dist/quill.core.css'
-  import 'quill/dist/quill.snow.css'
-  import 'quill/dist/quill.bubble.css'
+  // import 'quill/dist/quill.core.css'
+  // import 'quill/dist/quill.snow.css'
+  // import 'quill/dist/quill.bubble.css'
 
-  import { quillEditor } from 'vue-quill-editor'
+  // import { quillEditor } from 'vue-quill-editor'
   import { VueCropper } from 'vue-cropper'
 
   export default {
@@ -218,7 +217,7 @@
       handleInputConfirm() {
         let inputValue = this.tagValue;
         if (inputValue) {
-          this.commitDetail.tags.push(inputValue);
+          this.commitDetail.tags.includes(inputValue) ? this.$message.error('标签名重复') : this.commitDetail.tags.push(inputValue);
         }
         this.inputVisible = false;
         this.tagValue = '';

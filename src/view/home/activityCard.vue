@@ -1,8 +1,8 @@
 <template>
   <el-card class="card-box">
     <div class="card-title-img hand" @click="toDetail">
-<!--      <img :src="data.imgPath">-->
-      <img src="D:\yyh\bike-koa\public\upload\activityCover\dGVzdEltZy5wbmcxNTc4NTU1ODM3MTY2cover.jpg">
+      <img :src="data.imgPath">
+<!--      <img src="D:\yyh\bike-koa\public\upload\activityCover\dGVzdEltZy5wbmcxNTc4NTU1ODM3MTY2cover.jpg">-->
       <div class="card-Label-box">
         <div class="card-label-text-box">
           <p>进行中</p>

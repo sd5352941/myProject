@@ -92,7 +92,7 @@
 
     }
     .nav-button {
-      font-family: PingFang-SC-Regular;
+      font-family: PingFang-SC-Medium;
       font-size: 18px;
       color: #333333;
       letter-spacing: 0;
