@@ -121,7 +121,7 @@
   export default {
     name: 'baseMessage',
     components: {
-      quillEditor, //富文本编辑器
+      // quillEditor, //富文本编辑器
       VueCropper  //图片剪裁
     },
     computed: {
