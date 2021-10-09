@@ -22,7 +22,7 @@
   }
 </script>
 
-<style>
+<style scoped lang="scss">
   .el-carousel__container {
     height: 700px;
   }

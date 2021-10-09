@@ -184,7 +184,7 @@
   }
 </script>
 
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
   #userPie{
     width: 100%;
     height: 300px;

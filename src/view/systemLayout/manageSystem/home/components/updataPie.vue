@@ -70,7 +70,7 @@
   }
 </script>
 
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
   #updataPie{
     width: 100%;
     height: 300px;

@@ -26,7 +26,7 @@
     </el-menu>
   </div>
 </template>
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 100%;

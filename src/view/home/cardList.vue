@@ -2,6 +2,8 @@
   <div class="card-list-box"  v-infinite-scroll="loadMore" :infinite-scroll-immediate="false">
     <div class="card-box">
       <activity-card :data="item" v-for="item,index in activityList" :key="item._id"></activity-card>
+
+<!--      加载样式-->
       <div style="width: 100%;display: flex;justify-content: center">
         <div style="height: 100px" v-if="!noData">
           <div class="loadMore">
@@ -10,8 +12,10 @@
             </div>
           </div>
         </div>
-        <span v-if="noData" style="text-align: center;height: 50px; margin-top: 30px;width: 100%">已经没有更多了</span>
+        <span v-if="noData" class="no-more-info">已经没有更多了</span>
       </div>
+      <!--      加载样式-->
+
     </div>
       <BackTop>
         <el-button round type="info">返回顶部</el-button>
@@ -47,9 +51,7 @@
        * 加载更多活动列表
        */
       loadMore() {
-
         if(this.noData) return false //无数据不触发
-
         this.loadingDisplay = true
         this.noData = false
         setTimeout(() => {
@@ -65,7 +67,7 @@
             this.loadingDisplay = true
             this.noData = true
           })
-        }, 3000)
+        }, 1000)
       },
       /**
        * 获取活动列表
@@ -120,6 +122,12 @@
     color: #898989;
     font-size: 14px;
     margin-top: 20px;
+  }
+  .no-more-info {
+    text-align: center;
+    height: 50px;
+    margin-top: 30px;
+    width: 100%
   }
 
 </style>

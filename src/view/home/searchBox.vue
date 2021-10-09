@@ -36,7 +36,7 @@
     }
   }
 </script>
-<style>
+<style scoped lang="scss">
   .search-box {
     width: 1200px;
     height: 350px;

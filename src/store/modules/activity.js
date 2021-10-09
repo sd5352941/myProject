@@ -3,6 +3,7 @@ import {getActivity, getActivityDetail, addActivity} from "@/api/activity";
 const activity = {
   state: {
     commitDetail: {  //发布活动信息
+      address: '', //活动集合地点
       img: '', //活动封面图片url
       imgPath: {}, //活动封面后台地址
       title: '',

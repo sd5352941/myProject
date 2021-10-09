@@ -5,11 +5,11 @@
       <search-box></search-box>
     </div>
     <el-card class="content">
-      <el-tabs v-model="homeTab" style="width: 1180px">
+      <el-tabs v-model="homeTab">
         <el-tab-pane name="list">
           <div slot="label" class="tab-label">
             <img src="../../image/home/activity-tab.png">
-            <span style="margin-top: 11px">活动列表</span>
+            <span class="mt10">活动列表</span>
           </div>
           <div>
             <card-list></card-list>
@@ -18,14 +18,14 @@
         <el-tab-pane label="地图模式" name="map">
           <div slot="label" class="tab-label">
             <img src="../../image/home/map-tab.png">
-            <span style="margin-top: 11px">地图模式</span>
+            <span class="mt10">地图模式</span>
           </div>
           <map-list></map-list>
         </el-tab-pane>
         <el-tab-pane label="点聚合" name="dianjuhe">
           <div slot="label" class="tab-label">
             <img src="../../image/home/dianjuhe-tab.png">
-            <span style="margin-top: 11px">点聚合</span>
+            <span class="mt10">点聚合</span>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -64,7 +64,7 @@
   }
 </script>
 
-<style>
+<style scoped lang="scss">
   .backgourdIMG {
   }
   .search-div {

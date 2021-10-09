@@ -3,6 +3,7 @@
 @import "./element";
 @import "./variables";
 @import "./sidebar";
+@import "./other";
 
 body {
   margin: 0px;
@@ -42,4 +43,6 @@ a {text-decoration: none;color: white;}
   cursor:pointer;
 }
 
-
+.primaryBg {
+  background: $primaryColor
+}

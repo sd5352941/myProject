@@ -1,8 +1,7 @@
 <template>
   <el-card class="card-box">
     <div class="card-title-img hand" @click="toDetail">
-      <img :src="data.imgPath">
-<!--      <img src="D:\yyh\bike-koa\public\upload\activityCover\dGVzdEltZy5wbmcxNTc4NTU1ODM3MTY2cover.jpg">-->
+      <img :src="data.imgPath" onerror="javascript:this.src='https://preview.qiantucdn.com/paixin/39/06/74/158PICK58PICjDR3uS96EfXeX_PIC2018.jpg!w1024_new_small';">
       <div class="card-Label-box">
         <div class="card-label-text-box">
           <p>进行中</p>
@@ -20,7 +19,7 @@
         {{data.title}}
       </div>
       <div class="card-address-box">
-        <i class="el-icon-location"></i> 高新区益州大道按时大萨达所多
+        <i class="el-icon-location"></i> {{data.address}}
       </div>
       <div class="card-tags-box">
         <el-tag v-for="item of data.tags" :key="item">
@@ -56,6 +55,13 @@
           _id: this.data._id
         }
         this.$router.push({path: '/activityDetail', query})
+      },
+      /**
+       * 获取活动集合点
+       */
+      getAddress(data) {
+        console.log(data)
+        return '地点123'
       }
     },
   }

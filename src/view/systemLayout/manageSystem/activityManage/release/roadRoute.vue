@@ -1,8 +1,13 @@
 <template>
   <div class="roadrouter-box" :v-loading.fullscreen="true">
-    <h2>地图上点击右键创建路径点</h2>
+<!--    <div>地图上点击右键创建路径点</div>-->
+    <el-form ref="form" :model="commitDetail" label-width="80px" size="small" class="mt20">
+      <el-form-item label="集合地点" :rules="{ required: true, message: '请输入集合地点', trigger: 'blur' }" prop="address">
+        <el-input v-model="commitDetail.address" class="base-input" clearable></el-input>
+      </el-form-item>
+    </el-form>
     <div class="util-box">
-      <el-input class="auto-input" v-model="searchValue">
+      <el-input class="auto-input" v-model="searchValue" placeholder="搜索地址">
         <i slot="suffix" class="el-input__icon el-icon-search"></i>
       </el-input>
       <el-button type="danger" style="float: right;margin-right:50px;
@@ -79,6 +84,7 @@
               this.loading.close()  // 关闭loading状态
             } else {      //没有找到骑行路径
               this.$message.error('没有到此点的骑行路径，请重新设置')
+
               this.loading.close()  // 关闭loading状态
             }
           })
@@ -127,11 +133,22 @@
        */
       addMaker(p) {
         var marker = new BMap.Marker(p)
+        var geoc = new BMap.Geocoder();
         marker.enableDragging()     // 地图标注开启拖拽
-        var text
+        let text
         marker.addEventListener("dragend", this.makerDragendEvent);
-        this.commitDetail.mapPoint.length == 0 ? text = '起点' : text = '' + this.commitDetail.mapPoint.length
-        var label = new BMap.Label(text, {offset: new BMap.Size(20, -10)});
+        if(!this.commitDetail.mapPoint.length) {
+          text = '起点'
+
+          //根据起点获取集合地点
+          geoc.getLocation(p,(rs)=> {
+            this.commitDetail.address= rs.address
+          })
+
+        } else {
+          text = '' + this.commitDetail.mapPoint.length
+        }
+        let label = new BMap.Label(text, {offset: new BMap.Size(20, -10)});
         this.commitDetail.mapPoint.push(p)
         marker.setLabel(label);
         this.map.addOverlay(marker);    //地图添加标注
@@ -166,7 +183,7 @@
         label = Number(label)
         let endMaker = this.commitDetail.mapPoint.length - 1
         this.commitDetail.mapPoint[label] = e.target.point
-        if (label > 0 && label < endMaker) {   //移动非起点非终点Maker
+        if (label > 0 && label < endMaker) {   //移动起终点之间Maker
           this.computedRouter(this.commitDetail.mapPoint[label], this.commitDetail.mapPoint[label - 1])
           this.callbackStuts = true
           this.waitCallback().then(()=>{
@@ -234,7 +251,7 @@
   }
 </script>
 
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
   #container {
     width: 100%;
     height: 500px;
@@ -254,5 +271,8 @@
 
   .BMapLib_circle, .BMapLib_polygon, .BMapLib_polyline, .BMapLib_rectangle {
     display: none;
+  }
+  .base-input {
+    width: 220px;
   }
 </style>

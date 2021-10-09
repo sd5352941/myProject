@@ -78,7 +78,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   #baiduMap {
     height: 600px;
     width: 100%

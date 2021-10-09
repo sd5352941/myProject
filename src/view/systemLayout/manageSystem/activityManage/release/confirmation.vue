@@ -125,7 +125,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .confirmation-box {
     #map {
       height: 500px;

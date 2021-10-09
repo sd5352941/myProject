@@ -286,7 +286,7 @@
 </script>
 
 
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
   .back-home-button {
     display: flex;
     align-items: center;

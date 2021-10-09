@@ -2,7 +2,7 @@
   <div class="footer"></div>
 </template>
 
-<style>
+<style scoped lang="scss">
   .footer {
     background: #ACACAC;
     margin-top: 100px;

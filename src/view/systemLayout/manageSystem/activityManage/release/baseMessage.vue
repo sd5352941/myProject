@@ -8,7 +8,7 @@
     <el-dialog title="图片剪裁" :visible.sync="dialogVisible" >
       <div class="cropper-box">
         <vueCropper
-          style="height: 500px;width: 800px"
+          class="vue-cropper"
           ref="cropper"
           :img="option.img"
           :outputSize="option.size"
@@ -34,7 +34,7 @@
 
     <el-form ref="form" :model="commitDetail" label-width="80px" size="small">
       <el-form-item label="活动名称" :rules="{ required: true, message: '请填写活动名称', trigger: 'blur' }" prop="title">
-        <el-input v-model="commitDetail.title" style="width: 220px"></el-input>
+        <el-input v-model="commitDetail.title" class="base-input"></el-input>
       </el-form-item>
       <el-form-item label="活动封面" :rules="{ required: true, message: '请上传活动封面', trigger: 'blur' }" prop="img">
         <div class="activityImgDiv">
@@ -98,8 +98,8 @@
         活动详情
       </h2>
 <!--      <quill-editor v-model="commitDetail.desc" style="height: 400px"></quill-editor>-->
+
     </div>
-    {{commitDetail}}
    <!-- 弹出提示-->
     <el-popover placement="right" ref="popover"
       trigger="hover"
@@ -276,6 +276,14 @@
     .cropper-box{
       min-width: 500px;
       /*height: 800px;*/
+    }
+
+    .base-input {
+      width: 220px;
+    }
+    .vue-cropper {
+      height: 500px;
+      width: 800px;
     }
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }

@@ -1,8 +1,8 @@
 <template>
   <div class="home-box">
-    <Affix>
+    <div class="affix">
       <navbar></navbar>
-    </Affix>
+    </div>
     <transition name="fade-transform" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -30,5 +30,11 @@
     width: 100%;
     min-width: 1200px;
   }
-
+  .affix {
+    //position: -webkit-sticky;
+    //position: -moz-sticky;
+    //position: -ms-sticky;
+    //position: sticky;
+    //top: 0px;
+  }
 </style>

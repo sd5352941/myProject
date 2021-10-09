@@ -1,4 +1,4 @@
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
   .user-infor {
     height: 67px;
   }

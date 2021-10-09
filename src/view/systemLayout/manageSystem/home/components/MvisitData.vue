@@ -106,7 +106,7 @@
 </script>
 
 
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
   #Mvisite {
     height: 300px;
     width: 100%;

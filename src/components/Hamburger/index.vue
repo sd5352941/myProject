@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .hamburger {
     display: inline-block;
     cursor: pointer;

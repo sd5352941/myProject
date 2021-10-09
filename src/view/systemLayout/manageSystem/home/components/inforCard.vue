@@ -1,4 +1,4 @@
-<style>
+<style scoped lang="scss">
   .infor-card-icon-con{
     height: 100%;
   }
