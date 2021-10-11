@@ -24,7 +24,7 @@
             </el-badge>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <el-button type="text" style="color: #242329" @click="$router.push('/system')">个人中心</el-button>
+                <el-button type="text" style="color: #242329" @click="toSystem">个人中心</el-button>
               </el-dropdown-item>
               <el-dropdown-item>
                 <el-button type="text" style="color: #242329" @click="loginOut">退出登陆</el-button>
@@ -62,10 +62,16 @@
     },
     methods: {
       /**
-       * 发布活动r
+       * 发布活动
        */
       releaseActivity() {
         this.$router.push({name:'activityRelease'})
+      },
+      /**
+       * 跳转个人中心
+       */
+      toSystem() {
+         this.$router.push('/system')
       },
       toHome() {
         this.$router.push({name:'login'})

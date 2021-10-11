@@ -5,7 +5,7 @@ import router from './router'
 
 router.beforeEach((to, from, next)=>{
   NProgress.start()
-  if(to.matched[0].name == 'system') {
+  if(to.matched[0].name === 'system') {
     getToken() ? next() : next('/login')
   } else {
     next()

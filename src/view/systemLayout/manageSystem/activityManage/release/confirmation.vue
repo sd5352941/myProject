@@ -5,9 +5,10 @@
     <div>
       <img :src="commitDetail.imgPath">
     </div>
-    <div id="map">
+<!--    <div id="map">-->
 
-    </div>
+<!--    </div>-->
+    <view-map :width="500" :height="500" :mapData="commitDetail.mapPoint"></view-map>
   </div>
 </template>
 

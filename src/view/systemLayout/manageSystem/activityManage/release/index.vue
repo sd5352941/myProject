@@ -44,7 +44,7 @@
       next() {
         console.log(this.commitDetail)
         this.$refs.baseMessage.$refs.form.validate((value) => {
-          if(value) {
+          if(true) {
             if (this.stepsActive < 2) {
               this.stepsActive ++
             } else {

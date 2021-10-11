@@ -97,9 +97,8 @@
       <h2 class="base-message-title">
         活动详情
       </h2>
-<!--      <quill-editor v-model="commitDetail.desc" style="height: 400px"></quill-editor>-->
-
     </div>
+    {{commitDetail}}
    <!-- 弹出提示-->
     <el-popover placement="right" ref="popover"
       trigger="hover"
@@ -111,16 +110,14 @@
 <script>
   import {uploadIMG} from '@/api/activity'
   import {mapGetters} from 'vuex'
-  // import 'quill/dist/quill.core.css'
-  // import 'quill/dist/quill.snow.css'
-  // import 'quill/dist/quill.bubble.css'
-
-  // import { quillEditor } from 'vue-quill-editor'
   import { VueCropper } from 'vue-cropper'
+
+
 
   export default {
     name: 'baseMessage',
     components: {
+      VueUeditorWrap,
       // quillEditor, //富文本编辑器
       VueCropper  //图片剪裁
     },
@@ -189,7 +186,7 @@
           let files = new window.File([data], 'testImg.png', {type: 'image/png'})
           let formData = new FormData();
           formData.append('file', files)
-          uploadIMG(formData).then(res=> {
+          uploadIMG(formData,'activityCover').then(res=> {
             this.commitDetail.imgPath = res.data.path
           })
         })
