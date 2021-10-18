@@ -1,9 +1,9 @@
 <template>
   <div class="navbar">
     <div class="navbar-centent">
-      <a class="link link--kukuri" href="#" data-letters="LOGO"
-         @click="toHome">LOGO</a>
-      <!--<nav-menu class="nav-menu"></nav-menu>-->
+<!--      <a class="link link&#45;&#45;kukuri" href="#" data-letters="LOGO"-->
+<!--         @click="toHome"></a>-->
+      <img src="@static/image/logo/pc-title.png" class="logo-img" @click="toHome">
       <section class="navbar-right">
         <article style="margin-right: 50px">
           <el-button type="primary" round class="nav-button" @click="releaseActivity">发布活动</el-button>
@@ -74,7 +74,7 @@
          this.$router.push('/system')
       },
       toHome() {
-        this.$router.push({name:'login'})
+        this.$router.push({name:'home'})
       },
       toLogin() {
         this.$router.push({name:'login'})
@@ -224,5 +224,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+  .logo-img {
+    cursor: pointer;
+    width: 120px;
+    height: 40px;
   }
 </style>

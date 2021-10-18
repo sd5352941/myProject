@@ -2,7 +2,10 @@
   <el-menu class="systemNavbar" mode="horizontal">
     <template>
       <div style="display: flex">
-        <div>LOGO</div>
+        <div class="pc-logo-box ml20 mr20">
+          <img src="@static/image/logo/pc-title-system.png" class="logo-img" @click="toHome">
+
+        </div>
         <breadcrumb></breadcrumb>
       </div>
     </template>
@@ -48,10 +51,13 @@
     methods: {
       loginOut() {
         this.$store.dispatch('LoginOut').then(() => {
-          this.$router.push("/home")
+          this.toHome()
           location.reload() // 为了重新实例化vue-router对象 避免bug
         })
       },
+      toHome() {
+        this.$router.push("/home")
+      }
     },
     mounted: function () {
     }
@@ -105,6 +111,16 @@
         }
       }
     }
+  }
+  .logo-img {
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  .pc-logo-box {
+    display: flex;
+    align-items: center;
   }
 </style>
 

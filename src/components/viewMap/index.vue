@@ -1,5 +1,5 @@
 <template>
-  <div class="map-box" id="map" :style="`width:${width}px;height:${height}px`">
+  <div class="map-box" id="map" :style="`width:${width};height:${height}`">
   </div>
 </template>
 
@@ -11,12 +11,12 @@ export default {
       default: ()=>[]
     },
     width: {
-      type:Number,
-      default: 0,
+      type:String,
+      default: '',
     },
     height: {
-      type:Number,
-      default:0,
+      type:String,
+      default:'',
     }
   },
   data() {
@@ -60,8 +60,8 @@ export default {
           this.loading.close()  // 关闭loading状态
         }
       })
-      // this.routeRender()
-      // this.makerRender()
+      this.routeRender()
+      this.makerRender()
 
     },
     /**

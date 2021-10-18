@@ -97,8 +97,10 @@
       <h2 class="base-message-title">
         活动详情
       </h2>
+      <textarea class="my_editor" id="Editor"  v-model="Editortext"></textarea>
+
+
     </div>
-    {{commitDetail}}
    <!-- 弹出提示-->
     <el-popover placement="right" ref="popover"
       trigger="hover"
@@ -111,13 +113,13 @@
   import {uploadIMG} from '@/api/activity'
   import {mapGetters} from 'vuex'
   import { VueCropper } from 'vue-cropper'
-
+  import {editorConfig} from './editor.config'
 
 
   export default {
+    mixins:[editorConfig],
     name: 'baseMessage',
     components: {
-      VueUeditorWrap,
       // quillEditor, //富文本编辑器
       VueCropper  //图片剪裁
     },
@@ -184,6 +186,8 @@
         this.$refs.cropper.getCropBlob(data => {
           this.commitDetail.img = window.URL.createObjectURL(data)
           let files = new window.File([data], 'testImg.png', {type: 'image/png'})
+          console.log(files,'剪裁上传')
+
           let formData = new FormData();
           formData.append('file', files)
           uploadIMG(formData,'activityCover').then(res=> {
@@ -224,6 +228,10 @@
 </script>
 
 <style lang="scss" scoped="scoped">
+
+.editor {
+  width: 100%;
+}
   .base-message-box {
     .el-form-item__error {
       margin-top: 5px;

@@ -12,7 +12,7 @@ const activity = {
       departureTime: '', //出发时间
       type: 'free',
       tags: [],
-      desc: '',
+      desc: '', //活动详情
       people: 0,
       pee: '',
       mapPoint: [], //骑行路径点
