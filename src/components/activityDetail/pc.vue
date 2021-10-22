@@ -15,20 +15,20 @@
                 <span>{{data.address}}</span>
               </div>
               <div class="registration-info mb20">
-                <i class="el-icon-user-solid"></i><span class="ml10">已报名 86/100人</span>
+                <i class="el-icon-user-solid"></i><div class="ml10">已报名 86<span v-if="data.people">/{{data.people}}</span>人</div>
               </div>
             </div>
-            <div class="mb20">目的地：   成都益州大道1999号成都银泰城17号楼</div>
-            <div class="mb20">集合时间：06-29  12:30</div>
-            <div class="mb20">出发时间：06-29  12:30</div>
-            <div class="mb20">活动性质：免费</div>
+            <div class="mb20">目的地：{{data.destination}}</div>
+            <div class="mb20">集合时间：{{formatDate(data.gatheringTime)}}</div>
+            <div class="mb20">出发时间：{{formatDate(data.departureTime)}}</div>
+            <div class="mb20">活动性质：{{toText.type[data.type]}}</div>
           </div>
         </div>
       </div>
       <div class="top-content mt40">
         <div class="activity-type">
           <div class="label">报名类型</div>
-          <xhq-radio :options="{radioArr:testTypes}" v-model="pcTestValue"></xhq-radio>
+          <xhq-radio :options="{radioArr:data.typeArr,unit: '￥'}" v-model="applyType"></xhq-radio>
         </div>
         <div class="button-box">
           <div class="sign-up-now" @click="signUp">立即报名</div>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import {formatDate} from '@/utils/formatDate'
 
 export default {
   props: {
@@ -67,14 +68,17 @@ export default {
   },
   data() {
     return {
-      pcTestValue: '活动类型1',
-      testTypes: [
-        {value: '活动类型1',label: '￥99'},{value: '活动类型2',label: '￥129'}
-      ],
+      toText: {
+        type: {
+          free: '免费',
+          charge: '收费'
+        },
+      },
+      applyType: ''
     }
   },
   mounted() {
-    console.log(this.data)
+    console.log(this.data,33333333)
   },
   methods: {
     /**
@@ -82,6 +86,12 @@ export default {
      */
     signUp() {
       console.log('sign up!!!')
+    },
+    /**
+     * 时间格式化
+     */
+    formatDate(val) {
+      return formatDate(new Date(val))
     }
   }
 }
@@ -127,6 +137,8 @@ export default {
   justify-content: space-between;
 }
 .registration-info {
+  display: flex;
+  align-items: center;
   font-family: PingFangSC-Semibold;
   font-size: 14px;
   color: #FD7E39;

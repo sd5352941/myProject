@@ -2,7 +2,7 @@
   <div class="detail_content">
     <el-card class="card" v-if="activityDetail.esInformation">
       <el-card>
-        <img src="../../../static/image/activityImg/ac1.png" class="titleImg"/>
+        <img src="@static/image/activityImg/ac1.png" class="titleImg"/>
       </el-card>
       <article style="padding: 16px">
         <section class="top20">

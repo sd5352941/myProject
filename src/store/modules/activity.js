@@ -4,16 +4,17 @@ const activity = {
   state: {
     commitDetail: {  //发布活动信息
       address: '', //活动集合地点
+      destination: '', //目的地
       img: '', //活动封面图片url
       imgPath: {}, //活动封面后台地址
-      title: '',
+      title: '', //活动标题
       time: '', //骑行日期
       gatheringTime: '', //集合时间
       departureTime: '', //出发时间
-      type: 'free',
-      tags: [],
+      typeArr: [{label: 0,value: '免费',type: 'free'}], //报名种类
+      tags: [],  //活动标签
       desc: '', //活动详情
-      people: 0,
+      people: 0, //人数限制
       pee: '',
       mapPoint: [], //骑行路径点
     },

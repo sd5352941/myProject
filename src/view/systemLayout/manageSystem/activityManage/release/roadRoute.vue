@@ -5,6 +5,9 @@
       <el-form-item label="集合地点" :rules="{ required: true, message: '请输入集合地点', trigger: 'blur' }" prop="address">
         <el-input v-model="commitDetail.address" class="base-input" clearable></el-input>
       </el-form-item>
+      <el-form-item label="目的地" :rules="{ required: true, message: '请输入目的地', trigger: 'blur' }" prop="destination">
+        <el-input v-model="commitDetail.destination" class="base-input" clearable></el-input>
+      </el-form-item>
     </el-form>
     <div class="util-box">
       <el-input class="auto-input" v-model="searchValue" placeholder="搜索地址">
@@ -147,6 +150,10 @@
 
         } else {
           text = '' + this.commitDetail.mapPoint.length
+          //根据终点获取集合地点
+          geoc.getLocation(p,(rs)=> {
+            this.commitDetail.destination= rs.address
+          })
         }
         let label = new BMap.Label(text, {offset: new BMap.Size(20, -10)});
         this.commitDetail.mapPoint.push(p)

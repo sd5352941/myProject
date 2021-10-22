@@ -3,8 +3,11 @@
     <div class="type-tabs">
       <div v-for="item,index in options.radioArr" class="card" :key="index"
            :class="radioValue === item.value ? 'checked' : ''" @click="inputChange(item.value)">
-        <div>{{item.label}}</div>
-        <div class="sub-text">{{item.value}}</div>
+        <div v-if="item.label">
+          <div>{{options.unit}}{{item.label}}</div>
+          <div class="sub-text">{{item.value}}</div>
+        </div>
+        <div v-else>{{item.value}}</div>
       </div>
     </div>
 <!--    <div v-for="item,index in options.radioArr" :key="index" class="card">-->
@@ -38,7 +41,15 @@ export default {
       radioValue: this.value,
     }
   },
+  mounted() {
+    this.init()
+  },
   methods: {
+    init() {
+      this.radioValue = this.options.radioArr[0].value //默认选择第一个
+      this.$emit('change',this.radioValue)
+
+    },
     inputChange(val) {
       this.radioValue = val
       this.$emit('change',val)
@@ -55,6 +66,8 @@ export default {
 .card {
   width: 256px;
   height: 70px;
+  display: flex;
+  align-items: center;
   padding: 10px;
   margin-right: 40px;
   border: 2px solid #D0D0D0;

@@ -69,18 +69,26 @@
           </el-button>
         </div>
       </el-form-item>
-      <el-form-item label="活动性质">
-        <el-radio-group v-model="commitDetail.type">
-          <div style="display: flex">
-            <el-radio label="free">免费</el-radio>
-            <el-radio label="charge">收费</el-radio>
+      <el-form-item label="活动组别">
+        <div v-for="item,index in commitDetail.typeArr" :key="index">
+          <el-radio-group v-model="item.type" @change="typeChange(item)">
+            <div style="display: flex">
+              <el-radio label="free">免费</el-radio>
+              <el-radio label="charge">收费</el-radio>
+            </div>
+          </el-radio-group>
+          <div v-show="item.type=='charge'">
+            <el-input placeholder="请输入活动组名" v-model="item.value" class="base-input"></el-input>
+            <span style="margin-left: 20px">价格/人(元):
+              <el-input-number v-model="item.label"
+                           style="width: 150px;margin-left: 10px" :min="0"
+                           placeholder="输入每人报名费"></el-input-number>
+
+            </span>
           </div>
-        </el-radio-group>
-        <span style="margin-left: 20px" v-if="commitDetail.type=='charge'">价格/人(元):
-        <el-input-number v-model="commitDetail.pee"
-                         style="width: 150px;margin-left: 10px" :min="0"
-                         placeholder="输入每人报名费"></el-input-number>
-          </span>
+
+        </div>
+
       </el-form-item>
       <el-form-item label="活动标签">
         <el-tag :key="tag" v-for="tag in commitDetail.tags" closable style="margin-right: 20px" :disable-transitions="false" @close="handleClose(tag)">
@@ -159,6 +167,19 @@
       };
     },
     methods: {
+      /**
+       * 活动性质切换
+       */
+      typeChange(item) {
+        console.log(item.type,0)
+        let obj = {
+          free: {label: 0,value: '免费',type: 'free'},
+          charge: {label: 0,value: '',type: 'charge'},
+        }
+        this.commitDetail.typeArr[0].value = obj[item.type].value
+        this.commitDetail.typeArr[0].label = obj[item.type].label
+
+      },
       /**
        * 重置上传
        */
@@ -289,6 +310,9 @@
     .vue-cropper {
       height: 500px;
       width: 800px;
+    }
+    .base-input {
+      width: 200px;
     }
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
