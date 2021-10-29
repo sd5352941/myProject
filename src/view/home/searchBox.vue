@@ -1,6 +1,6 @@
 <template>
-  <el-card class="search-box">
-    <div v-for="item in searchDesc" style="display:flex;align-items: center" class="search-item">
+  <el-card class="search-box"shadow="never" >
+    <div v-for="item in searchDesc" class="search-item">
       <label class="search-label">{{item.label}}:</label>
       <el-radio-group v-model="searchValue[item.model]" v-if="item.status == 'radio'" size="mini">
         <el-radio-button v-for="val in item.value" :label="val.value" :key="val.value">{{val.label}}</el-radio-button>
@@ -32,7 +32,6 @@
       }
     },
     mounted() {
-      console.log(this.$store)
     }
   }
 </script>
@@ -54,5 +53,7 @@
 
   .search-item {
     margin-bottom: 31px;
+    display:flex;
+    align-items: center;
   }
 </style>g

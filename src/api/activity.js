@@ -42,3 +42,17 @@ export function uploadIMG(data,name) {
   //   formData: data
   // })
 }
+
+/**
+ * 暂存活动详情数据
+ * @param data 活动详情数据
+ * @returns {*}
+ */
+
+export function cacheAcData(data) {
+  return request({
+    url: '/activity/cache',
+    method: 'post',
+    data
+  })
+}

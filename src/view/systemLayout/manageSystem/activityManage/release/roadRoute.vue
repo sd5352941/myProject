@@ -2,10 +2,10 @@
   <div class="roadrouter-box" :v-loading.fullscreen="true">
 <!--    <div>地图上点击右键创建路径点</div>-->
     <el-form ref="form" :model="commitDetail" label-width="80px" size="small" class="mt20">
-      <el-form-item label="集合地点" :rules="{ required: true, message: '请输入集合地点', trigger: 'blur' }" prop="address">
+      <el-form-item label="集合地点" :rules="{ required: false, message: '请输入集合地点', trigger: 'blur' }" prop="address">
         <el-input v-model="commitDetail.address" class="base-input" clearable></el-input>
       </el-form-item>
-      <el-form-item label="目的地" :rules="{ required: true, message: '请输入目的地', trigger: 'blur' }" prop="destination">
+      <el-form-item label="目的地" :rules="{ required: false, message: '请输入目的地', trigger: 'blur' }" prop="destination">
         <el-input v-model="commitDetail.destination" class="base-input" clearable></el-input>
       </el-form-item>
     </el-form>
@@ -25,6 +25,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  import {parsePoints} from "@/utils";
 
   export default {
     data() {
@@ -60,6 +61,50 @@
         myCity.get(this.initMap)
       },
       /**
+       * 初始化路径
+       */
+      initRoute() {
+        if(this.commitDetail.mapPoint.length > 1) {
+          this.map.clearOverlays();
+          this.loading = this.$loading({
+            lock: true,
+            text: '正在计算骑行路径',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)',
+            target:document.querySelector('#map')
+          });
+          let mapPoint = parsePoints(this.commitDetail.mapPoint)
+          // 循环绘制骑行路线
+          for(let key in mapPoint) {
+            if(key < mapPoint.length - 1) {
+              setTimeout(()=> {
+                this.riding.search(mapPoint[Number(key)], mapPoint[Number(key)+1])
+              },100 * key)
+            }
+          }
+          // var viewPort = this.map.getViewport(mapPoint)
+          this.markerRender(mapPoint)
+          // this.map.centerAndZoom(viewPort.center, viewPort.zoom - 2);      //地图视角切换至路径规划中心
+        }
+      },
+      /**
+       *  骑终点路线渲染
+       */
+      markerRender(mapData) {
+        for(let key in mapData) {
+          var point = mapData[key]
+          var marker = new BMap.Marker(point);  // 创建标注
+          // 添加标注描述
+          let text
+          key == 0 ? text = '起' : text = '' + key
+          // if(key == mapData.length -1 ) text = '终'
+          let label = new BMap.Label(text, {offset: new BMap.Size(20, -10)});
+          marker.setLabel(label);
+          this.map.addOverlay(marker);               // 将标注添加到地图中
+          marker.setAnimation(BMAP_ANIMATION_DROP); //跳动的动画
+        }
+      },
+      /**
        * 初始化地图
        * @param result
        */
@@ -74,6 +119,7 @@
             autoViewport: true
           }
         });
+
 
         // 骑行路径点搜索回调
         this.riding.setSearchCompleteCallback(() => {
@@ -91,8 +137,10 @@
               this.loading.close()  // 关闭loading状态
             }
           })
+
         this.autocomplete()
         this.handlerMouseClick()
+
       },
       /**
        * 输入框完成自动输入，搜索目的地
@@ -247,6 +295,8 @@
         this.map.clearOverlays();
         this.polylineArr = []     //清除polyline数组
         this.commitDetail.mapPoint = []     //清除maker数组
+        this.commitDetail.destination = ''
+        this.commitDetail.address = ''
       }
     }
     ,

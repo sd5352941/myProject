@@ -7,12 +7,12 @@
     </el-steps>
     <div class="content-box">
       <base-message v-show="stepsActive == 0" ref="baseMessage"></base-message>
-      <road-route v-show="stepsActive == 1"></road-route>
+      <road-route v-show="stepsActive == 1" ref="roadRoute"></road-route>
       <confirmation v-if="stepsActive == 2"></confirmation>
     </div>
     <div class="button-box">
-      <el-button @click="next">{{stepsActive > 1 ? '提交': '下一步'}}</el-button>
-      <el-button @click="back" v-if="stepsActive!=0">上一步</el-button>
+      <el-button @click="next" type="primary" class="click-button">{{stepsActive > 1 ? '提交': '下一步'}}</el-button>
+      <el-button @click="back" type="primary" plain v-if="stepsActive!=0" class="click-button">上一步</el-button>
     </div>
   </el-card>
 </template>
@@ -22,6 +22,7 @@
   import roadRoute from './roadRoute'
   import confirmation from './confirmation'
   import {mapGetters} from 'vuex'
+  import {parsePoints} from "@/utils";
 
   export default {
     name: 'release',
@@ -40,20 +41,58 @@
         stepsActive: 0
       }
     },
+    created() {
+      this.initData()
+    },
     methods: {
+      initData() {
+        let cacheData = localStorage.getItem('commitDetail')
+        if(cacheData) {
+          // cacheData.mapPoint = parsePoints(cacheData.mapPoint)
+          this.$store.commit('SET_COMMITDETAIL',JSON.parse(cacheData))
+          this.commitDetail.mapPoint = parsePoints(this.commitDetail.mapPoint)
+        }
+      },
+      cacheData() {
+        localStorage.setItem("commitDetail",JSON.stringify(this.commitDetail));
+      },
       next() {
-        console.log(this.commitDetail)
         this.$refs.baseMessage.$refs.form.validate((value) => {
           if(true) {
             if (this.stepsActive < 2) {
+              this.cacheData()
               this.stepsActive ++
+              if(this.stepsActive == 1) this.$refs.roadRoute.initRoute()
             } else {
-              this.$store.dispatch('AddActivity')
+              this.commitData()
             }
           } else {
             this.$message.error('请完善相关活动信息')
           }
         })
+      },
+      /**
+       * 提交数据
+       */
+      commitData() {
+        this.$store.dispatch('AddActivity').then(res=> {
+          if(res.data.code === 2000) {
+            this.$confirm('活动提交成功，是否跳转到详情页面', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'success'
+            }).then(() => {
+              let query = {
+                _id: res.data.result._id
+              }
+              this.$router.push({path: '/activityDetail', query})
+
+            }).catch(() => {
+              this.stepsActive = 0
+            });
+          }
+        })
+
       },
       back() {
         this.stepsActive --
@@ -67,10 +106,15 @@
     .button-box{
       display: flex;
       flex-direction: row-reverse;
+      justify-content: space-between;
       margin: 20px;
     }
     .content-box {
       margin: 40px;
     }
+  }
+
+  .click-button {
+    width: 200px;
   }
 </style>

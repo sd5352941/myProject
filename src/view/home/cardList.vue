@@ -89,8 +89,10 @@
 
 <style lang="scss" scoped>
   .card-list-box {
+    padding: 30px 0;
     height: 700px;
     overflow-y:auto;
+    background: #F6F6F6;;
   }
   .card-box {
     overflow-y:auto;

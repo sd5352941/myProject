@@ -53,3 +53,10 @@ export function formatTime(time, option) {
     return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
   }
 }
+
+export function parsePoints(points) {
+  let newPoints = points.map((point)=> {
+    return new BMap.Point(point.lng,point.lat)
+  })
+  return newPoints
+}

@@ -15,13 +15,13 @@
                 <span>{{data.address}}</span>
               </div>
               <div class="registration-info mb20">
-                <i class="el-icon-user-solid"></i><div class="ml10">已报名 86<span v-if="data.people">/{{data.people}}</span>人</div>
+                <i class="el-icon-user-solid"></i><div class="ml10">已报名 {{data.currentPeople ? data.currentPeople : 0}}<span v-if="data.people">/{{data.people}}</span>人</div>
               </div>
             </div>
             <div class="mb20">目的地：{{data.destination}}</div>
             <div class="mb20">集合时间：{{formatDate(data.gatheringTime)}}</div>
             <div class="mb20">出发时间：{{formatDate(data.departureTime)}}</div>
-            <div class="mb20">活动性质：{{toText.type[data.type]}}</div>
+<!--            <div class="mb20">活动性质：{{toText.type[data.type]}}</div>-->
           </div>
         </div>
       </div>
@@ -42,7 +42,7 @@
         <i class="el-icon-location-outline"></i>
         <span>活动地图</span>
       </div>
-      <view-map height="575px" width="100%" :mapData="data.mapPoint"></view-map>
+      <view-map height="575px" width="100%" :mapData="data.mapPoint" mapId="pc"></view-map>
 
     </el-card>
 
@@ -78,7 +78,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.data,33333333)
   },
   methods: {
     /**
@@ -146,7 +145,7 @@ export default {
 }
 
 .card-base {
-  padding: 30px;
+  padding: 30px 15px;
 }
 
 .card-title {

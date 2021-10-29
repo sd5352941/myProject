@@ -1,11 +1,14 @@
 <template>
-  <el-card class="card-box">
+  <el-card class="card-box" shadow="hover">
     <div class="card-title-img hand" @click="toDetail">
       <img :src="data.imgPath" onerror="javascript:this.src='https://preview.qiantucdn.com/paixin/39/06/74/158PICK58PICjDR3uS96EfXeX_PIC2018.jpg!w1024_new_small';">
       <div class="card-Label-box">
         <div class="card-label-text-box">
           <p>进行中</p>
-          <p>999/999</p>
+          <p>9
+            <span v-if="data.people">/{{data.people }}</span>
+            <span v-else>人</span>
+          </p>
           <div class="thumbtack"></div>
         </div>
       </div>
@@ -13,7 +16,7 @@
     <div class="card-content">
       <div class="card-time-box">
         <i class="el-icon-date"></i>
-        <span class="card-time">{{data.departureTime}}</span>
+        <span class="card-time">{{formatDate(data.departureTime)}}</span>
       </div>
       <div class="card-title-box hand" @click="toDetail">
         {{data.title}}
@@ -32,6 +35,9 @@
 
 
 <script>
+import {formatDate} from '@/utils/formatDate'
+
+
   export default {
     name: 'activityCard',
     props: {
@@ -48,6 +54,12 @@
     },
     methods: {
       /**
+       * 格式化时间
+       */
+      formatDate(val) {
+        return formatDate(new Date(val))
+      },
+      /**
        * 跳转详情页面
        */
       toDetail() {
@@ -56,13 +68,6 @@
         }
         this.$router.push({path: '/activityDetail', query})
       },
-      /**
-       * 获取活动集合点
-       */
-      getAddress(data) {
-        console.log(data)
-        return '地点123'
-      }
     },
   }
 </script>
@@ -71,6 +76,9 @@
     .card-box {
       width: 365px;
       margin-bottom: 20px;
+      &:hover {
+        transform: scale(1.02);
+      }
 
       .card-title-img {
         position: relative;

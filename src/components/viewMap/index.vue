@@ -1,11 +1,17 @@
 <template>
-  <div class="map-box" id="map" :style="`width:${width};height:${height}`">
+  <div class="map-box" :id="mapId" :style="`width:${width};height:${height}`">
   </div>
 </template>
 
 <script>
+import {parsePoints} from "@/utils";
+
 export default {
   props: {
+    mapId: {
+      type:String,
+      default: 'map'
+    },
     mapData: {
       type:Array,
       default: ()=>[]
@@ -24,7 +30,7 @@ export default {
       map: {},  //地图容器
       riding: {},
       loading: {},  //地图加载状态
-      callbackStuts: false,  //判断是否在回调状态
+      callbackStatus: false,  //判断是否在回调状态
       polylineArr: [],
     }
   },
@@ -33,7 +39,7 @@ export default {
   },
   methods: {
     init() {
-      this.map = new BMap.Map('map')
+      this.map = new BMap.Map(this.mapId)
       this.map.centerAndZoom('成都', 10);                 // 初始化地图，设置中心点坐标和地图级别
       this.map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
       this.riding = new BMap.RidingRoute(this.map, {       //创建riding对象
@@ -51,7 +57,7 @@ export default {
           this.map.addOverlay(polyline)
           this.polylineArr.push(polyline)
           this.riding.clearResults() //清除路径计算点
-          this.callbackStuts = false
+          this.callbackStatus = false
           this.loading.close()  // 关闭loading状态
           var viewPort = this.map.getViewport(this.mapData)
           this.map.centerAndZoom(viewPort.center, viewPort.zoom - 1);      //地图视角切换至路径规划中心
@@ -62,7 +68,6 @@ export default {
       })
       this.routeRender()
       this.makerRender()
-
     },
     /**
      *  骑行路线渲染
@@ -76,8 +81,11 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)',
         target:document.querySelector('#map')
       });
+      setTimeout(()=> {
+        this.loading.close()
+      },2000)
             // 利用骑行路径返回point在地图绘制成线
-      let mapPoint = this.mapData
+      let mapPoint = parsePoints(this.mapData)
       // 循环绘制骑行路线
       for(let key in mapPoint) {
         if(key < mapPoint.length - 1) {
@@ -94,10 +102,7 @@ export default {
      *  骑终点路线渲染
      */
     async makerRender() {
-      console.log(this.mapData,33333)
-      let time = 2000
       for(let key in this.mapData) {
-        time > 200 ? time = time - 200 : time = 200
         var point = this.mapData[key]
         var marker = new BMap.Marker(point);  // 创建标注
         // 添加标注描述

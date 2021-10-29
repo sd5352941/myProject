@@ -4,7 +4,7 @@
       <navbar></navbar>
     </div>
     <transition name="fade-transform" mode="out-in">
-      <router-view></router-view>
+      <router-view class="mt103"></router-view>
     </transition>
     <foobar></foobar>
   </div>

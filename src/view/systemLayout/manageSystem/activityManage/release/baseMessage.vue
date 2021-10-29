@@ -39,7 +39,7 @@
       <el-form-item label="活动封面" :rules="{ required: true, message: '请上传活动封面', trigger: 'blur' }" prop="img">
         <div class="activityImgDiv">
           <div class="img-box">
-            <img :src="commitDetail.img">
+            <img :src="commitDetail.imgPath ? commitDetail.imgPath : commitDetail.img">
           </div>
           <div class="upload">
             <el-upload action :auto-upload="false" :file-list="fileList"
@@ -78,7 +78,7 @@
             </div>
           </el-radio-group>
           <div v-show="item.type=='charge'">
-            <el-input placeholder="请输入活动组名" v-model="item.value" class="base-input"></el-input>
+            <el-input placeholder="请输入描述" v-model="item.value" class="base-input"></el-input>
             <span style="margin-left: 20px">价格/人(元):
               <el-input-number v-model="item.label"
                            style="width: 150px;margin-left: 10px" :min="0"
@@ -166,12 +166,15 @@
         },
       };
     },
+    created() {
+      // this.Editortext = '1111111111111111'
+      if(this.commitDetail.desc) this.Editortext = this.commitDetail.desc
+    },
     methods: {
       /**
        * 活动性质切换
        */
       typeChange(item) {
-        console.log(item.type,0)
         let obj = {
           free: {label: 0,value: '免费',type: 'free'},
           charge: {label: 0,value: '',type: 'charge'},

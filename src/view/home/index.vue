@@ -1,10 +1,10 @@
 <template>
-  <div class="backgourdIMG">
+  <div class="home-content-box">
     <carousel></carousel>
     <div class="search-div">
       <search-box></search-box>
     </div>
-    <el-card class="content">
+    <el-card class="content" shadow="never">
       <el-tabs v-model="homeTab">
         <el-tab-pane name="list">
           <div slot="label" class="tab-label">
@@ -65,7 +65,8 @@
 </script>
 
 <style scoped lang="scss">
-  .backgourdIMG {
+  .home-content-box {
+
   }
   .search-div {
     display: flex;

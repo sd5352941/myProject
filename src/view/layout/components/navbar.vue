@@ -93,10 +93,12 @@
   }
   .navbar {
     width: 100%;
-    //min-width: 1200px;
-    .badge-item {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 
-    }
     .nav-button {
       font-family: PingFang-SC-Medium;
       font-size: 18px;
