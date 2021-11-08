@@ -1,8 +1,10 @@
-import {getActivity, getActivityDetail, addActivity} from "@/api/activity";
+import {getActivity, getActivityDetail, addActivity,signUpActivity} from "@/api/activity";
+import {getUserName} from "@/utils/auth";
 
 const activity = {
   state: {
     commitDetail: {  //发布活动信息
+      roadKm: [], //骑行总里程 unit:km
       address: '', //活动集合地点
       destination: '', //目的地
       img: '', //活动封面图片url
@@ -15,6 +17,7 @@ const activity = {
       tags: [],  //活动标签
       desc: '', //活动详情
       people: 0, //人数限制
+      creator: '', //提交用户名
       pee: '',
       mapPoint: [], //骑行路径点
     },
@@ -35,6 +38,7 @@ const activity = {
   mutations: {
     CLEAR_COMMITDETAIL(state) {
       state.commitDetail = {  //发布活动信息
+          roadKm: [],
           address: '', //活动集合地点
           destination: '', //目的地
           img: '', //活动封面图片url
@@ -47,6 +51,7 @@ const activity = {
           tags: [],  //活动标签
           desc: '', //活动详情
           people: 0, //人数限制
+          creator: '', //提交用户名
           pee: '',
           mapPoint: [], //骑行路径点
       }
@@ -59,6 +64,9 @@ const activity = {
     },
     SET_COMMITDETAIL(state,detail) {
       state.commitDetail = detail
+    },
+    SET_COMMITDETAILCREATOR(state) {
+      state.commitDetail.creator = getUserName()
     }
   },
   actions: {

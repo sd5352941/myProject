@@ -1,10 +1,22 @@
 import axios from 'axios'
+import {getToken} from "@/utils/auth";
+
 import {Message} from 'element-ui'
 
 var request = axios.create({
   baseURL: process.env.BASE_API,
   // timeout: 6000
 })
+
+/**
+ * request拦截器
+ */
+request.interceptors.request.use(
+  req => {
+    if(getToken())  req.headers['token'] = getToken()
+    return req
+  }
+)
 
 /**
  * response拦截器
@@ -27,7 +39,6 @@ request.interceptors.response.use(
     }
   },
   error => {
-    console.log(error.message)
     Message({
       message: error.message,
       type: 'error',

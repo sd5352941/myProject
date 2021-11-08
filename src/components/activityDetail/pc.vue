@@ -21,6 +21,10 @@
             <div class="mb20">目的地：{{data.destination}}</div>
             <div class="mb20">集合时间：{{formatDate(data.gatheringTime)}}</div>
             <div class="mb20">出发时间：{{formatDate(data.departureTime)}}</div>
+            <div class="mb20" flex>
+              <div class="creator">{{data.creator}}</div>
+              <div>123123</div>
+            </div>
 <!--            <div class="mb20">活动性质：{{toText.type[data.type]}}</div>-->
           </div>
         </div>
@@ -58,12 +62,18 @@
 
 <script>
 import {formatDate} from '@/utils/formatDate'
+import {signUpActivity} from "@/api/activity"
+import {getUserName} from "@/utils/auth";
 
 export default {
   props: {
     data: {
       type: Object,
       default: {}
+    },
+    view: {
+      tyoe:Boolean,
+      default: false
     }
   },
   data() {
@@ -84,7 +94,14 @@ export default {
      * 活动报名
      */
     signUp() {
-      console.log('sign up!!!')
+      if(this.view) return false
+      let commit = {
+        activityId: this.data._id,
+        userName: getUserName()
+      }
+      signUpActivity(commit).then(res=> {
+        console.log(res)
+      })
     },
     /**
      * 时间格式化
@@ -206,6 +223,13 @@ export default {
   font-size: 18px;
   color: #333333;
   letter-spacing: 0;
+}
+
+.creator {
+  cursor: pointer;
+  &:hover {
+    color: #dfc700;
+  }
 }
 
 </style>

@@ -42,6 +42,7 @@ export default {
       this.map = new BMap.Map(this.mapId)
       this.map.centerAndZoom('成都', 10);                 // 初始化地图，设置中心点坐标和地图级别
       this.map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      this.map.clearOverlays()
       this.riding = new BMap.RidingRoute(this.map, {       //创建riding对象
         renderOptions: {
           map: this.map,

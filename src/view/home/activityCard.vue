@@ -5,7 +5,7 @@
       <div class="card-Label-box">
         <div class="card-label-text-box">
           <p>进行中</p>
-          <p>9
+          <p>0x`
             <span v-if="data.people">/{{data.people }}</span>
             <span v-else>人</span>
           </p>

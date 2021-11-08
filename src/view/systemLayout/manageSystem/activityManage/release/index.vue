@@ -39,6 +39,7 @@
     data() {
       return {
         stepsActive: 0
+
       }
     },
     created() {
@@ -52,17 +53,23 @@
           this.$store.commit('SET_COMMITDETAIL',JSON.parse(cacheData))
           this.commitDetail.mapPoint = parsePoints(this.commitDetail.mapPoint)
         }
+        this.$store.commit('SET_COMMITDETAILCREATOR')
+
       },
       cacheData() {
         localStorage.setItem("commitDetail",JSON.stringify(this.commitDetail));
       },
-      next() {
+      async next() {
         this.$refs.baseMessage.$refs.form.validate((value) => {
           if(true) {
             if (this.stepsActive < 2) {
               this.cacheData()
               this.stepsActive ++
-              if(this.stepsActive == 1) this.$refs.roadRoute.initRoute()
+              if(this.stepsActive == 1) {
+                for(let key in this.commitDetail.mapPoint) {
+                  this.$refs.roadRoute.cacheAddMarker(this.commitDetail.mapPoint[key],key)
+                }
+              }
             } else {
               this.commitData()
             }
@@ -77,6 +84,9 @@
       commitData() {
         this.$store.dispatch('AddActivity').then(res=> {
           if(res.data.code === 2000) {
+            localStorage.setItem('commitDetail','')
+            this.$store.commit('CLEAR_COMMITDETAIL')
+            this.$refs.roadRoute.map.clearOverlays()
             this.$confirm('活动提交成功，是否跳转到详情页面', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',

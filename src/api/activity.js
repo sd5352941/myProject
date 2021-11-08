@@ -56,3 +56,11 @@ export function cacheAcData(data) {
     data
   })
 }
+
+export function signUpActivity(data) {
+  return request({
+    url: '/activity/signUp',
+    method: 'post',
+    data
+  })
+}
