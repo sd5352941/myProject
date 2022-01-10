@@ -2,25 +2,32 @@ import Cookies from 'js-cookie'
 
 
 export function setUserName(name) {
-  Cookies.set('username',name)
+  // Cookies.set('username',name)
+  localStorage.setItem("username", name);
 }
 
 export function setToken(token) {
- Cookies.set('userToken',token)
+  localStorage.setItem("userToken", token);
+
+  // Cookies.set('userToken',token)
 }
 
 export function removeToken() {
-  Cookies.remove('userToken')
+  localStorage.removeItem("userToken");
+  // Cookies.remove('userToken')
 }
 
 export function removeUserName() {
-  Cookies.remove('username')
+  localStorage.removeItem("username");
 }
 
 export function getToken() {
-  return Cookies.get('userToken')
+  return localStorage.getItem("userToken");
+  // return Cookies.get('userToken')
 }
 
 export function getUserName() {
-  return Cookies.get('username')
+  return localStorage.getItem("username");
+  //
+  // return Cookies.get('username')
 }

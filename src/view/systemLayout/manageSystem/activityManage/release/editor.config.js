@@ -37,6 +37,7 @@ export const editorConfig = {
         plugins: [ //配置插件：可自己随意选择，但如果是上传本地图片image和imagetools是必要的
           'advlist autolink link image lists charmap  preview hr anchor pagebreak ',
         ],
+        height:600,
         //工具框，也可自己随意配置
         toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image ',
         image_advtab: true,

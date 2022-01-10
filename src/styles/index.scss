@@ -7,7 +7,7 @@
 
 body {
   margin: 0px;
-  background: #f0f1f3;
+  background: #f9f9f9;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 
@@ -45,4 +45,24 @@ a {text-decoration: none;color: white;}
 
 .primaryBg {
   background: $primaryColor
+}
+
+.primaryColor {
+  color: $primaryColor
+}
+
+.subBg {
+  background: $subColor
+}
+
+.subColor {
+  color: $subColor
+}
+.primary-button {
+  background: $primaryColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  cursor: pointer;
 }

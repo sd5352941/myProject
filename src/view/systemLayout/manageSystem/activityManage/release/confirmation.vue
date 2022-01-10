@@ -8,7 +8,7 @@
       <transition name="el-fade-in-linear">
         <activity-detail-mobile :data="commitDetail" class="mobile-box" v-show="showPhone"></activity-detail-mobile>
       </transition>
-      <activity-detail-pc :data="commitDetail"></activity-detail-pc>
+      <activity-detail-pc :data="commitDetail" view></activity-detail-pc>
     </div>
     <div @click="showHidePhone">
       <el-card class="show-phone">

@@ -1,4 +1,4 @@
-import {register, login} from "@/api/user";
+import {register, login, getUserActivities,getUserData,commitUserData} from "@/api/user";
 import {setToken, setUserName, removeToken,
   removeUserName, getToken, getUserName} from "../../utils/auth";
 
@@ -16,6 +16,20 @@ var user = {
     }
   },
   actions: {
+    CommitUserData({commit},data) {
+      return new Promise((resolve, reject) => {
+        commitUserData(data).then(res => {
+          resolve(res)
+        })
+      })
+    },
+    GetUserData({commit}, data) {
+      return new Promise((resolve, reject) => {
+        getUserData(data).then(res => {
+          resolve(res)
+        })
+      })
+    },
     Login({commit}, data) {
       return new Promise((resolve, reject) => {
         login(data).then(res => {
@@ -38,6 +52,19 @@ var user = {
     Register({commit}, data) {
       return new Promise((resolve, reject) => {
         register(data).then(res => {
+          resolve(res)
+        })
+      })
+    },
+    /**
+     * 获取当前用户活动列表
+     * @param commit
+     * @returns {Promise<unknown>}
+     * @constructor
+     */
+    GetUserActivities({commit}) {
+      return new Promise((resolve,reject)=> {
+        getUserActivities().then(res=> {
           resolve(res)
         })
       })

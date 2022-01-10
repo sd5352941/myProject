@@ -22,7 +22,13 @@ export default new Router({
         path: '/activityDetail',
         name: 'activityDetail',
         component: () => import('@/view/activity/detail')
-      }]
+      },
+        {
+          path: '/personal',
+          name: 'personal',
+          component: ()=> import('@/view/user/personal')
+        },
+      ]
     },
     {
       path: '/login',
@@ -41,6 +47,11 @@ export default new Router({
         name: 'systemHome',
         meta: { title:'首页' },
         component: () => import('@/view/systemLayout/manageSystem/home/home')
+      },{
+        path: '/account',
+        name: 'account',
+        meta: { title:'账号设置' },
+        component: () => import('@/view/systemLayout/manageSystem/account')
       },{
         path: 'activityManage',
         name: 'activityList',

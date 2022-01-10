@@ -61,7 +61,7 @@
       },
       async next() {
         this.$refs.baseMessage.$refs.form.validate((value) => {
-          if(true) {
+          if(value) {
             if (this.stepsActive < 2) {
               this.cacheData()
               this.stepsActive ++

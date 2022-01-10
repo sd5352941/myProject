@@ -41,6 +41,7 @@
   import {mapGetters} from 'vuex'
 
   export default {
+    name: 'home',
 //    computed: {
 //      ...mapGetters([
 //        'homeTab'

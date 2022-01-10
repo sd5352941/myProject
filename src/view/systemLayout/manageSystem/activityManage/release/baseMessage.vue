@@ -25,9 +25,9 @@
       </div>
 
       <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="Tailoring">确 定</el-button>
-  </span>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="Tailoring">确 定</el-button>
+      </span>
     </el-dialog>
 
     <!--    活动基本信息  -->
@@ -37,7 +37,7 @@
         <el-input v-model="commitDetail.title" class="base-input"></el-input>
       </el-form-item>
       <el-form-item label="活动封面" :rules="{ required: true, message: '请上传活动封面', trigger: 'blur' }" prop="img">
-        <div class="activityImgDiv">
+        <div class="activity-img-div">
           <div class="img-box">
             <img :src="commitDetail.imgPath ? commitDetail.imgPath : commitDetail.img">
           </div>
@@ -53,13 +53,13 @@
         </div>
       </el-form-item>
       <el-form-item label="活动日期" :rules="{ validator:validDate, trigger: 'blur',required: true }" prop="time">
-        <el-date-picker type="date" placeholder="选择日期" v-model="commitDetail.time" value-format="timestamp"></el-date-picker>
-        <label style="margin-left: 10px;">集合时间:</label>
-        <el-time-picker placeholder="选择时间" v-model="commitDetail.gatheringTime" value-format="timestamp"
-                        style="margin-left: 10px;"></el-time-picker>
-        <label style="margin-left: 10px;">出发时间:</label>
-        <el-time-picker placeholder="选择时间" v-model="commitDetail.departureTime" value-format="timestamp"
-                        style="margin-left: 10px;"></el-time-picker>
+        <el-date-picker type="datetime" placeholder="选择日期" v-model="commitDetail.gatheringTime" value-format="timestamp"></el-date-picker>
+<!--        <label style="margin-left: 10px;">集合时间:</label>-->
+<!--        <el-time-picker placeholder="选择时间" v-model="commitDetail.gatheringTime" value-format="timestamp"-->
+<!--                        style="margin-left: 10px;"></el-time-picker>-->
+<!--        <label style="margin-left: 10px;">出发时间:</label>-->
+<!--        <el-time-picker placeholder="选择时间" v-model="commitDetail.departureTime" value-format="timestamp"-->
+<!--                        style="margin-left: 10px;"></el-time-picker>-->
       </el-form-item>
       <el-form-item label="人数限制">
         <div class="people-number-box">
@@ -140,11 +140,12 @@
       return {
         validDate: (rule, value, callback)=> {
           let {time, gatheringTime, departureTime} = this.commitDetail
-          if(time && gatheringTime && departureTime) {
-            gatheringTime > departureTime ? callback(new Error('出发时间必须大于集合时间')) :callback()
-          } else {
-            callback(new Error('请选择完整的活动时间'))
-          }
+          gatheringTime ? callback() : callback(new Error('请选择活动时间'))
+          // if(time && gatheringTime && departureTime) {
+          //   gatheringTime > departureTime ? callback(new Error('出发时间必须大于集合时间')) :callback()
+          // } else {
+          //   callback(new Error('请选择完整的活动时间'))
+          // }
         },
         fileList: [],
         dialogVisible:false,
@@ -167,7 +168,6 @@
       };
     },
     created() {
-      // this.Editortext = '1111111111111111'
       if(this.commitDetail.desc) this.Editortext = this.commitDetail.desc
     },
     methods: {
@@ -210,7 +210,6 @@
         this.$refs.cropper.getCropBlob(data => {
           this.commitDetail.img = window.URL.createObjectURL(data)
           let files = new window.File([data], 'testImg.png', {type: 'image/png'})
-          console.log(files,'剪裁上传')
 
           let formData = new FormData();
           formData.append('file', files)
@@ -266,7 +265,7 @@
     .activity-detail {
       margin: 60px 0px;
     }
-    .activityImgDiv {
+    .activity-img-div {
       display: flex;
 
       .img-box {

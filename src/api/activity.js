@@ -64,3 +64,18 @@ export function signUpActivity(data) {
     data
   })
 }
+
+export function getMyActivities() {
+  return request({
+    url: '/activity/myActivities',
+    method: 'get',
+  })
+}
+
+export function deleteActivity(data) {
+  return request({
+    url: '/activity/delete',
+    method: 'post',
+    data
+  })
+}

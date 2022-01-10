@@ -1,23 +1,28 @@
 <template>
-  <div class="map-list-box">
-    <div id="baiduMap">
-    </div>
+  <div class="map-list-box" flex>
     <el-card class="data-list-box">
-      <div class="data-item" v-for="item in activityList" @click="searchRoute(item.mapPoint)">
-        <h2>{{item.title}}</h2>
+      <div class="data-item" v-for="item in activityList" @click="searchRoute(item.mapPoint)" :key="">
+        <map-card :data="item"></map-card>
+
       </div>
     </el-card>
+    <div id="baiduMap">
+    </div>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
+  import mapCard from "./mapCard";
 
   export default {
     computed: {
       ...mapGetters([
         'activityList'
       ])
+    },
+    components: {
+      mapCard
     },
     data() {
       return {
@@ -126,19 +131,12 @@
   }
 
   .data-list-box {
-    overflow-y: auto;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 300px;
-    height: 780px;
+    background: #f0f1f3;
 
-    .data-item {
-      cursor: pointer;
-      height: 100px;
-      margin-bottom: 10px;
-      width: 100%;
-      background: #f0f1f3;
-    }
+    overflow-y: auto;
+    //position: absolute;
+    //top: 10px;
+    width: 375px;
+    height: 800px;
   }
 </style>

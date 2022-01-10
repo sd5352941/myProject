@@ -1,9 +1,10 @@
-import {getActivity, getActivityDetail, addActivity,signUpActivity} from "@/api/activity";
+import {getActivity, getActivityDetail, addActivity,signUpActivity,getMyActivities,deleteActivity} from "@/api/activity";
 import {getUserName} from "@/utils/auth";
 
 const activity = {
   state: {
     commitDetail: {  //发布活动信息
+      signUpUser: [], //报名用户
       roadKm: [], //骑行总里程 unit:km
       address: '', //活动集合地点
       destination: '', //目的地
@@ -20,6 +21,7 @@ const activity = {
       creator: '', //提交用户名
       pee: '',
       mapPoint: [], //骑行路径点
+      createTime: '',
     },
 
     activityList: [], // 活动列表
@@ -54,6 +56,7 @@ const activity = {
           creator: '', //提交用户名
           pee: '',
           mapPoint: [], //骑行路径点
+          createTime: '',
       }
     },
     SET_LIST(state, list) {
@@ -70,9 +73,27 @@ const activity = {
     }
   },
   actions: {
-    GetActivityList({commit}, parmas) {  //获取活动列表
+    DeleteActivity({commit},params) {
+      return new Promise((resolve,reject)=> {
+        deleteActivity(params).then(res=> {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    GetMyActivities() { //获取自己发布活动
+      return new Promise((resolve,reject)=> {
+        getMyActivities().then(res=> {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    GetActivityList({commit}, params) {  //获取活动列表
       return new Promise((resolve, reject) => {
-        getActivity(parmas).then(res => {
+        getActivity(params).then(res => {
           const result = res.data.result
           commit('SET_LIST', result)
           resolve(res)
@@ -93,6 +114,7 @@ const activity = {
     },
     AddActivity({state}) {  //添加活动列表
       return new Promise((resolve, reject)=> {
+        state.commitDetail.createTime = new Date()
         addActivity(state.commitDetail).then(res => {
           resolve(res)
         }).catch(err=> {

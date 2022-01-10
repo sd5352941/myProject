@@ -2,6 +2,7 @@ import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import {getToken} from "./utils/auth";
 import router from './router'
+import Cookies from "js-cookie";
 
 router.beforeEach((to, from, next)=>{
   NProgress.start()

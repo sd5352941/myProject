@@ -15,17 +15,21 @@
                 <span>{{data.address}}</span>
               </div>
               <div class="registration-info mb20">
-                <i class="el-icon-user-solid"></i><div class="ml10">已报名 {{data.currentPeople ? data.currentPeople : 0}}<span v-if="data.people">/{{data.people}}</span>人</div>
+                <i class="el-icon-user-solid"></i><div class="ml10">已报名
+                <span v-if="data.signUpUser">{{data.signUpUser.length}}</span>
+                <span v-else>0</span>
+                <span v-if="data.people">/{{data.people}}</span>
+                人
+              </div>
               </div>
             </div>
             <div class="mb20">目的地：{{data.destination}}</div>
             <div class="mb20">集合时间：{{formatDate(data.gatheringTime)}}</div>
             <div class="mb20">出发时间：{{formatDate(data.departureTime)}}</div>
             <div class="mb20" flex>
+              <div>发布者：</div>
               <div class="creator">{{data.creator}}</div>
-              <div>123123</div>
             </div>
-<!--            <div class="mb20">活动性质：{{toText.type[data.type]}}</div>-->
           </div>
         </div>
       </div>
@@ -35,7 +39,8 @@
           <xhq-radio :options="{radioArr:data.typeArr,unit: '￥'}" v-model="applyType"></xhq-radio>
         </div>
         <div class="button-box">
-          <div class="sign-up-now" @click="signUp">立即报名</div>
+          <button class="sign-up-now" @click="signUp" :disabled="data.state === 'expire'"
+                  :style="data.state === 'expire' ? 'background-color: #b5b5b5;color: #fff' : ''">{{buttonText}}</button>
         </div>
       </div>
     </el-card>
@@ -63,7 +68,7 @@
 <script>
 import {formatDate} from '@/utils/formatDate'
 import {signUpActivity} from "@/api/activity"
-import {getUserName} from "@/utils/auth";
+import {getUserName,getToken} from "@/utils/auth";
 
 export default {
   props: {
@@ -72,24 +77,44 @@ export default {
       default: {}
     },
     view: {
-      tyoe:Boolean,
+      type:Boolean,
       default: false
     }
   },
   data() {
     return {
+      signUpState: {
+
+      },
+      hdState: '',
       toText: {
         type: {
           free: '免费',
           charge: '收费'
         },
       },
+      buttonText: '立即报名',
       applyType: ''
     }
   },
   mounted() {
+    if(!this.view) {
+      this.judgeUserSignUp()
+    }
   },
   methods: {
+    /**
+     * 判断用户是否已报名
+     */
+    judgeUserSignUp() {
+      if(!getToken()) return false
+      this.$store.dispatch('GetUserActivities').then(res=> {
+        let activities = res.data.data
+        let exist = activities.find(n=> n._id === this.$route.query._id)
+        exist ? this.buttonText = '取消报名' : this.buttonText = '立即报名'
+        if(this.data.state === 'expire') this.buttonText = '已结束'
+      })
+    },
     /**
      * 活动报名
      */
@@ -100,7 +125,14 @@ export default {
         userName: getUserName()
       }
       signUpActivity(commit).then(res=> {
-        console.log(res)
+        this.$message.success(res.data.msg)
+        let query = {
+          id: this.$route.query._id
+        }
+        this.$store.dispatch('GetActivityDetail',query).then(res=> {
+          this.data = res.data.result.esInformation
+          this.judgeUserSignUp()
+        })
       })
     },
     /**
@@ -176,6 +208,7 @@ export default {
 }
 
 .sign-up-now {
+  border: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
