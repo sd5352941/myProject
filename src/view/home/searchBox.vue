@@ -2,10 +2,10 @@
   <el-card class="search-box"shadow="never" >
     <div v-for="item in searchDesc" class="search-item">
       <label class="search-label">{{item.label}}:</label>
-      <el-radio-group v-model="searchValue[item.model]" v-if="item.status == 'radio'" size="mini" @change="changeTab">
+      <el-radio-group v-model="searchValue[item.model]" v-if="item.status == 'radio'" size="mini" @change="changeTab(item,searchValue[item.model])">
         <el-radio-button v-for="val in item.value" :label="val.value" :key="val.value">{{val.label}}</el-radio-button>
       </el-radio-group>
-      <el-checkbox-group v-model="searchValue[item.model]" v-if="item.status == 'checkbox'" size="mini">
+      <el-checkbox-group v-model="searchValue[item.model]" v-if="item.status == 'checkbox'" size="mini" @change="checkBoxChange(item,searchValue[item.model])">
         <el-checkbox-button v-for="val in item.value" :label="val.value" :key="val.value">{{val.label}}
         </el-checkbox-button>
       </el-checkbox-group>
@@ -20,25 +20,28 @@
     name: 'searchBox',
     computed: {
       ...mapGetters([
-        'searchDesc'
+        'searchDesc',
+        'activityParams',
+        'searchValue'
       ])
     },
     data() {
       return {
-        searchValue: {
-          nature: 'all', //活动性质
-          state: ['ongoing'], //活动状态
-        },
+
       }
     },
     mounted() {
     },
     methods: {
-      changeTab() {
-        let query = {
-
-        }
-        console.log(this.searchValue)
+      changeTab(item,val) {
+        this.activityParams[item.model] = val
+        this.$store.commit('CLEAR_HD_LIST')
+        this.$store.dispatch('GetActivityList')
+      },
+      checkBoxChange(item,val) {
+        this.activityParams[item.model] = val.join(',')
+        this.$store.commit('CLEAR_HD_LIST')
+        this.$store.dispatch('GetActivityList')
       }
     }
   }

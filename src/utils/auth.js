@@ -17,6 +17,11 @@ export function removeToken() {
   // Cookies.remove('userToken')
 }
 
+export function removePortrait() {
+  localStorage.removeItem("userPortrait");
+  // Cookies.remove('userToken')
+}
+
 export function removeUserName() {
   localStorage.removeItem("username");
 }
@@ -28,6 +33,19 @@ export function getToken() {
 
 export function getUserName() {
   return localStorage.getItem("username");
+  //
+  // return Cookies.get('username')
+}
+
+export function getUserPortrait() {
+  return localStorage.getItem("userPortrait");
+  //
+  // return Cookies.get('username')
+}
+
+
+export function setUserPortrait(userPortrait) {
+  return localStorage.setItem("userPortrait", userPortrait);
   //
   // return Cookies.get('username')
 }

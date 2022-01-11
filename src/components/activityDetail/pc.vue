@@ -25,10 +25,11 @@
             </div>
             <div class="mb20">目的地：{{data.destination}}</div>
             <div class="mb20">集合时间：{{formatDate(data.gatheringTime)}}</div>
-            <div class="mb20">出发时间：{{formatDate(data.departureTime)}}</div>
+<!--            <div class="mb20">出发时间：{{formatDate(data.departureTime)}}</div>-->
             <div class="mb20" flex>
               <div>发布者：</div>
-              <div class="creator">{{data.creator}}</div>
+              <div class="creator" flex="cross:center">
+                <img :src="data.creatorPortrait" class="user-portrait">{{data.creator}}</div>
             </div>
           </div>
         </div>
@@ -173,6 +174,14 @@ export default {
   margin-bottom: 25px;
 
 }
+
+.user-portrait {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
 .title-top-content {
   font-family: PingFang-SC-Regular;
   font-size: 16px;

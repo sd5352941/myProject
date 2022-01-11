@@ -79,3 +79,10 @@
 .ft15 {
   font-size: 15px
 }
+
+.creator-text {
+  cursor: pointer;
+  &:hover {
+    color: #dfc700;
+  }
+}

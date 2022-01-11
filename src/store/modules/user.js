@@ -1,11 +1,12 @@
 import {register, login, getUserActivities,getUserData,commitUserData} from "@/api/user";
-import {setToken, setUserName, removeToken,
-  removeUserName, getToken, getUserName} from "../../utils/auth";
+import {setToken, setUserName, setUserPortrait,removeToken, removePortrait,
+  removeUserName, getToken, getUserName,getUserPortrait} from "../../utils/auth";
 
 var user = {
   state: {
     userName: getUserName(),
-    token: getToken()
+    token: getToken(),
+    portrait: getUserPortrait()
   },
   mutations: {
     SET_USERNAME(state,name) {
@@ -35,6 +36,7 @@ var user = {
         login(data).then(res => {
           setToken(res.data.token)
           setUserName(res.data.name)
+          setUserPortrait(res.data.portrait)
           commit('SET_USERNAME',res.data.name)
           commit('SET_USERTOKEN',res.data.token)
           resolve(res)
@@ -46,6 +48,7 @@ var user = {
     LoginOut({commit}) {
       removeUserName()
       removeToken()
+      removePortrait()
       commit('SET_USERNAME','')
       commit('SET_USERTOKEN','')
     },
@@ -72,7 +75,8 @@ var user = {
   },
   getters: {
     token: state => state.token,
-    userName: state => state.userName
+    userName: state => state.userName,
+    portrait: state => state.portrait
   }
 }
 

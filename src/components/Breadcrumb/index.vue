@@ -26,7 +26,6 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      console.log(this.$route.matched)
       let matched = this.$route.matched.filter(item => item.name)
       const first = matched[1]
       if (first && first.name !== 'systemHome') {

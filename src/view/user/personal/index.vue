@@ -4,7 +4,7 @@
       <div class="personal-page-top mt20">
         <div class="mt30" flex="main:center">
           <div class="personal-img mt10">
-            <img src="@static/image/logo/touxiang_default.png">
+            <img :src="userData.portrait">
           </div>
         </div>
         <div class="user-name" flex="main:center">{{userData.username}}</div>
@@ -115,7 +115,7 @@ export default {
       let query = {
         userId: this.$route.query.userId,
         pageSize: 10,
-        pageNum: 1
+        pageNum: 0
       }
       getActivity(query).then(res=> {
         this.hdList = res.data.result

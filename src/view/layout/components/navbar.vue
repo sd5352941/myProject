@@ -9,7 +9,7 @@
           <el-button type="primary" round class="nav-button" @click="releaseActivity">发布活动</el-button>
         </article>
         <article>
-          <el-input class="nav-input" suffix-icon="el-icon-search"></el-input>
+          <el-input class="nav-input" suffix-icon="el-icon-search" v-model="searchVal" @keyup.enter.native="search"></el-input>
         </article>
         <article class="sign-in" v-if="!token">
 <!--          <a style="margin-right: 40px" @click="$router.push('login')">注册</a>-->
@@ -51,14 +51,17 @@
     computed: {
       ...mapGetters([
         'token',
-        'userName'
+        'userName',
+        'activityParams'
       ])
     },
     components: {
       navMenu
     },
     data() {
-      return {}
+      return {
+        searchVal: ''
+      }
     },
     methods: {
       /**
@@ -66,6 +69,17 @@
        */
       releaseActivity() {
         this.$router.push({name:'activityRelease'})
+      },
+      /**
+       * 搜索
+       */
+      search() {
+        this.activityParams.title = this.searchVal
+        this.activityParams.address = this.searchVal
+        this.activityParams.pageNum = 0
+        this.activityParams.pageSize = 6
+        this.$store.commit('CLEAR_HD_LIST')
+        this.$store.dispatch('GetActivityList')
       },
       /**
        * 跳转个人中心

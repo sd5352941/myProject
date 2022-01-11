@@ -1,7 +1,7 @@
 <template>
   <div class="card-list-box"  v-infinite-scroll="loadMore" :infinite-scroll-immediate="false">
     <div class="card-box">
-      <activity-card :data="item" v-for="item,index in activityList" :key="item._id"></activity-card>
+      <activity-card :data="item" v-for="item,index in activityList" :key="index"></activity-card>
 
 <!--      加载样式-->
       <div style="width: 100%;display: flex;justify-content: center">
@@ -36,13 +36,13 @@
     computed: {
       ...mapGetters([
         'activityList',
-        'activityParams'
+        'activityParams',
       ])
     },
     data() {
       return {
-        noData: false,
         loadingDisplay: false,
+        noData: false,
         cardDesc: []
       }
     },
@@ -55,7 +55,7 @@
         this.loadingDisplay = true
         this.noData = false
         setTimeout(() => {
-          this.$store.dispatch("GetActivityList", this.activityParams).then(res => {
+          this.$store.dispatch("GetActivityList").then(res => {
             if (res.data.result.length != 0) {
               this.activityParams.pageNum = this.activityList.length
               this.loadingDisplay = false
@@ -73,7 +73,7 @@
        * 获取活动列表
        */
       getList() {
-        this.$store.dispatch("GetActivityList", this.activityParams).then(res => {
+        this.$store.dispatch("GetActivityList").then(res => {
           this.activityParams.pageNum = this.activityList.length
         }).catch(err => {
           this.loadingDisplay = true

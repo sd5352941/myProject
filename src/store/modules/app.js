@@ -4,11 +4,17 @@ const app = {
   state: {
     navMenu: [
       {label: '首页',target: '/'},
-      {label: '测试', target: 'system'}
+      {label: '个人中心', target: 'system'}
     ],
 
   },
   mutations: {
+    TO_HD_DETAIL({state},params) {
+      window.open('/#/activityDetail?_id=' + params._id)
+    },
+    TO_PERSONAL_DETAIL({},params) {
+      window.open('/#/personal?userId=' + params.userId)
+    }
   },
   actions: {
   },

@@ -1,10 +1,9 @@
 <template>
   <el-card shadow="hover" class="map-card-box">
-    <div class="sub-text ft14 mt20" flex="main:justify cross:center">
+    <div class="sub-text ft14 mt10" flex="main:justify cross:center">
       <div>{{formatDate(new Date(data.gatheringTime))}}</div>
       <div flex="cross：center" @click.stop="collect">
-        <img src="@static/image/icon/heart.png" class="heart-icon">
-        <img src="@static/image/icon/empty-heart.png" class="heart-icon">
+          <el-tag type="danger">已满</el-tag>
       </div>
     </div>
 
@@ -20,7 +19,7 @@
 
     <div class="bottom-item" flex="main:justify">
       <div flex @click.stop="toPersonalPage">
-        <img src="@static/image/icon/morentouxiang.jpg" class="touxiang mr5">
+        <img :src="data.creatorPortrait" class="touxiang mr5">
         <div class="user-name">{{data.creator}}</div>
       </div>
       <div class="view-detail-box" flex="main:center cross:center" @click.stop="toDetail">
@@ -67,7 +66,7 @@ export default {
       let query = {
         _id: this.data._id
       }
-      this.$router.push({path: '/activityDetail', query})
+      this.$store.commit('TO_HD_DETAIL',query)
     },
   }
 }

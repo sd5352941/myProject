@@ -5,9 +5,15 @@
       <hd-label :data="data"></hd-label>
     </div>
     <div class="card-content">
-      <div class="card-time-box">
-        <i class="el-icon-date"></i>
-        <span class="card-time">{{formatDate(data.gatheringTime)}}</span>
+      <div class="card-time-box" flex="main:justify">
+        <div class="card-time">
+          <i class="el-icon-date"></i>
+          {{formatDate(data.gatheringTime)}}
+        </div>
+        <div flex="cross:center" class="creator-text" @click="toPersonal">
+          <img :src="data.creatorPortrait" class="creator-portrait">
+          {{data.creator}}
+        </div>
       </div>
       <div class="card-title-box hand" @click="toDetail">
         {{data.title}}
@@ -57,7 +63,16 @@ import {formatDate} from '@/utils/formatDate'
         let query = {
           _id: this.data._id
         }
-        this.$router.push({path: '/activityDetail', query})
+        this.$store.commit('TO_HD_DETAIL',query)
+      },
+      /**
+       * 跳转详情页面
+       */
+      toPersonal() {
+        let query = {
+          userId: this.data.userId
+        }
+        this.$store.commit('TO_PERSONAL_DETAIL',query)
       },
     },
   }
@@ -94,6 +109,8 @@ import {formatDate} from '@/utils/formatDate'
           margin-left: 5px;
         }
         .card-time {
+          color: #666666;
+
           font-size: 14px;
         }
       }
@@ -107,6 +124,8 @@ import {formatDate} from '@/utils/formatDate'
       .card-address-box {
         margin-top: 15px;
         color: #666666;
+        font-size: 15px;
+
       }
       .card-tags-box {
         margin-top: 20px;
@@ -115,5 +134,12 @@ import {formatDate} from '@/utils/formatDate'
         align-items: center;
         border-top: 1px solid #eee;
       }
+    }
+
+    .creator-portrait {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-right: 6px;
     }
 </style>

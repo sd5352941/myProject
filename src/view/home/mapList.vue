@@ -1,7 +1,7 @@
 <template>
   <div class="map-list-box" flex>
     <el-card class="data-list-box">
-      <div class="data-item" v-for="item in activityList" @click="searchRoute(item.mapPoint)" :key="">
+      <div class="data-item" v-for="item,index in activityList" @click="searchRoute(item.mapPoint)" :key="index">
         <map-card :data="item"></map-card>
 
       </div>
