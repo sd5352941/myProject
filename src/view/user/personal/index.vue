@@ -4,14 +4,18 @@
       <div class="personal-page-top mt20">
         <div class="mt30" flex="main:center">
           <div class="personal-img mt10">
-            <img :src="userData.portrait">
+            <portrait :src="userData.portrait"></portrait>
           </div>
         </div>
-        <div class="user-name" flex="main:center">{{userData.username}}</div>
+        <div class="user-name" flex="main:center">{{userData.nickName}}</div>
         <div class="jieshao" flex="main:center">{{userData.introduction}}</div>
         <div class="backdrop" flex="cross:center main:justify">
-          <div v-for="item,index in tabList" :key="index" :class="currentTab === item.prop ? 'click-btn' : 'btn'" @click="handleTabChange(item)">{{item.label}}</div>
+          <div v-for="item,index in tabList" :key="index" :class="currentTab === item.prop ? 'click-btn' : 'btn'" @click="handleTaddbChange(item)">{{item.label}}</div>
         </div>
+        <el-button type="primary" class="concern-button" @click="follow('follow')" v-if="!isConcern">关注他</el-button>
+        <el-button type="info" class="concern-button" @click="follow('cancel')" v-if="isConcern">取消关注</el-button>
+
+
       </div>
     </div>
 
@@ -21,13 +25,18 @@
         <transition name="el-fade-in">
           <div class="content-left">
 
+
+          <!--     发布的活动       -->
             <div v-if="currentTab === 'activityList'" flex>
               <div class="content-left ml20">
                 <div class="content-title mb20">
                   {{tabName}}
                 </div>
-                <hd-card v-for="item,index in hdList" :key="index" shadow="hover" class="hd-card mt20" :item="item">
+                <hd-card v-for="item,index in hdList" :key="index" shadow="hover" class="hd-card mt20" :item="item" v-if="hdList.length> 0">
                 </hd-card>
+                <div v-if="hdList.length === 0">
+                  暂无发布活动
+                </div>
               </div>
               <div class="content-right" flex="main: center">
                 <div class="gz-box">
@@ -35,21 +44,40 @@
                     关注TA的人
                   </div>
                   <div class="gz-content" flex="main:justify" >
-                    <div v-for="item in userArr" class="user-item mr10" @click="toPersonal(item)">
+                    <div v-for="item in fansArr" class="user-item mr10" @click="toPersonal(item)" v-if="fansArr.length > 0">
                       <div>
-                        <img class="user-portrait" :src="item.portrait">
+                        <portrait class="user-portrait" :src="item.portrait"></portrait>
                       </div>
-                      {{item.userName}}
+                      <div flex="main:center">
+                        {{item.nickName}}
+                      </div>
+                    </div>
+
+                    <div v-if="fansArr.length === 0">
+                      暂无关注
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div v-if="currentTab === 'personalPage'" flex >
-
+<!--            个人主页-->
+            <div v-if="currentTab === 'personalPage'" flex="main:center">
+              <div v-html="userData.homePage" v-if="userData.homePage"></div>
+              <div v-else>
+                暂无主页
+              </div>
             </div>
 
+<!--            报名活动-->
+            <div v-if="currentTab === 'signUpActivity'">
+              <div class="content-left ml20">
+                <div class="content-title mb20">
+                  {{tabName}}
+                </div>
+
+              </div>
+            </div>
 
           </div>
 
@@ -77,20 +105,16 @@ export default {
     return {
       tabList: [
         {label: '个人主页',prop: 'personalPage'},
+        {label: '报名的活动',prop: 'signUpActivity'},
         {label: '发布的活动',prop: 'activityList'},
       ],
+      currentUserId: '',
       currentTab: 'personalPage',
       tabName: '个人主页',
       hdList: [],
       userData: {},
-      userArr: [
-        {userName: '用户1',userId: '321',portrait: 'https://thirdwx.qlogo.cn/mmopen/vi_32/uMUb8zxZDYOUkzm6gdqDoyuKNExvia9gznzSeZ4X1LNdmAkNias1kxekjYSW13xpwxpcBv1FxUE8Pp8GFQqQdeRg/132'},
-        {userName: '用户2',userId: '321',portrait:'https://cdn.huodongxing.com/Content/v2.0/img/face/male/small/35.jpg'},
-        {userName: '用户23',userId: '321',portrait:'https://cdn.huodongxing.com/app/hdx/social/user/logo/1074314805168/1635074536225.jpg'},
-        {userName: '用户244',userId: '321',portrait:'https://cdn.huodongxing.com/Content/v2.0/img/face/male/small/34.jpg'},
-        {userName: '用户2555',userId: '321',portrait:'http://thirdwx.qlogo.cn/mmopen/vi_32/kddcgrkQHsuoatq8tl0ib2s9GApJFl8furgAYicMzAueoaMb3nYwn5Uo1s3kaTjC7Vmlp5RH52Bcqrib5LfRia1ibIQ/132'}
-
-      ],
+      fansArr: [],
+      isConcern: false,
     }
   },
   mounted() {
@@ -98,18 +122,42 @@ export default {
   },
   methods: {
     toPersonal(i) {
-      window.open('/#/personal')
+
+      this.$store.commit('TO_PERSONAL_DETAIL', {userId:i._id})
+    },
+    getFans() {
+      let data = {
+        users: this.userData.fans
+      }
+      this.$store.dispatch('GetUsers',data).then(res=> {
+        this.fansArr = res.data.result
+      })
     },
     getUserData() {
       this.$store.dispatch('GetUserData',{id: this.$route.query.userId})
         .then(res=> {
-        this.userData = res.data.result
+          this.userData = res.data.result
+          this.$store.dispatch('GetUserId').then(res=> {
+            this.isConcern = this.userData.fans.includes(res)
+          })
+          this.getFans()
+          this.getSingUp()
       })
+    },
+    getSingUp(){
+
     },
     handleTabChange(i) {
       this.tabName = i.label
       this.currentTab = i.prop
       this.getHd()
+    },
+    follow(type) {
+      let data = {userId: this.$route.query.userId,type}
+      this.$store.dispatch('ConcernUser',data).then(res=> {
+        this.$message.success(res.data.msg)
+        this.getUserData()
+      })
     },
     getHd() {
       let query = {
@@ -277,4 +325,13 @@ export default {
   border-radius: 50%;
 }
 
+.concern-button {
+  position: absolute;
+  right: 30px;
+  //background: #FFE403;
+  //border-color: #FFE403;
+  //color: #1a1a1a;
+  opacity: 1;
+  bottom: 5px
+}
 </style>

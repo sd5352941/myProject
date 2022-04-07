@@ -6,7 +6,7 @@
     <transition name="fade-transform" mode="out-in">
       <router-view class="mt103"></router-view>
     </transition>
-    <foobar></foobar>
+<!--    <foobar></foobar>-->
   </div>
 </template>
 

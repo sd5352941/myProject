@@ -1,6 +1,6 @@
 <template>
   <div class="home-content-box">
-    <carousel></carousel>
+<!--    <carousel></carousel>-->
     <div class="search-div">
       <search-box></search-box>
     </div>
@@ -20,13 +20,13 @@
             <img src="../../image/home/map-tab.png">
             <span class="mt10">地图模式</span>
           </div>
-          <map-list></map-list>
         </el-tab-pane>
         <el-tab-pane label="点聚合" name="dianjuhe">
           <div slot="label" class="tab-label">
             <img src="../../image/home/dianjuhe-tab.png">
             <span class="mt10">点聚合</span>
           </div>
+          <pointAggregation></pointAggregation>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -38,6 +38,7 @@
   import mapList from './mapList'
   import carousel from './carousel'
   import searchBox from './searchBox'
+  import pointAggregation from "./pointAggregation";
   import {mapGetters} from 'vuex'
 
   export default {
@@ -56,18 +57,22 @@
       cardList,
       carousel,
       mapList,
-      searchBox
+      searchBox,
+      pointAggregation
     },
     methods: {},
     mounted() {
-
+      console.log(process.env)
     }
   }
 </script>
 
 <style scoped lang="scss">
-  .home-content-box {
-
+  .tab-label {
+    width: 400px;
+  }
+  .el-tabs {
+    width: 1200px;
   }
   .search-div {
     display: flex;

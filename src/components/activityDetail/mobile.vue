@@ -13,7 +13,6 @@
             </div>
             <div class="mt15">目的地：{{data.destination}}</div>
             <div class="mt15">集合时间：{{formatDate(data.gatheringTime)}}</div>
-            <div class="mt15">出发时间：{{formatDate(data.departureTime)}}</div>
 <!--            <div class="mt15">活动性质：{{toText.type[data.type]}}</div>-->
 <!--            {{data}}-->
             <div class="mt40 apply-text">

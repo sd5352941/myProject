@@ -2,7 +2,7 @@
   <div style="height: 100%">
     <div class="intro-container" v-show="loginShow">
       <h1 class="login-title">活动平台登陆</h1>
-      <el-input class="top20" placeholder="请输入账号" v-model="user.username" style="margin-top: 30px">
+      <el-input class="top20" placeholder="请输入账号" v-model="user.phone" style="margin-top: 30px">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
       <el-input class="top20" placeholder="请输入密码" type="password" v-model="user.password" @keyup.enter.native="login"></el-input>
@@ -24,7 +24,7 @@
           <h3 class="login-title top10">平台会员注册</h3>
           <el-input class="top20 "  placeholder="用户名" v-model="registerParams.username"></el-input>
           <el-input class="top20 " placeholder="密码" v-model="registerParams.password" type="password"></el-input>
-          <el-input class="top20 "  placeholder="重复密码" v-model="registerParams.password"  type="password" ></el-input>
+          <el-input class="top20 "  placeholder="重复密码" v-model="registerParams.passwordAgain"  type="password" ></el-input>
         </section>
         <el-button @click="register" class="top20" type="success" style="width: 300px">注册</el-button>
         <el-button @click="toLogin" class="top20" type="primary" style="width:300px;margin-left: 0px">返回登陆</el-button>
@@ -44,12 +44,13 @@
     data() {
       return {
         user: {
-          username: '',
+          phone: '',
           password: '',
         },
         registerParams: {
           username: '',
           password: '',
+          passwordAgain: ''
         },
         loginShow: true,
       }
@@ -103,8 +104,14 @@
         })
       },
       register() {
+        if(this.registerParams.password !== this.registerParams.passwordAgain) {
+          this.$Message.error('两次密码不一致，请重新输入')
+          return false
+        }
         this.$store.dispatch('Register', this.registerParams).then(res => {
           this.$message.success(res.data.msg)
+          this.$store.commit('SET_USERNAME',this.registerParams.username)
+          this.$router.push('/')
         })
       },
       toHome() {

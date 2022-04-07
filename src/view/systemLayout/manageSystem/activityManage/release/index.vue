@@ -7,7 +7,7 @@
     </el-steps>
     <div class="content-box">
       <base-message v-show="stepsActive == 0" ref="baseMessage"></base-message>
-      <road-route v-show="stepsActive == 1" ref="roadRoute"></road-route>
+      <road-route v-if="stepsActive == 1" ref="roadRoute"></road-route>
       <confirmation v-if="stepsActive == 2"></confirmation>
     </div>
     <div class="button-box">
@@ -48,10 +48,22 @@
     methods: {
       initData() {
         let cacheData = localStorage.getItem('commitDetail')
+
         if(cacheData) {
+          this.$confirm('上次编辑的信息尚未保存，是否继续', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$refs.baseMessage.$tinymce.remove()
+            this.$store.commit('SET_COMMITDETAIL',JSON.parse(cacheData))
+            this.commitDetail.mapPoint = parsePoints(this.commitDetail.mapPoint)
+            this.$refs.baseMessage.tinymce()
+          }).catch(() => {
+            return false
+          });
+
           // cacheData.mapPoint = parsePoints(cacheData.mapPoint)
-          this.$store.commit('SET_COMMITDETAIL',JSON.parse(cacheData))
-          this.commitDetail.mapPoint = parsePoints(this.commitDetail.mapPoint)
         }
         this.$store.commit('SET_COMMITDETAILCREATOR')
 
@@ -60,16 +72,11 @@
         localStorage.setItem("commitDetail",JSON.stringify(this.commitDetail));
       },
       async next() {
-        this.$refs.baseMessage.$refs.form.validate((value) => {
+        this.$refs.baseMessage.$refs.form.validate(async (value) => {
           if(value) {
             if (this.stepsActive < 2) {
               this.cacheData()
               this.stepsActive ++
-              if(this.stepsActive == 1) {
-                for(let key in this.commitDetail.mapPoint) {
-                  this.$refs.roadRoute.cacheAddMarker(this.commitDetail.mapPoint[key],key)
-                }
-              }
             } else {
               this.commitData()
             }
@@ -86,7 +93,6 @@
           if(res.data.code === 2000) {
             localStorage.setItem('commitDetail','')
             this.$store.commit('CLEAR_COMMITDETAIL')
-            this.$refs.roadRoute.map.clearOverlays()
             this.$confirm('活动提交成功，是否跳转到详情页面', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
@@ -106,6 +112,16 @@
       },
       back() {
         this.stepsActive --
+      }
+    },
+    watch: {
+      stepsActive() {
+        if(this.stepsActive == 1) {
+          this.$nextTick(()=> {
+            console.log(this.$refs.roadRoute.getCity())
+          })
+          // this.$refs.roadRoute.getCity()
+        }
       }
     }
   }

@@ -43,6 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 .card-Label-box {
+  font-family: Hiragino Sans GB;
   position: absolute;
   top: 0;
   left: 15px;

@@ -2,11 +2,12 @@
 
 <template>
   <div class="header">
-    <el-carousel>
-      <el-carousel-item v-for="item in carouselList" :key="item.imageURL">
-        <div :class="item.imageURL"></div>
-      </el-carousel-item>
-    </el-carousel>
+    <img :src="carouselList[0].imageURL">
+<!--    <el-carousel>-->
+<!--      <el-carousel-item v-for="item in carouselList" :key="item.imageURL">-->
+<!--        <img :src="item.imageURL">-->
+<!--      </el-carousel-item>-->
+<!--    </el-carousel>-->
   </div>
 </template>
 
@@ -15,7 +16,7 @@
     data() {
       return {
         carouselList: [{
-          imageURL: 'img'
+          imageURL: require('../../image/title/banner.png')
         }]
       }
     }
@@ -23,9 +24,9 @@
 </script>
 
 <style scoped lang="scss">
-  .el-carousel__container {
-    height: 700px;
-  }
+  //.el-carousel__container {
+  //  height: 700px;
+  //}
   .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;
@@ -42,5 +43,12 @@
     background-position-x:center;
     /*background-size: 700px;*/
     background-repeat: no-repeat;
+  }
+  .header {
+    margin-top: 100px;
+  }
+  img {
+    width: 100vw;
+    height: calc(100vh - 100px);
   }
 </style>

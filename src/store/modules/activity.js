@@ -1,4 +1,5 @@
-import {getActivity, getActivityDetail, addActivity,signUpActivity,getMyActivities,deleteActivity} from "@/api/activity";
+import {getActivity, getActivityDetail, addActivity,signUpActivity,getMyActivities,deleteActivity,
+  getActivities} from "@/api/activity";
 import {getUserPortrait} from "../../utils/auth";
 import {getUserName} from "@/utils/auth";
 
@@ -47,7 +48,7 @@ const activity = {
       address: '', //活动集合地点
       destination: '', //目的地
       img: '', //活动封面图片url
-      imgPath: {}, //活动封面后台地址
+      imgPath: '', //活动封面后台地址
       title: '', //活动标题
       time: '', //骑行日期
       gatheringTime: '', //集合时间
@@ -87,7 +88,7 @@ const activity = {
           address: '', //活动集合地点
           destination: '', //目的地
           img: '', //活动封面图片url
-          imgPath: {}, //活动封面后台地址
+          imgPath: '', //活动封面后台地址
           title: '', //活动标题
           time: '', //骑行日期
           gatheringTime: '', //集合时间
@@ -138,6 +139,13 @@ const activity = {
           resolve(res)
         }).catch(err => {
           reject(err)
+        })
+      })
+    },
+    GetActivities({},data) {  //批量查询活动
+      return new Promise((resolve, reject) =>{
+        getActivities(data).then(res=> {
+          resolve(res)
         })
       })
     },

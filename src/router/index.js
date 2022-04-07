@@ -7,7 +7,7 @@ import none from '@/view/systemLayout/manageSystem/none'
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -60,7 +60,7 @@ export default new Router({
         children: [{
           path: 'list',
           name: 'activityList',
-          meta: { title:'活动列表' },
+          meta: { title:'我的活动' },
           component: () => import('@/view/systemLayout/manageSystem/activityManage')
         },{
           path: 'release',

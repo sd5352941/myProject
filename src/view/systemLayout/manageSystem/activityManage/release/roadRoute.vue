@@ -53,7 +53,7 @@
       ])
     },
     mounted: function () {
-      this.getCity()
+      // this.getCity()
     },
     methods: {
       /**
@@ -85,7 +85,7 @@
               },100 * key)
             }
           }
-          // var viewPort = this.map.getViewport(mapPoint)
+          var viewPort = this.map.getViewport(mapPoint)
           this.markerRender(mapPoint)
           // this.map.centerAndZoom(viewPort.center, viewPort.zoom - 2);      //地图视角切换至路径规划中心
         }
@@ -97,9 +97,12 @@
         for(let key in mapData) {
           var point = mapData[key]
           var marker = new BMap.Marker(point);  // 创建标注
+          marker.enableDragging()     // 地图标注开启拖拽
+          marker.addEventListener("dragend", this.makerDragendEvent);
+
           // 添加标注描述
           let text
-          key == 0 ? text = '起' : text = '' + key
+          key == 0 ? text = '起点' : text = '' + key
           // if(key == mapData.length -1 ) text = '终'
           let label = new BMap.Label(text, {offset: new BMap.Size(20, -10)});
           marker.setLabel(label);
@@ -124,26 +127,33 @@
         });
 
 
+
+
         // 骑行路径点搜索回调
         this.riding.setSearchCompleteCallback(() => {
-            if(this.riding.getResults()) {
-              if(this.riding.getResults().getPlan(0).getDistance()) {
-                let km = Number(this.riding.getResults().getPlan(0).getDistance().split('公')[0])
-                this.commitDetail.roadKm.push(km)
-              }
-              var pts = this.riding.getResults().getPlan(0).getRoute(0).getPath()   //获取路线途经坐标点
-              var polyline = new BMap.Polyline(pts)  // 将坐标点数组绘制成线
-              this.map.addOverlay(polyline)
-              this.polylineArr.push(polyline)
-              this.riding.clearResults() //清除路径计算点
-              this.callbackStuts = false
-              this.loading.close()  // 关闭loading状态
-            } else {      //没有找到骑行路径
-              this.$message.error('没有到此点的骑行路径，请重新设置')
-
-              this.loading.close()  // 关闭loading状态
+          if(this.riding.getResults()) {
+            if(this.riding.getResults().getPlan(0).getDistance()) {
+              let km = Number(this.riding.getResults().getPlan(0).getDistance().split('公')[0])
+              this.commitDetail.roadKm.push(km)
             }
-          })
+            var pts = this.riding.getResults().getPlan(0).getRoute(0).getPath()   //获取路线途经坐标点
+            var polyline = new BMap.Polyline(pts)  // 将坐标点数组绘制成线
+            this.map.addOverlay(polyline)
+            this.polylineArr.push(polyline)
+            this.riding.clearResults() //清除路径计算点
+            this.callbackStuts = false
+
+            this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+              this.loading.close()
+
+            });
+          } else {      //没有找到骑行路径
+            this.$message.error('没有到此点的骑行路径，请重新设置')
+
+            this.loading.close()  // 关闭loading状态
+          }
+        })
+        this.initRoute()
 
         this.autocomplete()
         this.handlerMouseClick()
@@ -185,40 +195,6 @@
           menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
         }
         this.map.addContextMenu(menu);
-      },
-      /**
-       * mapPoint已有数据添加maker
-       */
-      cacheAddMarker(p,key) {
-        return new Promise(resolve => {
-          key = Number(key)
-          // this.commitDetail.roadKm = 0
-          let marker = new BMap.Marker(p)
-          let geoc = new BMap.Geocoder();
-          marker.enableDragging()     // 地图标注开启拖拽
-          let text
-          marker.addEventListener("dragend", this.makerDragendEvent);
-          if(!key) {
-            text = '起点'
-
-            //根据起点获取集合地点
-            geoc.getLocation(p,(rs)=> {
-              this.commitDetail.address= rs.address
-            })
-          } else if(key === this.commitDetail.mapPoint.length - 1){
-            text = '' + key
-            //根据终点获取集合地点
-            geoc.getLocation(p,(rs)=> {
-              this.commitDetail.destination= rs.address
-            })
-          }
-          let label = new BMap.Label(text, {offset: new BMap.Size(20, -10)});
-          marker.setLabel(label);
-          this.map.addOverlay(marker);    //地图添加标注
-          marker.setAnimation(BMAP_ANIMATION_DROP); //动画
-          if(key > 0)    this.computedRouter(this.commitDetail.mapPoint[key-1], this.commitDetail.mapPoint[key])
-          resolve()
-        })
       },
 
       /**

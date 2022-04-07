@@ -36,7 +36,16 @@ export function getUserData(params) {
     params
   })
 }
-
+/**
+ * 关注用户
+ */
+export function concernUser(data) {
+  return request({
+    url: `/user/follow`,
+    method: `post`,
+    data
+  })
+}
 /**
  * 查询用户信息
  */
@@ -48,3 +57,25 @@ export function commitUserData(data) {
   })
 }
 
+/**
+ * 提交个人主页数据
+ */
+export function commitHomePage(data) {
+  return request({
+    url: `/user/homePage`,
+    method: `post`,
+    data
+  })
+}
+
+/**
+ * 获取用户群
+ */
+
+export function getUsers(data) {
+  return request({
+    url: `/user/getUsers`,
+    method: `post`,
+    data
+  })
+}

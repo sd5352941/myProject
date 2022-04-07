@@ -4,6 +4,9 @@ export const editorConfig = {
   watch: {
     Editortext() {
       this.commitDetail.desc = this.Editortext
+    },
+    'commitDetail.desc'(){
+      this.Editortext = this.commitDetail.desc
     }
   },
   data() {
@@ -33,6 +36,7 @@ export const editorConfig = {
         selector: "#Editor",
         language_url: '/static/tinymce/zh_CN.js',//设置中文
         language: 'zh_CN',
+        branding: false,
 
         plugins: [ //配置插件：可自己随意选择，但如果是上传本地图片image和imagetools是必要的
           'advlist autolink link image lists charmap  preview hr anchor pagebreak ',
@@ -43,7 +47,7 @@ export const editorConfig = {
         image_advtab: true,
         table_default_styles: {
           height: '500px',
-          width: '100%',
+          width: '100vw',
           borderCollapse: 'collapse'
         },
         image_title: false, // 是否开启图片标题设置的选择，这里设置否

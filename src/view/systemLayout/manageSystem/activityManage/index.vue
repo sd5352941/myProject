@@ -1,9 +1,8 @@
 <template>
   <div class="activity-manage-box">
     <el-tabs v-model="currentTab" @tab-click="handleClick">
-      <el-tab-pane label="全部" name="all"></el-tab-pane>
-      <el-tab-pane label="进行中" name="ongoing"></el-tab-pane>
-      <el-tab-pane label="已结束" name="end"></el-tab-pane>
+      <el-tab-pane label="我发布的活动" name="myHd"></el-tab-pane>
+      <el-tab-pane label="我报名的活动" name="signUpHd"></el-tab-pane>
     </el-tabs>
     <el-card shadow="hover" v-for="item,index in list" :key="index" class="mb20 hd-card">
       <div class="table-top" flex>
@@ -21,7 +20,7 @@
           <img :src="item.imgPath" class="hd-img">
         </div>
         <div class="hd-title" style="flex:6" >
-          <div class="subColor" style="font-weight: bold;font-size: 18px">{{item.title}}</div>
+          <div class="subColor" style="font-weight: bold;font-size: 18px;cursor: pointer" @click="toDetail(item)">{{item.title}}</div>
         </div>
         <div class="hd-num" style="flex:2" flex="main:center cross:center">
           {{item.signUpUser.length}}
@@ -38,7 +37,7 @@
         </div>
       </div>
 
-      <div class="table-bottom" flex>
+      <div class="table-bottom" flex v-if="currentTab === 'myHd'">
         <div class="primary-button ">
           <i class="el-icon-edit mr5"></i>
           编辑
@@ -64,7 +63,8 @@ import {formatDate} from '@/utils/formatDate'
 export default {
   data() {
     return {
-      currentTab: 'all',
+      userData: {},
+      currentTab: 'myHd',
       list: [],
       formatDate,
       hdState: {
@@ -84,16 +84,37 @@ export default {
     }
   },
   methods: {
-    activityState(item) {
-
+    toDetail(i) {
+      this.$store.commit('TO_HD_DETAIL',{_id: i._id})
+    },
+    getUserData(){
+      this.$store.dispatch('GetUserData').then(res=> {
+        this.userData = res.data.result
+      })
     },
     handleClick() {
-
+      this.getList()
     },
     getList() {
-      this.$store.dispatch('GetMyActivities').then(res=> {
-        this.list = res.data.data
-      })
+      this.list = []
+      const fn = {
+        myHd: ()=> {
+          this.$store.dispatch('GetMyActivities').then(res=> {
+            this.list = res.data.data
+          })
+        },
+        signUpHd: ()=> {
+          if(this.userData.activities.length > 0) {
+            this.$store.dispatch('GetActivities',{activitiesId: this.userData.activities}).then(res=> {
+              this.list = res.data.result
+              console.log(this.list,123)
+            })
+          }
+        }
+      }
+
+      fn[this.currentTab]()
+
     },
     deleteActivity(item) {
       this.$confirm('此操作将永久删除该活动, 是否继续?', '提示', {
@@ -116,6 +137,7 @@ export default {
     }
   },
   mounted() {
+    this.getUserData()
     this.getList()
   }
 }

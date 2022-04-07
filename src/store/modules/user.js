@@ -1,6 +1,9 @@
-import {register, login, getUserActivities,getUserData,commitUserData} from "@/api/user";
-import {setToken, setUserName, setUserPortrait,removeToken, removePortrait,
-  removeUserName, getToken, getUserName,getUserPortrait} from "../../utils/auth";
+import {register, login, getUserActivities,getUserData,commitUserData,commitHomePage,concernUser,getUsers} from "@/api/user";
+import {
+  setToken, setUserName, setUserPortrait, removeToken, removePortrait,
+  removeUserName, getToken, getUserName, getUserPortrait, setUserId,
+  getUserId,removeUserId
+} from "../../utils/auth";
 
 var user = {
   state: {
@@ -11,12 +14,28 @@ var user = {
   mutations: {
     SET_USERNAME(state,name) {
       state.userName = name
+      setUserName(name)
     },
     SET_USERTOKEN(state,token) {
       state.token = token
+    },
+    LOGIN(state,data) {
+
     }
   },
   actions: {
+    GetUsers({},data) {
+      return new Promise((resolve, reject) => {
+        getUsers(data).then(res => {
+          resolve(res)
+        })
+      })
+    },
+    GetUserId() {
+      return new Promise((resolve, reject) => {
+          resolve(getUserId())
+      })
+    },
     CommitUserData({commit},data) {
       return new Promise((resolve, reject) => {
         commitUserData(data).then(res => {
@@ -31,12 +50,20 @@ var user = {
         })
       })
     },
+    ConcernUser({},data) {
+      return new Promise((resolve, reject) => {
+        concernUser(data).then(res => {
+          resolve(res)
+        })
+      })
+    },
     Login({commit}, data) {
       return new Promise((resolve, reject) => {
         login(data).then(res => {
           setToken(res.data.token)
           setUserName(res.data.name)
           setUserPortrait(res.data.portrait)
+          setUserId(res.data.userId)
           commit('SET_USERNAME',res.data.name)
           commit('SET_USERTOKEN',res.data.token)
           resolve(res)
@@ -49,12 +76,18 @@ var user = {
       removeUserName()
       removeToken()
       removePortrait()
+      removeUserId()
       commit('SET_USERNAME','')
       commit('SET_USERTOKEN','')
     },
     Register({commit}, data) {
       return new Promise((resolve, reject) => {
         register(data).then(res => {
+          setToken(res.data.token)
+          setUserPortrait(res.data.portrait)
+          setUserId(res.data.userId)
+          commit('SET_USERNAME',res.data.name)
+          commit('SET_USERTOKEN',res.data.token)
           resolve(res)
         })
       })
@@ -68,6 +101,19 @@ var user = {
     GetUserActivities({commit}) {
       return new Promise((resolve,reject)=> {
         getUserActivities().then(res=> {
+          resolve(res)
+        })
+      })
+    },
+
+    /**
+     * 提交个人主页数据
+     * @param data
+     * @constructor
+     */
+    CommitHomePage ({},data) {
+      return new Promise((resolve,reject)=> {
+        commitHomePage(data).then(res=> {
           resolve(res)
         })
       })

@@ -11,8 +11,9 @@
           {{formatDate(data.gatheringTime)}}
         </div>
         <div flex="cross:center" class="creator-text" @click="toPersonal">
-          <img :src="data.creatorPortrait" class="creator-portrait">
-          {{data.creator}}
+          <portrait :src="data.userInfo[0].portrait" class="creator-portrait">
+          </portrait>
+          {{data.userInfo[0].nickName}}
         </div>
       </div>
       <div class="card-title-box hand" @click="toDetail">
@@ -63,14 +64,16 @@ import {formatDate} from '@/utils/formatDate'
         let query = {
           _id: this.data._id
         }
-        this.$store.commit('TO_HD_DETAIL',query)
+        this.$router.push({path:"activityDetail",query})
+
+        // this.$store.commit('TO_HD_DETAIL',query)
       },
       /**
        * 跳转详情页面
        */
       toPersonal() {
         let query = {
-          userId: this.data.userId
+          userId: this.data.userInfo[0]._id
         }
         this.$store.commit('TO_PERSONAL_DETAIL',query)
       },
@@ -82,11 +85,12 @@ import {formatDate} from '@/utils/formatDate'
     .card-box {
       width: 365px;
       margin-bottom: 20px;
-      -webkit-transition: margin 0.1s ease-out;
-      -moz-transition: margin 0.1s ease-out;
-      -o-transition: margin 0.1s ease-out;
+      //-webkit-transition: margin 0.1s ease-out;
+      //-moz-transition: margin 0.1s ease-out;
+      //-o-transition: margin 0.1s ease-out;
       &:hover {
         margin-top: -2px;
+        transform:scaleX(1.01);
       }
 
       .card-title-img {

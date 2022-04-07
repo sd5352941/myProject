@@ -39,7 +39,7 @@
       <el-form-item label="活动封面" :rules="{ required: true, message: '请上传活动封面', trigger: 'blur' }" prop="img">
         <div class="activity-img-div">
           <div class="img-box">
-            <img :src="commitDetail.imgPath ? commitDetail.imgPath : commitDetail.img">
+            <img :src="commitDetail.imgPath ? commitDetail.imgPath : commitDetail.img" v-if="commitDetail.img">
           </div>
           <div class="upload">
             <el-upload action :auto-upload="false" :file-list="fileList"
@@ -105,8 +105,7 @@
       <h2 class="base-message-title">
         活动详情
       </h2>
-      <textarea class="my_editor" id="Editor"  v-model="Editortext"></textarea>
-
+      <textarea class="my_editor" id="Editor"  v-model="Editortext" ></textarea>
 
     </div>
    <!-- 弹出提示-->
@@ -122,6 +121,8 @@
   import {mapGetters} from 'vuex'
   import { VueCropper } from 'vue-cropper'
   import {editorConfig} from './editor.config'
+  import roadRoute from './roadRoute'
+
 
 
   export default {
@@ -129,11 +130,12 @@
     name: 'baseMessage',
     components: {
       // quillEditor, //富文本编辑器
-      VueCropper  //图片剪裁
+      VueCropper,  //图片剪裁
+      roadRoute
     },
     computed: {
       ...mapGetters([
-        'commitDetail'
+        'commitDetail','token'
       ])
     },
     data() {
@@ -209,13 +211,24 @@
       Tailoring() {
         this.$refs.cropper.getCropBlob(data => {
           this.commitDetail.img = window.URL.createObjectURL(data)
-          let files = new window.File([data], 'testImg.png', {type: 'image/png'})
+          let files = new window.File([data], 'coverImg.png', {type: 'image/png'})
+          let fileName = this.token + Date.parse(new Date()) + '.png'
+
 
           let formData = new FormData();
           formData.append('file', files)
-          uploadIMG(formData,'activityCover').then(res=> {
-            this.commitDetail.imgPath = res.data.path
-          })
+          cos.putObject({
+            Bucket: 'image-1309239628', /* 填入您自己的存储桶，必须字段 */
+            Region: 'ap-chengdu',  /* 存储桶所在地域，例如ap-beijing，必须字段 */
+            Key: `officialCover/${fileName}`,  /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */
+            StorageClass: 'STANDARD',
+            Body: files, // 上传文件对象
+            onProgress: (progressData)=> {
+
+            }
+          }, (err, data)=> {
+            this.commitDetail.imgPath = 'https://' + data.Location
+          });
         })
         this.dialogVisible = false
         this.fileList = []

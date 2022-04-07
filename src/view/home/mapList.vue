@@ -72,6 +72,9 @@
         this.newMapPoint = []
         // if(this.loading) this.loading.close()
         this.map.clearOverlays()
+        this.$nextTick( ()=>{
+          this.loading.close()
+        })
         this.loading = this.$loading({
           lock: true,
           text: '正在计算骑行路径',

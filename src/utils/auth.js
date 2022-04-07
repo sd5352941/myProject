@@ -8,8 +8,16 @@ export function setUserName(name) {
 
 export function setToken(token) {
   localStorage.setItem("userToken", token);
-
   // Cookies.set('userToken',token)
+}
+
+export function setUserId(id) {
+  return localStorage.setItem("userId",id);
+}
+
+export function removeUserId() {
+  localStorage.removeItem("userId");
+  // Cookies.remove('userToken')
 }
 
 export function removeToken() {
@@ -43,6 +51,10 @@ export function getUserPortrait() {
   // return Cookies.get('username')
 }
 
+export function getUserId() {
+  return localStorage.getItem("userId");
+  // Cookies.remove('userToken')
+}
 
 export function setUserPortrait(userPortrait) {
   return localStorage.setItem("userPortrait", userPortrait);

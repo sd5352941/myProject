@@ -28,9 +28,31 @@
 <!--            <div class="mb20">出发时间：{{formatDate(data.departureTime)}}</div>-->
             <div class="mb20" flex>
               <div>发布者：</div>
-              <div class="creator" flex="cross:center">
-                <img :src="data.creatorPortrait" class="user-portrait">{{data.creator}}</div>
+              <div class="creator" flex="cross:center" @click="toPersonal(data.userInfo[0]._id)" v-if="!view">
+                <portrait :src="data.userInfo[0].portrait" class="user-portrait mr10"></portrait>
+                <span class="ml5">{{data.userInfo[0].nickName}}</span>
+              </div>
+
+              <div class="creator" flex="cross:center" @click="toPersonal(data.userInfo[0]._id)" v-else>
+                <portrait :src="data.portrait" class="user-portrait mr10"></portrait>
+                <span class="ml5">{{data.nickName}}</span>
+              </div>
             </div>
+
+            <div class="mb20" flex v-if="signUpUsers.length > 0">
+              <div flex="cross:center">已报名用户：</div>
+              <div v-for="item,index in signUpUsers" @click="toPersonal(item._id)" v-if="index < 8">
+                <el-popover
+                  placement="top-start"
+                  trigger="hover"
+                  :content="item.nickName">
+                  <portrait slot="reference" :src="item.portrait" class="sign-up-user-portrait mr10"></portrait>
+                </el-popover>
+
+              </div>
+              <span v-if="signUpUsers.length > 8">...</span>
+            </div>
+
           </div>
         </div>
       </div>
@@ -40,8 +62,7 @@
           <xhq-radio :options="{radioArr:data.typeArr,unit: '￥'}" v-model="applyType"></xhq-radio>
         </div>
         <div class="button-box">
-          <button class="sign-up-now" @click="signUp" :disabled="data.state === 'expire'"
-                  :style="data.state === 'expire' ? 'background-color: #b5b5b5;color: #fff' : ''">{{buttonText}}</button>
+          <button class="sign-up-now" @click="signUp"  >{{isSignUp ? '取消报名' : '立即报名'}}</button>
         </div>
       </div>
     </el-card>
@@ -56,7 +77,7 @@
 
     </el-card>
 
-    <el-card class="card-base mt60">
+    <el-card class="card-base mt60" v-if="data.desc">
       <div class="card-title mb30">
         <i class="el-icon-location-outline"></i>
         <span>活动详情</span>
@@ -95,7 +116,10 @@ export default {
         },
       },
       buttonText: '立即报名',
-      applyType: ''
+      applyType: '',
+      signUpUsers: [],
+      //是否报名
+      isSignUp: false,
     }
   },
   mounted() {
@@ -105,15 +129,21 @@ export default {
   },
   methods: {
     /**
+     * 跳转个人主页
+     */
+    toPersonal(userId) {
+      if(this.view) return false
+      this.$store.commit('TO_PERSONAL_DETAIL',{userId})
+    },
+    /**
      * 判断用户是否已报名
      */
     judgeUserSignUp() {
       if(!getToken()) return false
-      this.$store.dispatch('GetUserActivities').then(res=> {
-        let activities = res.data.data
-        let exist = activities.find(n=> n._id === this.$route.query._id)
-        exist ? this.buttonText = '取消报名' : this.buttonText = '立即报名'
-        if(this.data.state === 'expire') this.buttonText = '已结束'
+      this.$store.dispatch('GetUserId').then(res=> {
+        this.isSignUp = this.data.signUpUser.includes(res)
+
+        this.getSingUpUsers()
       })
     },
     /**
@@ -121,19 +151,32 @@ export default {
      */
     signUp() {
       if(this.view) return false
+      let type
+      this.isSignUp ? type = "cancel" : type = 'signUp'
+
       let commit = {
         activityId: this.data._id,
-        userName: getUserName()
+        userName: getUserName(),
+        type
       }
       signUpActivity(commit).then(res=> {
         this.$message.success(res.data.msg)
         let query = {
-          id: this.$route.query._id
+          id: this.$route.query._id,
         }
         this.$store.dispatch('GetActivityDetail',query).then(res=> {
           this.data = res.data.result.esInformation
+
           this.judgeUserSignUp()
         })
+      })
+    },
+    /**
+     * 获取报名人数
+     */
+    getSingUpUsers(){
+      this.$store.dispatch('GetUsers',{users: this.data.signUpUser}).then(res=> {
+        this.signUpUsers = res.data.result
       })
     },
     /**
@@ -180,6 +223,15 @@ export default {
   height: 24px;
   border-radius: 50%;
   margin-right: 4px;
+}
+
+.sign-up-user-portrait{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 4px;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
 .title-top-content {

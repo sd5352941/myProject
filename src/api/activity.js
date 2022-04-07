@@ -8,11 +8,21 @@ export function getActivity(params) {
   })
 }
 
+
+
 export function getActivityDetail(params) {
   return request({
     url:'/activity/detail',
     method:'get',
     params,
+  })
+}
+
+export function getActivities(data) {
+  return request({
+    url:'/activity/list',
+    method:'post',
+    data,
   })
 }
 
@@ -34,7 +44,6 @@ export function uploadIMG(data,name) {
   let config = {
     headers:{'Content-Type':'multipart/form-data','fileName': name},
   }
-
   return request.post('/activity/uploadIMG',data, config)
   // return request({
   //   url: '/activity/uploadIMG',

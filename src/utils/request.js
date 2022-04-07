@@ -5,7 +5,8 @@ import {Message} from 'element-ui'
 
 var request = axios.create({
   baseURL: process.env.BASE_API,
-  // timeout: 6000
+  // baseURL: 'http://175.178.40.9:3001',
+  timeout: 10000
 })
 
 /**

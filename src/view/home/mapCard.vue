@@ -3,7 +3,7 @@
     <div class="sub-text ft14 mt10" flex="main:justify cross:center">
       <div>{{formatDate(new Date(data.gatheringTime))}}</div>
       <div flex="cross：center" @click.stop="collect">
-          <el-tag type="danger">已满</el-tag>
+          <el-tag :type="state[data.state].color">{{state[data.state].text}}</el-tag>
       </div>
     </div>
 
@@ -19,8 +19,8 @@
 
     <div class="bottom-item" flex="main:justify">
       <div flex @click.stop="toPersonalPage">
-        <img :src="data.creatorPortrait" class="touxiang mr5">
-        <div class="user-name">{{data.creator}}</div>
+        <portrait :src="data.userInfo[0].portrait" class="touxiang mr5"></portrait>
+        <div class="user-name">{{data.userInfo[0].nickName}}</div>
       </div>
       <div class="view-detail-box" flex="main:center cross:center" @click.stop="toDetail">
         查看详情
@@ -43,21 +43,29 @@ export default {
   },
   data() {
     return {
-      formatDate
+      formatDate,
+      state: {
+        ongoing: {
+          text: '进行中',
+          color: 'warning'
+        },
+        full:  {
+          text: '已满员',
+          color: 'danger'
+        },
+        expire: {
+          text: '已结束',
+          color: 'info'
+        }
+      }
     }
   },
   methods: {
     toPersonalPage() {
       let query = {
-        userId: this.data.userId
+        userId: this.data.userInfo[0]._id
       }
-      this.$router.push({path:'/personal',query},)
-    },
-    /**
-     * 收藏页面
-     */
-    collect() {
-      console.log('collect！！')
+      this.$store.commit('TO_PERSONAL_DETAIL',query)
     },
     /**
      * 跳转详情页面
